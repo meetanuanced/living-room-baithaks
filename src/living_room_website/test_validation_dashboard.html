@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LRB Test Suite - Validation Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .test-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .test-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .test-number {
+            background: #ff8800;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .test-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .test-description {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .test-button {
+            display: inline-block;
+            background: #e6c200;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .test-button:hover {
+            background: #ffd700;
+            transform: translateY(-1px);
+        }
+
+        .validation-checklist {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .validation-checklist h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .checklist-category {
+            margin-bottom: 25px;
+        }
+
+        .category-title {
+            font-weight: bold;
+            color: #ff8800;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            padding: 8px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 3px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .checklist-item label {
+            cursor: pointer;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .instructions {
+            background: #fff3cd;
+            border-left: 4px solid #ff8800;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .instructions h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            color: #856404;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .test-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .status-passed {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-failed {
+            background: #dc3545;
+            color: white;
+        }
+
+        .summary-section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .summary-card {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .summary-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ff8800;
+        }
+
+        .summary-label {
+            color: #666;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 Living Room Baithaks - Test Suite Dashboard</h1>
+        <p class="subtitle">Comprehensive validation for dynamic rendering scenarios</p>
+
+        <div class="instructions">
+            <h3>📋 How to Use This Test Suite</h3>
+            <ol>
+                <li>Click on each test case button below to open your HTML file with that specific JSON data</li>
+                <li>Manually replace the JSON file reference in your HTML or use a local server</li>
+                <li>Verify each item in the validation checklist below</li>
+                <li>Check off items as you validate them</li>
+                <li>Document any issues found in each test case</li>
+            </ol>
+        </div>
+
+        <div class="summary-section">
+            <h2>📊 Test Coverage Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-number">10</div>
+                    <div class="summary-label">Test Cases</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number">45+</div>
+                    <div class="summary-label">Validation Points</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number">4</div>
+                    <div class="summary-label">Meal Types</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number">15</div>
+                    <div class="summary-label">Max Past Events</div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="margin-bottom: 20px;">🧪 Test Cases</h2>
+        <div class="test-grid">
+            <div class="test-card">
+                <div class="test-header">
+                    <span class="test-number">Test 1</span>
+                    <span class="test-status status-pending">Pending</span>
+                </div>
+                <div class="test-title">Single Upcoming - Breakfast Before</div>
+                <div class="test-description">
+                    Tests single upcoming concert with breakfast served before the baithak starts.
+                    <br><strong>Time:</strong> 9:00 AM concert, 8:00 AM breakfast
+                </div>
+                <a href="#" class="test-button" onclick="alert('Load: test_case_1_single_breakfast.json'); return false;">Run Test</a>
+            </div>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <span class="test-number">Test 2</span>
+                    <span class="test-status status-pending">Pending</span>
+                </div>
+                <div class="test-title">Two Upcoming Concerts</div>
+                <div class="test-description">
+                    Tests that only the concert with isCurrent='Y' is displayed when multiple upcoming concerts exist.
+                    <br><strong>Expected:</strong> Only first concert shown
+                </div>
+                <a href="#" class="test-button" onclick="alert('Load: test_case_2_two_upcoming.json'); return false;">Run Test</a>
+            </div>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <span class="test-number">Test 3</span>
+                    <span class="test-status status-pending">Pending</span>
+                </div>
+                <div class="test-title">Minimum Past Events (2)</div>
+                <div class="test-description">
+                    Tests rendering with only 2 past baithaks. Should not show "View More" button.
+                    <br><strong>Meal:</strong> Snacks before concert
+                </div>
+                <a href="#" class="test-button" onclick="alert('Load: test_case_3_min_past.json'); return false;">Run Test</a>
+            </div>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <span class="test-number">Test 4</span>
+                    <span class="test-status status-pending">Pending</span>
+                </div>
+                <div class="test-title">Maximum Past Events (15)</div>
+                <div class="test-description">
+                    Tests pagination with 15 past baithaks. Should show 4 initially, then "View More" button.
+                    <br><strong>Focus:</strong> Pagination & grid layout
+                </div>
+                <a href="#" class="test-button" onclick="alert('Load: test_case_4_max_past.json'); return false;">Run Test</a>
+            </div>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <span class="test-number">Test 5</span>
+                    <span class="test-status status-pending">Pending</span>
+                </div>
+                <div class="test-title">All Meal Types</div>
+                <div class="test-description">
+                    Tests all meal types: breakfast, lunch, snacks, dinner with both "before" and "after" orders.
+                    <br><strong>Focus:</strong> Meal time formatting
+                </div>
+                <a href="#" class="test-button" onclick="alert('Load: test_case_5_all_meals.json'); return false;">Run Test</a>
+            </div>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <span class="test-number">Test 6</span>
+                    <span class="test-status status-pending">Pending</span>
+                </div>
+                <div class="test-title">Long & Short Titles</div>
+                <div class="test-description">
+                    Tests titles from 1 word to 6+ words. Verifies text wrapping and visual layout consistency.
+                    <br><strong>Focus:</strong> Typography & responsive text
+                </div>
+                <a href="#" class="test-button" onclick="alert('Load: test_case_6_long_titles.json'); return false;">Run Test</a>
+            </div>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <span class="test-number">Test 7</span>
+                    <span class="test-status status-pending">Pending</span>
+                </div>
+                <div class="test-title">Evening Concert - 7 PM</div>
+                <div class="test-description">
+                    Tests evening concert at 7:00 PM with dinner served after at 9:00 PM.
+                    <br><strong>Time:</strong> 19:00 - 21:00
+                </div>
+                <a href="#" class="test-button" onclick="alert('Load: test_case_7_evening_dinner.json'); return false;">Run Test</a>
+            </div>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <span class="test-number">Test 8</span>
+                    <span class="test-status status-pending">Pending</span>
+                </div>
+                <div class="test-title">Early Morning - 8 AM</div>
+                <div class="test-description">
+                    Tests early morning concert at 8:00 AM with breakfast after at 10:00 AM.
+                    <br><strong>Time:</strong> 08:00 - 10:00
+                </div>
+                <a href="#" class="test-button" onclick="alert('Load: test_case_8_morning_early.json'); return false;">Run Test</a>
+            </div>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <span class="test-number">Test 9</span>
+                    <span class="test-status status-pending">Pending</span>
+                </div>
+                <div class="test-title">No Upcoming Concert</div>
+                <div class="test-description">
+                    Tests fallback message when no upcoming concerts exist. Only shows past baithaks.
+                    <br><strong>Expected:</strong> "No Upcoming Baithak" message
+                </div>
+                <a href="#" class="test-button" onclick="alert('Load: test_case_9_no_upcoming.json'); return false;">Run Test</a>
+            </div>
+
+            <div class="test-card">
+                <div class="test-header">
+                    <span class="test-number">Test 10</span>
+                    <span class="test-status status-pending">Pending</span>
+                </div>
+                <div class="test-title">Missing Optional Fields</div>
+                <div class="test-description">
+                    Tests handling of null/missing meal_time, meal_order, inclusions, and other optional fields.
+                    <br><strong>Focus:</strong> Graceful degradation
+                </div>
+                <a href="#" class="test-button" onclick="alert('Load: test_case_10_missing_fields.json'); return false;">Run Test</a>
+            </div>
+        </div>
+
+        <div class="validation-checklist">
+            <h2>✅ Validation Checklist</h2>
+            <p style="color: #666; margin-bottom: 20px;">Check each item as you validate it across all relevant test cases</p>
+
+            <div class="checklist-category">
+                <div class="category-title">🎭 Hero Section - Upcoming Concert</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check1">
+                    <label for="check1">Correct upcoming concert displayed (isCurrent='Y' logic works)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check2">
+                    <label for="check2">Artist name(s) display correctly</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check3">
+                    <label for="check3">Concert title and subtitle render properly (short and long titles)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check4">
+                    <label for="check4">Date displays in correct format</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check5">
+                    <label for="check5">Time block formats correctly for all meal types</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check6">
+                    <label for="check6">Breakfast "before" shows: "08:00 — Breakfast followed by Baithak / 09:00 — Baithak Begins"</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check7">
+                    <label for="check7">Lunch "after" shows: "13:00 — Baithak / 14:30 — Lunch"</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check8">
+                    <label for="check8">Snacks "before" formats correctly</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check9">
+                    <label for="check9">Dinner "after" formats correctly</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check10">
+                    <label for="check10">Time displays correctly for 8:00 AM concerts</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check11">
+                    <label for="check11">Time displays correctly for 7:00 PM concerts</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check12">
+                    <label for="check12">Venue displays: "Sadashivnagar, Bangalore"</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check13">
+                    <label for="check13">Inclusions field displays correctly (or defaults gracefully)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check14">
+                    <label for="check14">Contribution prices display: ₹1000 (General) • ₹500 (Students)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check15">
+                    <label for="check15">Contribution note displays (or defaults gracefully)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check16">
+                    <label for="check16">Seats urgency shows "50 Baithak Seats Available"</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check17">
+                    <label for="check17">"Reserve a Seat" button links correctly</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check18">
+                    <label for="check18">Hero image loads (or shows fallback)</label>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <div class="category-title">🔄 No Upcoming Concert Fallback</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check19">
+                    <label for="check19">Shows "No Upcoming Baithak Currently" message when no upcoming event</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check20">
+                    <label for="check20">Fallback message is centered and properly styled</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check21">
+                    <label for="check21">Past events section still works when no upcoming event</label>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <div class="category-title">🎵 Past Events Section</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check22">
+                    <label for="check22">Past events load and display correctly</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check23">
+                    <label for="check23">With 2 past events: Shows both, no "View More" button</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check24">
+                    <label for="check24">With 15 past events: Shows 4 initially</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check25">
+                    <label for="check25">With 15 past events: "View More" button appears</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check26">
+                    <label for="check26">"View More" button loads all remaining events</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check27">
+                    <label for="check27">"View More" button disappears after loading all</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check28">
+                    <label for="check28">Past events sorted by date (newest first)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check29">
+                    <label for="check29">Past event cards show title correctly (all title lengths)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check30">
+                    <label for="check30">Past event cards show artist name(s)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check31">
+                    <label for="check31">Past event cards show date</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check32">
+                    <label for="check32">"View Gallery/Recording" link appears when available</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check33">
+                    <label for="check33">"View Gallery/Recording" link works correctly</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check34">
+                    <label for="check34">Past event images load (or show fallback)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check35">
+                    <label for="check35">Card animations work on load</label>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <div class="category-title">📱 Mobile Responsive</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check36">
+                    <label for="check36">Mobile sticky CTA appears on mobile (< 968px)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check37">
+                    <label for="check37">Mobile sticky CTA shows "50 Seats Remain"</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check38">
+                    <label for="check38">Mobile sticky CTA button links correctly</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check39">
+                    <label for="check39">Hero grid stacks vertically on mobile</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check40">
+                    <label for="check40">Past events grid becomes single column on mobile</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check41">
+                    <label for="check41">Long titles wrap properly on mobile</label>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <div class="category-title">🛠️ Edge Cases & Error Handling</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check42">
+                    <label for="check42">Handles missing meal_time gracefully (shows only concert time)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check43">
+                    <label for="check43">Handles missing meal_order gracefully</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check44">
+                    <label for="check44">Handles null inclusions field (shows default or nothing)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check45">
+                    <label for="check45">Handles empty artists array (shows "Various Artists")</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check46">
+                    <label for="check46">Image errors trigger fallback images</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check47">
+                    <label for="check47">JSON loading errors show appropriate error message</label>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <div class="category-title">🎨 Visual & Typography</div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check48">
+                    <label for="check48">All colors match design (orange, gold, etc.)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check49">
+                    <label for="check49">Fonts load correctly (League Spartan, Lora, Inter)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check50">
+                    <label for="check50">Very long titles (6+ words) wrap and maintain readability</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check51">
+                    <label for="check51">Very short titles (1-2 words) look balanced</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check52">
+                    <label for="check52">Spacing and alignment consistent across all test cases</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Save checkbox states to localStorage
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            const savedState = localStorage.getItem(checkbox.id);
+            if (savedState === 'true') {
+                checkbox.checked = true;
+            }
+
+            checkbox.addEventListener('change', function() {
+                localStorage.setItem(this.id, this.checked);
+            });
+        });
+
+        // Clear all checkboxes button (optional)
+        const clearButton = document.createElement('button');
+        clearButton.textContent = 'Reset All Checkboxes';
+        clearButton.style.cssText = 'position: fixed; bottom: 20px; right: 20px; padding: 15px 30px; background: #dc3545; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2);';
+        clearButton.onclick = function() {
+            if (confirm('Are you sure you want to reset all checkboxes?')) {
+                document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    cb.checked = false;
+                    localStorage.removeItem(cb.id);
+                });
+            }
+        };
+        document.body.appendChild(clearButton);
+    </script>
+</body>
+</html>

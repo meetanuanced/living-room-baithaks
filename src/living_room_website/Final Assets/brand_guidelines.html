@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Living Room Baithaks - Website Brand Guidelines</title>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800;900&family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orange: #ff8800;
+            --gold-bright: #e6c200;
+            --gold-toned: #d4a574;
+            --black: #000000;
+            --dark: #1a1a1a;
+            --white: #ffffff;
+            --gray: #b3b3b3;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 30px;
+        }
+
+        /* Header */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 80px;
+            padding-bottom: 40px;
+            border-bottom: 3px solid var(--orange);
+        }
+
+        .brand-header h1 {
+            font-family: 'League Spartan', sans-serif;
+            font-size: clamp(2.5em, 6vw, 4em);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--orange), var(--gold-bright));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .brand-header .subtitle {
+            font-family: 'Inter', sans-serif;
+            color: var(--gray);
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Section Titles */
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 2.2em;
+            font-weight: 800;
+            color: var(--orange);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 136, 0, 0.3);
+        }
+
+        .section-subtitle {
+            font-family: 'Inter', sans-serif;
+            color: var(--gray);
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* Color Palette */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .color-card {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--dark);
+        }
+
+        .color-swatch {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'League Spartan', sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .color-info {
+            background: var(--dark);
+            padding: 15px;
+        }
+
+        .color-name {
+            font-family: 'League Spartan', sans-serif;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .color-hex {
+            font-family: 'Inter', monospace;
+            font-size: 0.85em;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .color-usage {
+            font-size: 0.85em;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* Typography */
+        .type-specimen {
+            background: var(--dark);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--orange);
+        }
+
+        .type-family {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 0.9em;
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .type-display {
+            margin-bottom: 15px;
+        }
+
+        .type-notes {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85em;
+            color: var(--gray);
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Design Principles */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .principle-card {
+            background: var(--dark);
+            padding: 30px;
+            border-radius: 12px;
+            border-top: 4px solid var(--orange);
+        }
+
+        .principle-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .principle-title {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.4em;
+            font-weight: 800;
+            color: var(--gold-bright);
+            margin-bottom: 12px;
+        }
+
+        .principle-desc {
+            font-size: 0.9em;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Component Examples */
+        .component-showcase {
+            background: var(--dark);
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .component-title {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.2em;
+            color: var(--gold-bright);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Examples with actual styles */
+        .example-label {
+            display: inline-block;
+            font-family: 'League Spartan', sans-serif;
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: var(--orange);
+            color: var(--black);
+            padding: 10px 20px;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        .example-button {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 6px;
+            font-family: 'League Spartan', sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            background: var(--gold-bright);
+            color: var(--black);
+            margin-right: 15px;
+            margin-bottom: 15px;
+        }
+
+        .example-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--orange);
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .example-dots-pattern {
+            display: inline-flex;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .example-dots-pattern .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--orange);
+        }
+
+        /* Do's and Don'ts */
+        .dos-donts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .dos-donts-card {
+            background: var(--dark);
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .dos-donts-card.do {
+            border-left: 4px solid #00ff00;
+        }
+
+        .dos-donts-card.dont {
+            border-left: 4px solid #ff0000;
+        }
+
+        .dos-donts-title {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .dos-donts-card.do .dos-donts-title {
+            color: #00ff00;
+        }
+
+        .dos-donts-card.dont .dos-donts-title {
+            color: #ff0000;
+        }
+
+        .dos-donts-list {
+            list-style: none;
+            font-size: 0.9em;
+            line-height: 2;
+            color: var(--gray);
+        }
+
+        .dos-donts-list li::before {
+            margin-right: 8px;
+        }
+
+        .dos-donts-card.do li::before {
+            content: '✓';
+            color: #00ff00;
+        }
+
+        .dos-donts-card.dont li::before {
+            content: '✗';
+            color: #ff0000;
+        }
+
+        /* Code Examples */
+        .code-block {
+            background: #0d0d0d;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid var(--orange);
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            color: var(--gray);
+            white-space: pre-wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .brand-header h1 {
+                font-size: 2.2em;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="brand-header">
+            <h1>Living Room Baithaks</h1>
+            <div class="subtitle">Website Brand Guidelines v1.0</div>
+        </div>
+
+        <!-- Brand Philosophy -->
+        <section class="section">
+            <h2 class="section-title">Brand Philosophy</h2>
+            <p class="section-subtitle">
+                Living Room Baithaks brings classical music into intimate home settings. 
+                Our website design reflects this ethos: <strong>minimal, bold, accessible, and warm</strong>. 
+                We use strategic orange accents to create energy without overwhelming, 
+                paired with clean typography and generous white space for a sophisticated feel.
+            </p>
+        </section>
+
+        <!-- Color Palette -->
+        <section class="section">
+            <h2 class="section-title">Color Palette</h2>
+            <p class="section-subtitle">
+                Our color system is built around <strong>strategic orange usage</strong> as an accent, 
+                not a dominant color. Orange creates energy and urgency, while gold adds sophistication and warmth.
+            </p>
+
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #ff8800; color: #000;">ORANGE</div>
+                    <div class="color-info">
+                        <div class="color-name">Primary Accent</div>
+                        <div class="color-hex">#ff8800</div>
+                        <div class="color-usage">
+                            Labels, borders, links, icons, dots pattern, highlights
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #e6c200; color: #000;">GOLD</div>
+                    <div class="color-info">
+                        <div class="color-name">Bright Gold</div>
+                        <div class="color-hex">#e6c200</div>
+                        <div class="color-usage">
+                            CTA buttons, seat count (urgency), tagline text
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #d4a574; color: #000;">TONED GOLD</div>
+                    <div class="color-info">
+                        <div class="color-name">Elegant Gold</div>
+                        <div class="color-hex">#d4a574</div>
+                        <div class="color-usage">
+                            Artist names, elegant typography highlights
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #000000; color: #fff; border: 1px solid #333;">BLACK</div>
+                    <div class="color-info">
+                        <div class="color-name">Background</div>
+                        <div class="color-hex">#000000</div>
+                        <div class="color-usage">
+                            Primary background, creates drama and sophistication
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #1a1a1a; color: #fff;">DARK</div>
+                    <div class="color-info">
+                        <div class="color-name">Secondary BG</div>
+                        <div class="color-hex">#1a1a1a</div>
+                        <div class="color-usage">
+                            Cards, boxes, containers with content
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #ffffff; color: #000;">WHITE</div>
+                    <div class="color-info">
+                        <div class="color-name">Primary Text</div>
+                        <div class="color-hex">#ffffff</div>
+                        <div class="color-usage">
+                            Headlines, body copy, labels
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #b3b3b3; color: #000;">GRAY</div>
+                    <div class="color-info">
+                        <div class="color-name">Secondary Text</div>
+                        <div class="color-hex">#b3b3b3</div>
+                        <div class="color-usage">
+                            Supporting text, secondary information
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <pre>/* CSS Variables */
+:root {
+    --orange: #ff8800;
+    --gold-bright: #e6c200;
+    --gold-toned: #d4a574;
+    --black: #000000;
+    --dark: #1a1a1a;
+    --white: #ffffff;
+    --gray: #b3b3b3;
+}</pre>
+            </div>
+        </section>
+
+        <!-- Typography -->
+        <section class="section">
+            <h2 class="section-title">Typography</h2>
+            <p class="section-subtitle">
+                Three-font system for hierarchy and balance: <strong>League Spartan</strong> for impact, 
+                <strong>Lora</strong> for elegance, and <strong>Inter</strong> for UI clarity.
+            </p>
+
+            <div class="type-specimen">
+                <div class="type-family">League Spartan • Display & Headlines</div>
+                <div class="type-display">
+                    <div style="font-family: 'League Spartan', sans-serif; font-size: 2.5em; font-weight: 900; line-height: 1.2; margin-bottom: 10px;">
+                        Shri Ashwin Srinivasan
+                    </div>
+                    <div style="font-family: 'League Spartan', sans-serif; font-size: 1.8em; font-weight: 800; line-height: 1.2; margin-bottom: 10px;">
+                        Raag Dhaari Concert
+                    </div>
+                    <div style="font-family: 'League Spartan', sans-serif; font-size: 1em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+                        BOOK YOUR SEAT
+                    </div>
+                </div>
+                <div class="type-notes">
+                    <strong>Usage:</strong> Artist names, event titles, headings, CTA buttons<br>
+                    <strong>Weights:</strong> 700 (Bold), 800 (Extra Bold), 900 (Black)<br>
+                    <strong>Responsive:</strong> Use clamp() for fluid scaling - clamp(1.5em, 4vw, 2em)
+                </div>
+            </div>
+
+            <div class="type-specimen">
+                <div class="type-family">Lora • Body Text</div>
+                <div class="type-display">
+                    <div style="font-family: 'Lora', serif; font-size: 1.1em; line-height: 1.7; margin-bottom: 10px;">
+                        Experience an intimate evening of Hindustani classical music in a warm living room setting. 
+                        Join us for dinner and conversation with fellow music lovers.
+                    </div>
+                </div>
+                <div class="type-notes">
+                    <strong>Usage:</strong> Body copy, descriptions, longer-form content<br>
+                    <strong>Weights:</strong> 400 (Regular), 600 (Semi Bold), 700 (Bold)<br>
+                    <strong>Characteristics:</strong> Elegant serif, excellent readability, warm feel
+                </div>
+            </div>
+
+            <div class="type-specimen">
+                <div class="type-family">Inter • UI Elements</div>
+                <div class="type-display">
+                    <div style="font-family: 'Inter', sans-serif; font-size: 0.85em; margin-bottom: 8px;">
+                        <span style="font-weight: 600;">Date:</span> Friday, November 16, 2024
+                    </div>
+                    <div style="font-family: 'Inter', sans-serif; font-size: 0.85em; margin-bottom: 8px;">
+                        <span style="font-weight: 600;">Time:</span> 7:00 PM - 9:30 PM
+                    </div>
+                    <div style="font-family: 'Inter', sans-serif; font-size: 0.7em; text-transform: uppercase; letter-spacing: 2px; color: var(--orange);">
+                        NEXT EVENT
+                    </div>
+                </div>
+                <div class="type-notes">
+                    <strong>Usage:</strong> Labels, metadata, small UI text, navigation<br>
+                    <strong>Weights:</strong> 400 (Regular), 500 (Medium), 600 (Semi Bold)<br>
+                    <strong>Characteristics:</strong> Clean sans-serif, optimal for small sizes
+                </div>
+            </div>
+        </section>
+
+        <!-- Design Principles -->
+        <section class="section">
+            <h2 class="section-title">Design Principles</h2>
+            
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="principle-icon">🎯</div>
+                    <div class="principle-title">Minimal & Bold</div>
+                    <div class="principle-desc">
+                        Use generous white space. Make every element intentional. 
+                        Bold typography for artist names. Clean lines, no clutter.
+                    </div>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-icon">🔶</div>
+                    <div class="principle-title">Strategic Orange</div>
+                    <div class="principle-desc">
+                        Orange is an accent, not dominant. Use for labels, borders, 
+                        links, and icons. Creates energy without overwhelming.
+                    </div>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-icon">📱</div>
+                    <div class="principle-title">Mobile-First</div>
+                    <div class="principle-desc">
+                        Responsive typography with clamp(). No awkward line breaks. 
+                        Touch-friendly buttons. Test on actual mobile devices.
+                    </div>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-icon">🎨</div>
+                    <div class="principle-title">No Borders</div>
+                    <div class="principle-desc">
+                        Avoid card borders and heavy frames. Use left borders for 
+                        accent. Clean image presentation without orange borders.
+                    </div>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-icon">⚡</div>
+                    <div class="principle-title">Create Urgency</div>
+                    <div class="principle-desc">
+                        Bright gold for seats remaining and CTAs. Lightning bolt 
+                        icon. "Selling Fast" messaging. Makes action compelling.
+                    </div>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-icon">🔘</div>
+                    <div class="principle-title">Dot Pattern</div>
+                    <div class="principle-desc">
+                        Signature decorative element. Subtle background dots (30% opacity). 
+                        Orange dot icons. Creates visual rhythm.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Components -->
+        <section class="section">
+            <h2 class="section-title">Key Components</h2>
+
+            <div class="component-showcase">
+                <div class="component-title">1. Event Label</div>
+                <div class="example-label">NEXT EVENT</div>
+                <div class="code-block">
+                    <pre>/* Solid orange background, black text, bold */
+.hero-label {
+    display: inline-block;
+    font-family: 'League Spartan', sans-serif;
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: var(--orange);
+    color: var(--black);
+    padding: 10px 20px;
+    font-weight: 900;
+}</pre>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-title">2. CTA Button</div>
+                <a href="#" class="example-button">Book Your Seat</a>
+                <div class="code-block">
+                    <pre>/* Bright gold background, no borders */
+.btn-primary {
+    display: inline-block;
+    padding: 15px 35px;
+    border-radius: 6px;
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--gold-bright);
+    color: var(--black);
+    transition: all 0.3s;
+}</pre>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-title">3. Orange Dot Icons</div>
+                <div>
+                    <div class="example-dot"></div>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 0.9em;">Date: Friday, November 16, 2024</span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <div class="example-dot"></div>
+                    <span style="font-family: 'Inter', sans-serif; font-size: 0.9em;">Time: 7:00 PM - 9:30 PM</span>
+                </div>
+                <div class="code-block">
+                    <pre>/* Simple orange circles, ultra-minimal */
+.icon-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--orange);
+    border-radius: 50%;
+    min-width: 8px;
+    flex-shrink: 0;
+    margin-top: 6px;
+}</pre>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-title">4. Decorative Dot Pattern</div>
+                <div class="example-dots-pattern">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="code-block">
+                    <pre>/* Decorative dots on left/right sides */
+.dots-pattern {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(4, 8px);
+    gap: 16px;
+    opacity: 0.3; /* Subtle, not overwhelming */
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--orange);
+}</pre>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-title">5. Orange Left Border</div>
+                <div style="background: var(--dark); border-left: 3px solid var(--orange); padding: 20px; border-radius: 4px;">
+                    <div style="font-family: 'Inter', sans-serif; font-size: 0.9em; color: var(--gray);">
+                        Content box with orange left accent border
+                    </div>
+                </div>
+                <div class="code-block">
+                    <pre>/* Signature accent style */
+.event-details {
+    background: var(--dark);
+    border-left: 3px solid var(--orange);
+    padding: 20px 22px;
+    border-radius: 4px;
+}</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Responsive Typography -->
+        <section class="section">
+            <h2 class="section-title">Responsive Typography</h2>
+            <p class="section-subtitle">
+                Use <strong>clamp()</strong> for fluid, mobile-friendly typography that scales perfectly 
+                without awkward line breaks.
+            </p>
+
+            <div class="code-block">
+                <pre>/* Artist names - scales from 1.5em to 2em */
+.hero-artists {
+    font-size: clamp(1.5em, 4vw, 2em);
+}
+
+/* Event title - scales from 1.2em to 1.5em */
+.hero-title {
+    font-size: clamp(1.2em, 3vw, 1.5em);
+}
+
+/* Seats count - scales from 1.1em to 1.3em */
+.seats-count {
+    font-size: clamp(1.1em, 2.5vw, 1.3em);
+}</pre>
+            </div>
+        </section>
+
+        <!-- Do's and Don'ts -->
+        <section class="section">
+            <h2 class="section-title">Do's and Don'ts</h2>
+
+            <div class="dos-donts-grid">
+                <div class="dos-donts-card do">
+                    <div class="dos-donts-title">✓ DO</div>
+                    <ul class="dos-donts-list">
+                        <li>Use orange strategically as accents</li>
+                        <li>Keep generous white space</li>
+                        <li>Use left borders for containers</li>
+                        <li>Make artist names prominent</li>
+                        <li>Use clamp() for responsive text</li>
+                        <li>Test on mobile devices</li>
+                        <li>Use orange dots for icons</li>
+                        <li>Keep designs minimal and bold</li>
+                    </ul>
+                </div>
+
+                <div class="dos-donts-card dont">
+                    <div class="dos-donts-title">✗ DON'T</div>
+                    <ul class="dos-donts-list">
+                        <li>Add orange borders to images</li>
+                        <li>Add orange borders to buttons</li>
+                        <li>Use emoji icons</li>
+                        <li>Create card-style borders</li>
+                        <li>Make orange dominant color</li>
+                        <li>Use hard-to-read white on white</li>
+                        <li>Create line breaks on mobile</li>
+                        <li>Overcrowd with decorative elements</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Layout Guidelines -->
+        <section class="section">
+            <h2 class="section-title">Layout Guidelines</h2>
+            
+            <div class="component-showcase">
+                <div class="component-title">Grid Structure</div>
+                <div class="code-block">
+                    <pre>/* Hero Section Layout */
+.hero-grid {
+    display: grid;
+    grid-template-columns: 55% 45%; /* Content left, image right */
+    gap: 60px;
+    align-items: center;
+}
+
+/* Mobile: Stack vertically */
+@media (max-width: 968px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}</pre>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-title">Content Hierarchy</div>
+                <ol style="font-family: 'Inter', sans-serif; color: var(--gray); line-height: 2; font-size: 0.95em; margin-left: 20px;">
+                    <li><strong style="color: var(--white);">"NEXT EVENT" Label</strong> - Small, orange background</li>
+                    <li><strong style="color: var(--white);">Artist Names</strong> - LARGEST, bold (League Spartan 900)</li>
+                    <li><strong style="color: var(--white);">Event Title</strong> - Secondary size with orange highlight</li>
+                    <li><strong style="color: var(--white);">Event Details</strong> - Box with left border, organized rows</li>
+                    <li><strong style="color: var(--white);">Seats Available</strong> - Bright gold for urgency</li>
+                    <li><strong style="color: var(--white);">CTA Button</strong> - Bright gold, prominent</li>
+                    <li><strong style="color: var(--white);">Navigation Dots</strong> - For event carousel</li>
+                    <li><strong style="color: var(--white);">Quick Links</strong> - "How It Works" / "FAQ"</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Content Guidelines -->
+        <section class="section">
+            <h2 class="section-title">Content Guidelines</h2>
+            
+            <div class="component-showcase">
+                <div class="component-title">Tagline Format</div>
+                <div style="text-align: center; font-family: 'Inter', sans-serif; font-size: 0.95em; color: var(--gold-bright); margin: 20px 0;">
+                    <span style="color: var(--orange);">Music</span> • Conversation • <span style="color: var(--orange);">Connections</span> • Food
+                </div>
+                <div class="type-notes">
+                    Format: Orange highlights on "Music" and "Connections", rest in gold for readability
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-title">Pricing Display</div>
+                <div style="font-family: 'Inter', sans-serif; font-size: 0.9em; color: var(--gray);">
+                    ₹1,500 General • ₹1,000 <span style="color: var(--orange); border-bottom: 1px dashed var(--orange); cursor: help;">Student*</span>
+                </div>
+                <div class="type-notes" style="margin-top: 15px;">
+                    <strong>Student Link:</strong> "Student is someone pursuing studies or music full time"<br>
+                    Use dashed underline with tooltip on hover
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Notes -->
+        <section class="section">
+            <h2 class="section-title">Technical Implementation</h2>
+            
+            <div class="component-showcase">
+                <div class="component-title">Google Fonts Import</div>
+                <div class="code-block">
+                    <pre>&lt;link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800;900&family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"&gt;</pre>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-title">Mobile Breakpoints</div>
+                <div class="code-block">
+                    <pre>/* Tablet and below */
+@media (max-width: 968px) {
+    /* Stack layout, adjust spacing */
+}
+
+/* Mobile phones */
+@media (max-width: 640px) {
+    /* Further compress, full-width buttons */
+}</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div style="text-align: center; padding: 60px 0 40px; border-top: 2px solid rgba(255, 136, 0, 0.3); margin-top: 80px;">
+            <div style="font-family: 'League Spartan', sans-serif; font-size: 1.5em; color: var(--orange); margin-bottom: 10px;">
+                Living Room Baithaks
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 0.9em; color: var(--gray);">
+                Brand Guidelines v1.0 • October 2025
+            </div>
+        </div>
+    </div>
+</body>
+</html>

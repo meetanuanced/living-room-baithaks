@@ -1,0 +1,2609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Living Room Baithaks | Intimate Classical Music Concerts in Bangalore</title>
+    
+    <!-- SEO -->
+    <meta name="description" content="Experience classical music in intimate home concerts. Limited to 50 seats. Hindustani & Carnatic artists. Food included.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800;900&family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* BRAND COLORS - From Guidelines */
+            --orange: #ff8800;
+            --orange-subtle: rgba(255, 136, 0, 0.1);
+            --gold-bright: #e6c200;
+            --gold-toned: #d4a574;
+            
+            --bg-black: #000000;
+            --bg-dark: #1a1a1a;
+            
+            --text-white: #ffffff;
+            --text-light: #e5e5e5;
+            --text-gray: #b3b3b3;
+            --text-muted: #808080;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: var(--bg-black);
+            color: var(--text-white);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'League Spartan', sans-serif;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* ========================
+           IMAGE MANAGEMENT SYSTEM
+           Dynamic aspect ratio handling
+           ======================== */
+        
+        /* Base image container - handles all aspect ratios */
+        .image-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: var(--bg-dark);
+            border-radius: 8px;
+        }
+
+        /* Aspect ratio variants */
+        .aspect-square { aspect-ratio: 1 / 1; }           /* 1:1 - Square */
+        .aspect-portrait { aspect-ratio: 4 / 5; }        /* 4:5 - Instagram portrait */
+        .aspect-story { aspect-ratio: 9 / 16; }          /* 9:16 - Instagram story */
+        .aspect-landscape { aspect-ratio: 16 / 9; }      /* 16:9 - Landscape */
+        .aspect-cinema { aspect-ratio: 21 / 9; }         /* 21:9 - Ultra-wide */
+        .aspect-photo { aspect-ratio: 3 / 2; }           /* 3:2 - Standard photo */
+
+        /* Image styling */
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Image cover - for text overlays */
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+            z-index: 1;
+        }
+
+        .image-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Optional: Image loading state */
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                var(--bg-dark) 0%, 
+                rgba(26, 26, 26, 0.8) 50%, 
+                var(--bg-dark) 100%
+            );
+            animation: shimmer 2s infinite;
+            z-index: 0;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Image loaded - remove shimmer */
+        .image-container.loaded::before {
+            display: none;
+        }
+
+        /* ========================
+           FIXED NAVIGATION (UX BEST PRACTICE)
+           Always visible for easy booking & orientation
+           ======================== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.15);
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-nav {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.2em;
+            font-weight: 800;
+            color: var(--gold-toned);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--orange);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--gold-toned);
+        }
+
+        .nav-book-btn {
+            background: var(--gold-bright);
+            color: var(--bg-black);
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85em;
+        }
+
+        .nav-book-btn:hover {
+            background: #ffd700;
+            color: var(--bg-black);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1002;
+            position: relative;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-white);
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Hamburger animation when active */
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .mobile-menu-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 80px 30px 30px;
+        }
+
+        .mobile-menu-content a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.4em;
+            font-weight: 700;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .mobile-menu-content a:hover,
+        .mobile-menu-content a:active {
+            color: var(--orange);
+            background: rgba(255, 136, 0, 0.1);
+        }
+
+        .mobile-menu-content .nav-book-btn {
+            background: var(--gold-bright);
+            color: var(--bg-black);
+            border-radius: 8px;
+            margin-top: 20px;
+            border: none;
+            font-size: 1.2em;
+        }
+
+        .mobile-menu-content .nav-book-btn:hover {
+            background: #ffd700;
+        }
+
+        /* ========================
+           MOBILE STICKY BOTTOM CTA (UX FIX #3 - CRITICAL)
+           Thumb-friendly, always accessible booking
+           ======================== */
+        .mobile-sticky-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(20px);
+            border-top: 2px solid var(--orange);
+            padding: 12px 20px;
+            z-index: 999;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .mobile-sticky-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1300px;
+            margin: 0 auto;
+            gap: 15px;
+        }
+
+        .mobile-sticky-info {
+            flex: 1;
+        }
+
+        .mobile-sticky-seats {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.1em;
+            font-weight: 800;
+            color: var(--gold-bright);
+        }
+
+        .mobile-sticky-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75em;
+            color: var(--text-gray);
+        }
+
+        .mobile-sticky-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gold-bright);
+            color: var(--bg-black);
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-family: 'League Spartan', sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            white-space: nowrap;
+            min-height: 44px; /* Touch-friendly */
+        }
+
+        /* Decorative Dots - Brand Pattern */
+        .dots-pattern {
+            position: absolute;
+            display: grid;
+            grid-template-columns: repeat(4, 8px);
+            gap: 16px;
+            opacity: 0.3;
+        }
+
+        .dots-left {
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .dots-right {
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--orange);
+        }
+
+        .dot:nth-child(4n) {
+            background: var(--gold-toned);
+            opacity: 0.6;
+        }
+
+        /* ========================
+           HERO SECTION
+           ======================== */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 120px 0 60px;
+            background: var(--bg-black);
+        }
+
+        .hero-intro {
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            font-size: 1em;
+            text-transform: sentencecase;
+            letter-spacing: 3px;
+            color: var(--gold-toned);
+            margin-bottom: 50px;
+            font-weight: 500;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 55% 45%;
+            gap: 60px;
+            align-items: center;
+        }
+
+        /* Orange Label - Brand Component */
+        .hero-label {
+            display: inline-block;
+            font-family: 'League Spartan', sans-serif;
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: var(--orange);
+            color: var(--bg-black);
+            padding: 10px 20px;
+            margin-bottom: 25px;
+            font-weight: 900;
+        }
+
+        /* Artists - Largest, Bold (Brand Hierarchy) */
+        .hero-artists {
+            font-family: 'League Spartan', sans-serif;
+            font-size: clamp(1.5em, 4vw, 2em);
+            font-weight: 800;
+            color: var(--text-white);
+            margin-bottom: 18px;
+            line-height: 1.35;
+        }
+
+        .artist-name {
+            color: var(--gold-toned);
+            font-weight: 900;
+        }
+
+        .artist-role {
+            color: var(--text-gray);
+            font-size: 0.55em;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-title {
+            font-size: clamp(1.2em, 3vw, 1.5em);
+            color: var(--text-light);
+            margin-bottom: 30px;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .hero-title .highlight {
+            color: var(--orange);
+        }
+
+        /* Orange Left Border - Brand Pattern */
+        .event-details {
+            background: var(--bg-dark);
+            border-left: 3px solid var(--orange);
+            padding: 20px 22px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88em;
+            color: var(--text-gray);
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Orange Dot Icon - Brand Pattern */
+        .icon-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--orange);
+            border-radius: 50%;
+            min-width: 8px;
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+
+        .detail-row strong {
+            color: var(--text-white);
+            min-width: 65px;
+            font-size: 0.95em;
+            flex-shrink: 0;
+        }
+
+        .detail-row span:last-child {
+            flex: 1;
+        }
+
+        .student-info {
+            color: var(--orange);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--orange);
+            cursor: help;
+            transition: all 0.3s;
+        }
+
+        .student-info:hover {
+            color: var(--gold-bright);
+            border-bottom-color: var(--gold-bright);
+        }
+
+        .seats-urgency {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-dark);
+            border-left: 3px solid var(--orange);
+            padding: 12px 20px;
+            border-radius: 4px;
+            margin-bottom: 28px;
+        }
+
+        .seats-count {
+            font-family: 'League Spartan', sans-serif;
+            font-size: clamp(1.1em, 2.5vw, 1.3em);
+            font-weight: 800;
+            color: var(--gold-bright);
+            letter-spacing: 0.5px;
+        }
+
+        .seats-count::before {
+            content: '⚡ ';
+            color: var(--orange);
+        }
+
+        .seats-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75em;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        /* Button Components - Brand Style */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 35px;
+            border-radius: 6px;
+            font-family: 'League Spartan', sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s;
+            min-height: 44px; /* Touch-friendly */
+        }
+
+        .btn-primary {
+            background: var(--gold-bright);
+            color: var(--bg-black);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #ffd700;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(230, 194, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-white);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-white);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Trust Badges (UX Enhancement) */
+        .trust-badges {
+            display: flex;
+            gap: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75em;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-dots {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 136, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-dot:hover,
+        .nav-dot.active {
+            background: var(--orange);
+        }
+
+        .hero-quick-links {
+            display: flex;
+            gap: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8em;
+            flex-wrap: wrap;
+        }
+
+        .hero-quick-links a {
+            color: var(--orange);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .hero-quick-links a:hover {
+            color: var(--gold-bright);
+            text-decoration: underline;
+        }
+
+        .hero-image-container {
+            position: relative;
+        }
+
+        /* Clean Image - NO borders (Brand Guideline) */
+        .hero-image {
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-tagline {
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85em;
+            color: var(--gold-bright);
+            margin-top: 50px;
+        }
+
+        .hero-tagline .highlight {
+            color: var(--orange);
+        }
+
+        /* ========================
+           TESTIMONIALS (UX FIX #1 - Real Quote Cards)
+           Replaced video placeholders with image quote cards
+           ======================== */
+        #testimonials {
+            padding: 80px 0;
+            background: var(--bg-black);
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--text-white);
+        }
+
+        .section-title .highlight {
+            color: var(--orange);
+        }
+
+        /* UX FIX #1: Mobile-responsive grid */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .testimonial-card {
+            position: relative;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            overflow: hidden;
+            min-height: 280px;
+            display: flex;
+            align-items: flex-end;
+            padding: 25px;
+            border: 1px solid rgba(212, 165, 116, 0.2);
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.9) 100%);
+            z-index: 1;
+        }
+
+        .testimonial-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-quote {
+            font-family: 'Lora', serif;
+            font-size: 1em;
+            font-style: italic;
+            color: var(--text-white);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85em;
+            color: var(--gold-toned);
+            font-weight: 600;
+        }
+
+        .testimonial-role {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75em;
+            color: var(--text-gray);
+        }
+
+        /* ========================
+           BOOKING DECISION HUB
+           Professional conversion pattern
+           ======================== */
+        #booking-hub {
+            padding: 80px 0;
+            background: var(--bg-dark);
+            text-align: center;
+        }
+
+        .hub-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: var(--text-white);
+        }
+
+        .hub-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1em;
+            color: var(--text-gray);
+            margin-bottom: 50px;
+        }
+
+        .hub-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .hub-card {
+            background: var(--bg-black);
+            border: 2px solid rgba(255, 136, 0, 0.3);
+            border-radius: 8px;
+            padding: 35px 25px;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: block;
+        }
+
+        .hub-card:hover {
+            border-color: var(--orange);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 136, 0, 0.2);
+        }
+
+        .hub-card-icon {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .hub-card-title {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.3em;
+            color: var(--gold-toned);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .hub-card-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9em;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .hub-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gold-bright);
+            color: var(--bg-black);
+            padding: 16px 40px;
+            border-radius: 6px;
+            font-family: 'League Spartan', sans-serif;
+            font-weight: 700;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s;
+            min-height: 44px;
+        }
+
+        .hub-cta:hover {
+            background: #ffd700;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(230, 194, 0, 0.3);
+        }
+
+        /* ========================
+           PAST EVENTS
+           ======================== */
+        #past-events {
+            padding: 80px 0;
+            background: var(--bg-black);
+        }
+
+        .past-events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .past-event-card {
+            background: var(--bg-dark);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            transition: all 0.3s;
+        }
+
+        .past-event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 136, 0, 0.2);
+        }
+
+        /* Past event images now use image-container system */
+
+        .past-event-info {
+            padding: 20px;
+        }
+
+        .past-event-title {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.1em;
+            color: var(--gold-toned);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .past-event-artist {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.1em;
+            color: var(--orange);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .past-event-date {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85em;
+            color: var(--text-gray);
+        }
+
+        /* Instagram Feed Embed */
+        .instagram-embed {
+            margin-top: 60px;
+            text-align: center;
+            padding: 50px;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            border: 1px dashed rgba(212, 165, 116, 0.3);
+        }
+
+        .instagram-embed-text {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-gray);
+            font-size: 0.95em;
+            margin-bottom: 15px;
+        }
+
+        .instagram-link {
+            color: var(--orange);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .instagram-link:hover {
+            color: var(--gold-bright);
+            text-decoration: underline;
+        }
+
+        /* ========================
+           HOW IT WORKS (UX FIX #2 - Mobile Vertical Stack)
+           ======================== */
+        #how-it-works {
+            padding: 80px 0;
+            background: var(--bg-dark);
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            position: relative;
+        }
+
+        .step-card {
+            background: var(--bg-black);
+            border-left: 3px solid var(--orange);
+            border-radius: 8px;
+            padding: 30px 25px;
+            text-align: center;
+        }
+
+        .step-number {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 3em;
+            font-weight: 900;
+            color: var(--orange);
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+
+        .step-title {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.2em;
+            color: var(--gold-toned);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .step-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9em;
+            color: var(--text-gray);
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        /* Arrows between steps (hidden on mobile) */
+        .step-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: var(--orange);
+            opacity: 0.3;
+        }
+
+        /* ========================
+           FAQ SECTION
+           ======================== */
+        #faq {
+            padding: 80px 0;
+            background: var(--bg-black);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--bg-dark);
+            border-left: 3px solid var(--orange);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--text-white);
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            color: var(--gold-toned);
+        }
+
+        .faq-toggle {
+            font-size: 1.5em;
+            color: var(--orange);
+            transition: transform 0.3s;
+        }
+
+        .faq-answer {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95em;
+            color: var(--text-gray);
+            padding: 0 30px 25px;
+            line-height: 1.7;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        /* FAQ Search Box */
+        .faq-search-container {
+            max-width: 900px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .faq-search-input {
+            width: 100%;
+            padding: 18px 50px 18px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1em;
+            background: var(--bg-dark);
+            border: 2px solid rgba(212, 165, 116, 0.2);
+            border-radius: 8px;
+            color: var(--text-white);
+            transition: all 0.3s;
+        }
+
+        .faq-search-input:focus {
+            outline: none;
+            border-color: var(--orange);
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        .faq-search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .faq-search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            color: var(--orange);
+            pointer-events: none;
+        }
+
+        /* FAQ Category Headers */
+        .faq-category-header {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.5em;
+            font-weight: 800;
+            color: var(--gold-toned);
+            margin: 50px 0 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 136, 0, 0.3);
+            text-align: left;
+        }
+
+        .faq-category-header:first-of-type {
+            margin-top: 0;
+        }
+
+        /* No Results Message */
+        .faq-no-results {
+            text-align: center;
+            padding: 60px 20px;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-gray);
+            font-size: 1.1em;
+            display: none;
+        }
+
+        .faq-no-results.show {
+            display: block;
+        }
+
+        /* Hidden items during search */
+        .faq-item.hidden,
+        .faq-category-header.hidden {
+            display: none;
+        }
+
+        /* ========================
+           THE EXPERIENCE
+           ======================== */
+        #experience {
+            padding: 80px 0;
+            background: var(--bg-dark);
+        }
+
+        /* Foreword Section */
+        .experience-foreword {
+            max-width: 900px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
+
+        .foreword-text {
+            font-size: 1.4em;
+            line-height: 1.6;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .foreword-note {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95em;
+            color: var(--gold-toned);
+            font-style: italic;
+        }
+
+        /* Video Gallery - NEW: Integrated video + text cards */
+        .experience-videos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .video-card {
+            background: var(--bg-black);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            transition: transform 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--orange);
+        }
+
+        /* Video/Media container within card */
+        .video-media {
+            width: 100%;
+            position: relative;
+            background: #000;
+        }
+
+        .experience-video {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: var(--bg-black);
+        }
+
+        /* For Instagram embeds */
+        .video-media iframe {
+            width: 100%;
+            border: none;
+            display: block;
+            min-height: 400px;
+        }
+
+        .video-caption {
+            padding: 15px 20px 10px;
+            text-align: left;
+            font-family: 'League Spartan', sans-serif;
+            font-weight: 700;
+            font-size: 1.1em;
+            color: var(--gold-toned);
+        }
+
+        /* NEW: Text content within video cards */
+        .video-text-content {
+            padding: 0 20px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95em;
+            color: var(--text-gray);
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .video-text-content p {
+            margin-bottom: 12px;
+        }
+
+        .video-text-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .video-text-content em {
+            color: var(--gold-toned);
+            font-style: italic;
+        }
+
+        /* Instagram Link Alternative */
+        .instagram-link {
+            display: block;
+            padding: 15px;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9em;
+            color: var(--orange);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .instagram-link:hover {
+            color: var(--gold-bright);
+        }
+
+        /* Experience Content Sections */
+        .experience-section {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--orange);
+            border-radius: 8px;
+        }
+
+        .experience-subtitle {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.8em;
+            color: var(--gold-toned);
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .experience-content p {
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .experience-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .experience-content em {
+            color: var(--gold-toned);
+            font-style: italic;
+        }
+
+        /* Curation List */
+        .curation-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .curation-list li {
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 20px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .curation-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--orange);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .curation-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Old styles kept for compatibility */
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .experience-pillar {
+            text-align: center;
+        }
+
+        .pillar-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .pillar-title {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.5em;
+            color: var(--gold-toned);
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .pillar-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95em;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        /* ========================
+           COMMUNITY
+           ======================== */
+        #community {
+            padding: 80px 0;
+            background: var(--bg-black);
+            text-align: center;
+        }
+
+        .community-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .community-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-dark);
+            border: 2px solid var(--orange);
+            color: var(--text-white);
+            padding: 15px 35px;
+            border-radius: 6px;
+            font-family: 'League Spartan', sans-serif;
+            font-weight: 700;
+            font-size: 0.95em;
+            text-decoration: none;
+            transition: all 0.3s;
+            min-height: 44px;
+        }
+
+        .community-btn:hover {
+            background: var(--orange);
+            color: var(--bg-black);
+            transform: translateY(-2px);
+        }
+
+        /* ========================
+           FOOTER
+           ======================== */
+        footer {
+            padding: 60px 0 40px;
+            background: var(--bg-dark);
+            border-top: 1px solid rgba(212, 165, 116, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 1.2em;
+            color: var(--gold-toned);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--orange);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(212, 165, 116, 0.1);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85em;
+            color: var(--text-muted);
+        }
+
+        /* ========================
+           MOBILE RESPONSIVE (ALL UX CRITICAL FIXES)
+           ======================== */
+        
+        /* Tablet */
+        @media (max-width: 968px) {
+            body {
+                padding-bottom: 80px; /* Space for sticky CTA */
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-image {
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
+            .dots-pattern {
+                display: none;
+            }
+
+            /* UX CRITICAL FIX #1: Testimonials single column on mobile */
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            /* Hub cards stack vertically */
+            .hub-cards {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            /* Past events flexible grid on tablet */
+            .past-events-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            /* UX CRITICAL FIX #2: Steps vertical, hide arrows */
+            .steps-container {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .step-arrow {
+                display: none;
+            }
+
+            .experience-grid {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            /* New Experience Section Mobile Styles */
+            .experience-videos {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .foreword-text {
+                font-size: 1.2em;
+            }
+
+            .experience-section {
+                padding: 25px;
+                margin: 35px auto;
+            }
+
+            .experience-subtitle {
+                font-size: 1.4em;
+            }
+
+            .experience-content p {
+                font-size: 1em;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .nav-menu a:not(.nav-book-btn) {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            /* UX CRITICAL FIX #3: Show mobile sticky CTA */
+            .mobile-sticky-cta {
+                display: block;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .nav-container {
+                padding: 0 20px;
+            }
+
+            #hero {
+                padding: 100px 0 40px;
+            }
+
+            .hero-artists {
+                font-size: 1.5em;
+            }
+
+            .hero-title {
+                font-size: 1.1em;
+            }
+
+            .detail-row {
+                font-size: 0.82em;
+                gap: 8px;
+            }
+
+            .detail-row strong {
+                min-width: 55px;
+                font-size: 0.9em;
+            }
+
+            .hero-cta-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-dots {
+                justify-content: center;
+            }
+
+            .hero-quick-links {
+                justify-content: center;
+            }
+
+            .section-title {
+                font-size: 2em;
+            }
+
+            /* Mobile: Video cards single column */
+            .experience-videos {
+                grid-template-columns: 1fr;
+            }
+
+            .video-media iframe {
+                min-height: 350px;
+            }
+
+            /* Past events single column on phone */
+            .past-events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .trust-badges {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- FIXED NAVIGATION (UX BEST PRACTICE) -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#hero" class="logo-nav"></a>
+            <div class="nav-menu">
+                <a href="#experience">The Experience</a>
+                <a href="#how-it-works">Reservation Process</a>
+                <a href="#faq">FAQs</a>
+                <a href="#past-events">Past Baithaks</a>
+            </div>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="mobile-menu-content">
+            <a href="#hero">Home</a>
+            <a href="#experience">The Experience</a>
+            <a href="#how-it-works">Reservation Process</a>
+            <a href="#faq">FAQs</a>
+            <a href="#past-events">Past Baithaks</a>
+            <a href="#" class="nav-book-btn">Reserve Your Seat</a>
+        </div>
+    </div>
+
+    <!-- MOBILE STICKY BOTTOM CTA (UX FIX #3 - CRITICAL) -->
+    <div class="mobile-sticky-cta">
+        <div class="mobile-sticky-content">
+            <div class="mobile-sticky-info">
+                <div class="mobile-sticky-seats">34/50 Seats</div>
+                <div class="mobile-sticky-text">Remain</div>
+            </div>
+            <a href="#" class="mobile-sticky-btn">Reserve Seat</a>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-intro">Living Room Baithaks Presents</div>
+
+            <!-- Decorative Dots Left -->
+            <div class="dots-pattern dots-left">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <div class="hero-grid">
+                <div class="hero-image-container">
+                    <div class="hero-image image-container aspect-portrait loaded">
+                        <img src="./Images/Baithaks/siddharth_invite.png" alt="Hindustani Classical Flute Recital" loading="eager">
+                    </div>
+                </div>
+                
+                <div class="hero-content">
+                    <div class="hero-label">UPCOMING BAITHAK</div>
+                    
+                    <div class="hero-artists">
+                        <span class="artist-name">Shri Siddharth Belamannu</span> <span class="artist-role">(Hindustani Vocal)</span><br>
+                 <!--"<span class="artist-name">Udayaraj Karpur</span> <span class="artist-role">(Tabla)</span>" -->    
+                    </div>
+
+                    <h1 class="hero-title">
+                        <span class="highlight">Raagdhari Music</span> • In an Intimate Baithak
+                    </h1>
+
+                    <div class="event-details">
+                        <div class="detail-row">
+                            <div class="icon-dot"></div>
+                            <strong>Date</strong>
+                            <span>Friday • 16 November 2024</span>
+                        </div>
+                        <div class="detail-row">
+                            <div class="icon-dot"></div>
+                            <strong>Time</strong>
+                            <span>9:00 AM – Breakfast & Samvaad<br>10:00 AM – Baithak Begins</span>
+                        </div>
+                        <div class="detail-row">
+                            <div class="icon-dot"></div>
+                            <strong>Venue</strong>
+                            <span>Sadashivnagar, Bangalore</span>
+                        </div>
+                        <div class="detail-row">
+                            <div class="icon-dot"></div>
+                            <strong>Includes</strong>
+                            <span>Home-cooked meal & Raagdhari mehfil</span>
+                        </div>
+                        <div class="detail-row">
+                            <div class="icon-dot"></div>
+                            <strong>Contribution</strong>
+                            <span>₹1,000 (General) • ₹500 (Students)</span>
+                        </div>
+                    </div>
+
+                    <div style="font-family: 'Inter', sans-serif; font-size: 0.85em; color: var(--text-gray); margin-bottom: 25px; line-height: 1.6;">
+                        Your contribution goes entirely toward the artists and their music; the food is lovingly sponsored by the host. This is not a commercial venture.
+                    </div>
+
+                    <div class="seats-urgency">
+                        <div class="seats-count">50/50 Baithak Seats</div>
+                        <div class="seats-text">Sold Out</div>
+                    </div>
+
+                    <div class="hero-cta-group">
+                        <a href="#" class="btn btn-primary">Reserve a Seat</a>
+                        <a href="#past-events" class="btn btn-secondary">See Past Baithaks</a>
+                    </div>
+                    
+                    <div class="nav-dots">
+                        <div class="nav-dot active"></div>
+                        <div class="nav-dot"></div>
+                        <div class="nav-dot"></div>
+                        <div class="nav-dot"></div>
+                        <div class="nav-dot"></div>
+                    </div>
+
+
+                    <div class="hero-quick-links">
+                        <a href="#how-it-works">The Experience</a>
+                        <a href="#faq">Questions You May Have</a>
+                        <a href="#how-it-works">Reservation Process</a>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decorative Dots Right -->
+            <div class="dots-pattern dots-right">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <div class="hero-tagline">
+                <span class="highlight">Music</span> • Conversation • <span class="highlight">Connections</span> • Food
+            </div>
+        </div>
+    </section>
+
+
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title">The <span class="highlight">Experience</span></h2>
+            
+            <!-- FOREWORD -->
+            <div class="experience-foreword">
+                <p class="foreword-text">
+                    These gatherings are about music, food, and connections — in the warmth of a home, not the scale of a hall.
+                </p>
+                <p class="foreword-note">
+                    We are still learning with each baithak. Please excuse any small inconveniences along the way.
+                </p>
+            </div>
+
+            <!-- VIDEO GALLERY - Integrated video/embed + text cards -->
+            <div class="experience-videos">
+                <!-- CARD 1: What is a Baithak -->
+                <div class="video-card">
+                    <div class="video-media">
+                        <!-- Option 1: Direct video embed -->
+                        <video class="experience-video" controls playsinline>
+                            <source src="/Videos/Experience/WhatisaBaithak.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <!-- Option 2: Instagram embed (uncomment and replace URL) -->
+                        <!-- <iframe src="https://www.instagram.com/p/YOUR_POST_ID/embed" frameborder="0" scrolling="no" allowtransparency="true"></iframe> -->
+                    </div>
+                    <div class="video-caption">What is a baithak?</div>
+                    <div class="video-text-content">
+                        <p>
+                            A baithak is an intimate sit-down concert. The artist and audience share the same space, close enough for real dialogue. Listeners respond with <em>daad</em> (appreciation), and the artist draws on that energy to improvise and deepen the music.
+                        </p>
+                        <p>
+                            In a large hall, this kind of closeness and exchange is not possible. A baithak preserves the original way this music was meant to be heard — personal, interactive, and alive.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- CARD 2: Why We Do This -->
+                <div class="video-card">
+                    <div class="video-media">
+                        <video class="experience-video" controls playsinline>
+                            <source src="/Videos/Experience/OurPurpose.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-caption">Why are we doing this?</div>
+                    <div class="video-text-content">
+                        <p>
+                            We are doing this to bring back soulful experiences that are rare in today's world of noise, screens, and digital clutter.
+                        </p>
+                        <p>
+                            Baithaks were once the natural setting for Hindustani music — close, conversational, and deeply immersive. By reviving this tradition, we hope audiences can rediscover its original intent: <em>aatmaranjan</em> — inner enrichment and soulful connection.
+                        </p>
+                        <p>
+                            It is equally important that artists who make these art forms their profession are fairly compensated. We believe in support that comes directly from listeners, through patronage, rather than relying only on sponsors.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- CARD 3: Curation -->
+                <div class="video-card">
+                    <div class="video-media">
+                        <video class="experience-video" controls playsinline>
+                            <source src="/Videos/Experience/AboutUS.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-caption">Curation</div>
+                    <div class="video-text-content">
+                        <p>
+                            • Curated by Mowna Ramachandra (who is a performing artist herself), in collaboration with the performing artist of the day.
+                        </p>
+                        <p>
+                            • A space for both traditional works and new experiments.
+                        </p>
+                        <p>
+                            • Accessible to first-time listeners and seasoned rasikas, with explanations woven into the music.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Reservation <span class="highlight">Process</span></h2>
+            
+            <div class="steps-container">
+                <div class="step-card">
+                  <!-- <div class="step-number">1</div> --> 
+                    <div class="step-title">Reserve Online</div>
+                    <div class="step-desc"><li>Reserve your baithak seat by filling the form.</li ><li>Make the contribution via UPI/GPay and share the screenshot.</li><li>Please read all details and expectations before booking.</li></div>
+                </div>
+
+                <div class="step-card">
+                  <!--    <div class="step-number">2</div>--> 
+                    <div class="step-title">Get Confirmation </div>
+                    <div class="step-desc"><li>You’ll receive a confirmation from the host within 24 hours.</li><li>If seats are full, your contribution will be refunded.</li></div>
+                </div>
+
+                <div class="step-card">
+                <!--    <div class="step-number">3</div>-->
+                    <div class="step-title">Get Reminders and Directionst</div>
+                    <div class="step-desc"><li>We’ll share reminders and directions on WhatsApp closer to the baithak. </li><li>As the host is engaged in welcoming artists and guests, we request you to avoid calling on the day of the concert.</li><li>Most answers can be found in the FAQs — do take a moment to read them before reaching out.</li></div>
+                </div>
+
+                <div class="step-card">
+                  <!--  <div class="step-number">4</div>-->`
+                    <div class="step-title">Immerse and Experience</div>
+                    <div class="step-desc"><li>Arrive a little early, follow the house guidelines and soak in the experience.</li><li> If it resonates with you, join our community to stay connected for future baithaks.</li></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="faq">
+        <div class="container">
+            <h2 class="section-title">🪔 Living Room Baithaks — <span class="highlight">Frequently Asked Questions</span></h2>
+            
+            <!-- FAQ Search Box -->
+            <div class="faq-search-container">
+                <input type="text" id="faqSearch" class="faq-search-input" placeholder="Search FAQs..." aria-label="Search FAQs">
+                <span class="faq-search-icon">🔍</span>
+            </div>
+
+            <div class="faq-container">
+                <!-- 1. ABOUT THE BAITHAK -->
+                <div class="faq-category-header">1. About the Baithak</div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What makes this different from a regular concert?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Unlike an auditorium, a baithak is held in a home — close to the artist, with conversation, food, and no stage or spotlight. It brings back traditional raagdhari baithak culture — intimate, unhurried, and deeply personal.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Who curates the concerts?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Curated by musician Mowna Ramachandra along with the performing artists. Together, they choose traditional bandishes and newer explorations. Conversations and explanations are woven in so beginners and rasikas both feel included.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do I need to know classical music?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Not at all. You can come as a first-time listener, a curious ear, or a seasoned rasika. The idea is simple — listen with attention and respect.
+                    </div>
+                </div>
+
+                <!-- 2. BOOKING & CONTRIBUTION -->
+                <div class="faq-category-header">2. Booking & Contribution</div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How often do you host baithaks?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        We host one baithak every month. Details are announced 2–3 weeks in advance on Instagram and WhatsApp.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I reserve a seat?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Fill the reservation form → make your contribution via UPI/GPay → share the screenshot. Please read all details before booking.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is the contribution for?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Your contribution goes toward remunerating the artists. The home-style meal is lovingly offered by the host — not charged.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>When will my booking be confirmed?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        You'll receive a WhatsApp confirmation within 24 hours. If seats are full, your amount is refunded.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I bring a guest?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes. Please book and contribute for the correct number of seats.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is your cancellation policy?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        If you need to cancel, please let us know at least 3 days in advance so we can offer the seat to someone else.
+                    </div>
+                </div>
+
+                <!-- 3. GETTING HERE & ARRIVAL -->
+                <div class="faq-category-header">3. Getting Here & Arrival</div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Where is the venue?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        The baithak is hosted at a home in Sadashivnagar, Bangalore. The exact address is shared with confirmed guests 24–48 hours before the event.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What time should I arrive?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Please arrive 15–20 minutes early — it allows time to park, settle in, and soak in the atmosphere before the music begins.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is parking available?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Street parking is available nearby. Coming a little early helps.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What should I do on arrival?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        – Leave footwear neatly at the designated area<br>
+                        – Help keep tea/water area free of bags and clutter<br>
+                        – Settle in quietly; sound checks may be happening
+                    </div>
+                </div>
+
+                <!-- 4. THE EXPERIENCE -->
+                <div class="faq-category-header">4. The Experience</div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What should I wear?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Comfortable clothing that allows floor seating. Traditional wear is always welcome but never required.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What's the seating like?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Carpeted floor with bolsters and cushions — the most authentic way to experience a baithak. Chairs are available if floor seating is difficult — just mention it in the form.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How long is the baithak?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        The music lasts around 1.5 hours, followed by a short conversation or Q&A.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is food provided?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes — a home-style vegetarian meal (breakfast, brunch or dinner depending on timing). It is offered by the host as hospitality, not as part of a commercial package.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I bring children?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Children are welcome if they can sit quietly throughout. The space is intimate, and sound carries easily.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I leave during the performance?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        We request you stay for the full performance to maintain the atmosphere. Stepping out briefly in emergencies is, of course, understood.
+                    </div>
+                </div>
+
+                <!-- 5. PHOTOGRAPHY & ETIQUETTE -->
+                <div class="faq-category-header">5. Photography & Etiquette</div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I take photos or record?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        You're welcome to take a few quiet photos before or after the performance. During the music, please avoid recording so the space remains undisturbed.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Will I get reminders and directions?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, directions and gentle reminders will be shared on WhatsApp before the baithak. On the day of the event, the host may be occupied in receiving artists and guests — we request you avoid calling unless urgent.
+                    </div>
+                </div>
+
+                <!-- 6. STILL HAVE QUESTIONS -->
+                <div class="faq-category-header">6. Still Have Questions?</div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How can I contact you?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>📞 Phone:</strong> +91 9880803110<br>
+                        <strong>✉️ Email:</strong> livingroombaithaks@gmail.com<br>
+                        <strong>📸 Instagram:</strong> @livingroombaithaks
+                    </div>
+                </div>
+
+                <!-- No Results Message -->
+                <div class="faq-no-results" id="noResults">
+                    No FAQs match your search. Please try different keywords or <a href="#" onclick="document.getElementById('faqSearch').value=''; document.getElementById('faqSearch').dispatchEvent(new Event('input')); return false;" style="color: var(--orange); text-decoration: underline;">clear your search</a>.
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="past-events">
+        <div class="container">
+            <h2 class="section-title"><span class="highlight">Previous</span> Baithaks</h2>
+            
+            <div class="past-events-grid">
+                <!-- PAST EVENT 1: Kishori Amonkar - Using 9:16 aspect ratio -->
+                <div class="past-event-card">
+                    <div class="image-container aspect-story loaded">
+                        <img src="./Images/Baithaks/ListeningSession_past.jpg" alt="Kishori Amonkar Guided Listening" loading="lazy">
+                    </div>
+                    <div class="past-event-info">
+                        <div class="past-event-title">Listening Session of Kishori Amonkar</div>
+                        <div class="past-event-artist">Mowna Ramachandra</div>
+                        <div class="past-event-date">Aug 2024</div>
+                    </div>
+                </div>
+                <div class="past-event-card">
+                    <div class="image-container aspect-story loaded">
+                        <img src="./Images/Baithaks/aniruddh_Invite_past.jpeg" alt="Vocals of Young Artist" loading="lazy">
+                    </div>
+                    <div class="past-event-info">
+                        <div class="past-event-title">Vocals of Young Artist</div>
+                        <div class="past-event-artist">Aniruddh Aithal</div>
+                        <div class="past-event-date">September 2024</div>
+                    </div>
+                </div>
+                <!-- PAST EVENT 2: Flute - Placeholder (replace with your image) -->
+                <div class="past-event-card">
+                    <div class="image-container aspect-story loaded">
+                        <img src="./Images/Baithaks/ashwin_concert_past.jpg" alt="Flute in the night" loading="lazy">
+                    </div>
+                    <div class="past-event-info">
+                        <div class="past-event-title">Flute in the night</div>
+                        <div class="past-event-artist">Ashwin Srinivasan</div>
+                        <div class="past-event-date">Oct 2024</div>
+                    </div>
+                </div>
+
+                <!-- PAST EVENT 3: Vocals - Placeholder (replace with your image) -->
+                
+
+                <!-- PAST EVENT 4: Raag Bhairavi - Placeholder (replace with your image) -->
+            </div>
+
+            <!-- Instagram Feed Placeholder
+            <div class="instagram-embed">
+                <p class="instagram-embed-text">
+                    <strong>See more from our events on Instagram</strong><br>
+                    Follow our journey and get a glimpse of the intimate baithak atmosphere
+                </p>
+                <a href="https://instagram.com/thelivingroombaithaks" class="instagram-link" target="_blank">
+                    @livingroombaithaks →
+                </a>
+                <p style="font-family: 'Inter', sans-serif; color: var(--text-muted); font-size: 0.85em; margin-top: 15px;">
+                    (Use SnapWidget to embed your feed here with zero maintenance)
+                </p>
+            </div> -->
+        </div>
+    </section>
+
+
+    <section id="community">
+        <div class="container">
+            <h2 class="section-title">Stay in the Baithak <span class="highlight">Circle</span></h2>
+            <p style="font-family: 'Inter', sans-serif; color: var(--text-gray); font-size: 1.1em; margin-bottom: 20px;">
+                Connect with fellow rasiks and never miss a baithak
+            </p>
+            
+            <div class="community-links">
+                <a href="https://instagram.com/thelivingroombaithaks" class="community-btn" target="_blank">
+                    Follow on Instagram
+                </a>
+                <a href=" https://chat.whatsapp.com/CfZlxIz3yKZBLSMKMyFBX2?mode=wwt" class="community-btn" target="_blank">
+                    Join WhatsApp Group
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Living Room Baithaks</h3>
+                    <p style="font-family: 'Inter', sans-serif; color: var(--text-gray); font-size: 0.9em; line-height: 1.6;">
+                        Bringing classical music back to its intimate roots through carefully curated home concerts in Bangalore.
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#experience">The Experience</a></li>
+                        <li><a href="#how-it-works">Reservation Process</a></li>
+                        <li><a href="#faq">FAQs</a></li>
+                        <li><a href="#past-events">Past Baithaks</a></li>
+                        <li><a href="#">Reserve a Seat</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://instagram.com/livingroombaithaks" target="_blank">Instagram</a></li>
+                        <li><a href="https://wa.me/919876543210" target="_blank">WhatsApp</a></li>
+                        <li><a href="mailto:hello@livingroombaithaks.com">Email</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                © 2024 Living Room Baithaks. All rights reserved. | <a href="#" style="color: var(--orange); text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: var(--orange); text-decoration: none;">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // ===========================
+        // MOBILE MENU TOGGLE
+        // ===========================
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const body = document.body;
+
+        // Toggle mobile menu
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menuToggle.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+            body.style.overflow = mobileMenuOverlay.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close menu when clicking on overlay background
+        mobileMenuOverlay.addEventListener('click', (e) => {
+            if (e.target === mobileMenuOverlay) {
+                menuToggle.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+                body.style.overflow = '';
+            }
+        });
+
+        // Close menu when clicking any menu link
+        document.querySelectorAll('.mobile-menu-content a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+                body.style.overflow = '';
+            });
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+                body.style.overflow = '';
+            }
+        });
+
+        // ===========================
+        // FAQ TOGGLE
+        // ===========================
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // ===========================
+        // FAQ SEARCH FUNCTIONALITY (INTELLIGENT WITH SYNONYMS)
+        // ===========================
+        const faqSearchInput = document.getElementById('faqSearch');
+        const noResultsDiv = document.getElementById('noResults');
+
+        // Synonym mapping for intelligent search
+        const synonymMap = {
+            // Duration/Time related - SPECIFIC TO LENGTH OF EVENT
+            'length': ['duration', 'long', 'hours'],
+            'duration': ['length', 'long', 'hours'],
+            'long': ['duration', 'length', 'hours'],
+            'hours': ['duration', 'length', 'long'],
+            'hour': ['duration', 'length', 'long'],
+            
+            // Payment/Money related
+            'cost': ['contribution', 'price', 'fee', 'payment'],
+            'price': ['contribution', 'cost', 'fee', 'payment'],
+            'payment': ['contribution', 'cost', 'price', 'pay'],
+            'fee': ['contribution', 'cost', 'price'],
+            'money': ['contribution', 'cost', 'price'],
+            'ticket': ['booking', 'reservation'],
+            'pay': ['payment', 'contribution'],
+            
+            // Booking related
+            'booking': ['reservation', 'reserve'],
+            'reservation': ['booking', 'reserve'],
+            'reserve': ['booking', 'reservation'],
+            'confirm': ['confirmation'],
+            'confirmation': ['confirm'],
+            
+            // Location related
+            'location': ['venue', 'address'],
+            'venue': ['location', 'address'],
+            'address': ['location', 'venue'],
+            'where': ['location', 'venue', 'address'],
+            
+            // Parking/Transport
+            'parking': ['park'],
+            'park': ['parking'],
+            
+            // Food related
+            'food': ['meal', 'eat'],
+            'meal': ['food', 'eat'],
+            'eat': ['food', 'meal'],
+            'dinner': ['meal', 'food'],
+            'lunch': ['meal', 'food'],
+            'breakfast': ['meal', 'food'],
+            
+            // Seating related
+            'seating': ['seat'],
+            'seat': ['seating'],
+            'sitting': ['seating', 'seat'],
+            'chair': ['seating', 'seat'],
+            'floor': ['seating'],
+            
+            // Photography related
+            'photo': ['photography', 'picture', 'camera'],
+            'photography': ['photo', 'picture', 'camera'],
+            'picture': ['photo', 'photography'],
+            'record': ['recording', 'video'],
+            'recording': ['record', 'video'],
+            'camera': ['photo', 'photography'],
+            'video': ['recording', 'record'],
+            
+            // Children related
+            'kids': ['children', 'child'],
+            'children': ['kids', 'child'],
+            'child': ['children', 'kids'],
+            
+            // Cancellation related
+            'cancel': ['cancellation'],
+            'cancellation': ['cancel'],
+            'refund': ['cancel', 'cancellation'],
+            
+            // Guest related
+            'guest': ['friend', 'bring'],
+            'friend': ['guest', 'bring'],
+            'bring': ['guest'],
+            
+            // Arrival related - MORE SPECIFIC
+            'arrive': ['arrival'],
+            'arrival': ['arrive'],
+            
+            // Dress/Attire
+            'dress': ['wear', 'clothing', 'attire'],
+            'wear': ['dress', 'clothing', 'attire'],
+            'clothing': ['dress', 'wear', 'attire'],
+            'clothes': ['dress', 'wear', 'attire'],
+            
+            // Contact related
+            'contact': ['phone', 'email'],
+            'phone': ['contact'],
+            'email': ['contact'],
+            
+            // Experience related
+            'concert': ['baithak', 'performance'],
+            'baithak': ['concert', 'performance'],
+            'performance': ['concert', 'baithak'],
+            'show': ['concert', 'baithak', 'performance']
+        };
+
+        // Get all synonyms for a word
+        function getSynonyms(word) {
+            word = word.toLowerCase();
+            return synonymMap[word] || [];
+        }
+
+        // Helper function to check if a word exists with word boundaries
+        function wordBoundaryMatch(text, word) {
+            // Create regex with word boundaries: \b word \b
+            const regex = new RegExp('\\b' + word + '\\b', 'i');
+            return regex.test(text);
+        }
+
+        // Helper function for intelligent matching with synonyms
+        function smartMatch(text, searchTerm) {
+            text = text.toLowerCase();
+            searchTerm = searchTerm.toLowerCase();
+            
+            // Split search term into individual keywords (minimum 3 chars to avoid false matches)
+            const keywords = searchTerm.split(' ').filter(word => word.length >= 3);
+            
+            if (keywords.length === 0) {
+                // If search is too short (1-2 chars), do basic match
+                return text.includes(searchTerm);
+            }
+            
+            // Check if ALL keywords (or their synonyms) are found
+            return keywords.every(keyword => {
+                // Check for word boundary match with the keyword itself
+                if (wordBoundaryMatch(text, keyword)) return true;
+                
+                // Check synonyms - but only with word boundaries
+                const synonyms = getSynonyms(keyword);
+                if (synonyms.length === 0) return false;
+                
+                // Check if any synonym matches with word boundaries
+                return synonyms.some(syn => wordBoundaryMatch(text, syn));
+            });
+        }
+
+        if (faqSearchInput) {
+            faqSearchInput.addEventListener('input', function() {
+                const searchTerm = this.value.trim();
+                const faqItems = document.querySelectorAll('.faq-item');
+                const categoryHeaders = document.querySelectorAll('.faq-category-header');
+                let visibleCount = 0;
+
+                if (searchTerm === '') {
+                    // Show all items and categories
+                    faqItems.forEach(item => {
+                        item.classList.remove('hidden');
+                    });
+                    categoryHeaders.forEach(header => {
+                        header.classList.remove('hidden');
+                    });
+                    noResultsDiv.classList.remove('show');
+                    return;
+                }
+
+                // Track which categories have visible items
+                const visibleCategories = new Set();
+
+                // Search through FAQ items
+                faqItems.forEach(item => {
+                    const question = item.querySelector('.faq-question span:first-child').textContent;
+                    const answer = item.querySelector('.faq-answer').textContent;
+                    const combinedText = question + ' ' + answer;
+                    
+                    if (smartMatch(combinedText, searchTerm)) {
+                        item.classList.remove('hidden');
+                        visibleCount++;
+                        
+                        // Find which category this item belongs to
+                        let previousElement = item.previousElementSibling;
+                        while (previousElement) {
+                            if (previousElement.classList.contains('faq-category-header')) {
+                                visibleCategories.add(previousElement);
+                                break;
+                            }
+                            previousElement = previousElement.previousElementSibling;
+                        }
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+
+                // Show/hide category headers based on whether they have visible items
+                categoryHeaders.forEach(header => {
+                    if (visibleCategories.has(header)) {
+                        header.classList.remove('hidden');
+                    } else {
+                        header.classList.add('hidden');
+                    }
+                });
+
+                // Show/hide no results message
+                if (visibleCount === 0) {
+                    noResultsDiv.classList.add('show');
+                } else {
+                    noResultsDiv.classList.remove('show');
+                }
+            });
+        }
+
+        // ===========================
+        // SMOOTH SCROLL WITH MOBILE MENU CLOSE
+        // ===========================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                
+                // Handle # (home) link
+                if (targetId === '#') {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                    return;
+                }
+                
+                const target = document.querySelector(targetId);
+                if (target) {
+                    const offset = 80; // Account for fixed nav
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ===========================
+        // PREVENT SCROLL WHEN MENU IS OPEN
+        // ===========================
+        let lastScrollY = 0;
+        window.addEventListener('scroll', () => {
+            if (mobileMenuOverlay.classList.contains('active')) {
+                window.scrollTo(0, lastScrollY);
+            } else {
+                lastScrollY = window.pageYOffset;
+            }
+        });
+    </script>
+</body>
+</html>

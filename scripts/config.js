@@ -24,7 +24,7 @@ const API_URL = 'YOUR_WEB_APP_URL_HERE';
 /**
  * Use local JSON for testing?
  *
- * Set to true to use local test_case_4_max_past.json file
+ * Set to true to use local data/lrb_concerts_master_final_updated.json file
  * Set to false to use Google Apps Script API
  */
 const USE_LOCAL_DATA = true;
@@ -32,7 +32,7 @@ const USE_LOCAL_DATA = true;
 /**
  * Local JSON file path (for testing only)
  */
-const LOCAL_DATA_PATH = 'test_case_4_max_past.json';
+const LOCAL_DATA_PATH = './data/lrb_concerts_master_final_updated.json';
 
 // ========================================
 // DO NOT EDIT BELOW THIS LINE

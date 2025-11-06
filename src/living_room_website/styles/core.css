@@ -1,0 +1,68 @@
+/**
+ * CORE STYLES
+ * CSS Variables, Reset, Base Typography, and Universal Styles
+ */
+
+/* ========== CSS RESET ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========== CSS VARIABLES (THEME) ========== */
+:root {
+    /* Primary Colors */
+    --orange: #ff8800;
+    --orange-subtle: rgba(255, 136, 0, 0.1);
+    --gold-bright: #e6c200;
+    --gold-toned: #d4a574;
+
+    /* Background Colors */
+    --bg-black: #000000;
+    --bg-dark: #1a1a1a;
+
+    /* Text Colors */
+    --text-white: #ffffff;
+    --text-light: #e5e5e5;
+    --text-gray: #b3b3b3;
+    --text-muted: #808080;
+}
+
+/* ========== BASE STYLES ========== */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Lora', serif;
+    background: var(--bg-black);
+    color: var(--text-white);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+/* ========== TYPOGRAPHY ========== */
+h1, h2, h3 {
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.section-title {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 60px;
+    color: var(--text-white);
+}
+
+.section-title .highlight {
+    color: var(--orange);
+}
+
+/* ========== UTILITY CLASSES ========== */
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 30px;
+}

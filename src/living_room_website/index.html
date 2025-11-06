@@ -5,698 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Living Room Baithaks | Intimate Classical Music Concerts in Bangalore</title>
 <meta name="description" content="Experience classical music in intimate home concerts. Limited to 50 seats. Hindustani & Carnatic artists. Food included.">
+
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800;900&family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        :root {
-            --orange: #ff8800;
-            --orange-subtle: rgba(255, 136, 0, 0.1);
-            --gold-bright: #e6c200;
-            --gold-toned: #d4a574;
-            --bg-black: #000000;
-            --bg-dark: #1a1a1a;
-            --text-white: #ffffff;
-            --text-light: #e5e5e5;
-            --text-gray: #b3b3b3;
-            --text-muted: #808080;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Lora', serif;
-            background: var(--bg-black);
-            color: var(--text-white);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3 {
-            font-family: 'League Spartan', sans-serif;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 30px;
-        }
-
-        .image-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            background: var(--bg-dark);
-            border-radius: 8px;
-        }
-
-        .aspect-square { aspect-ratio: 1 / 1; }
-        .aspect-portrait { aspect-ratio: 4 / 5; }
-        .aspect-story { aspect-ratio: 9 / 16; }
-        .aspect-landscape { aspect-ratio: 16 / 9; }
-
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-        }
-
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(212, 165, 116, 0.15);
-        }
-
-        .nav-container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
-
-        .nav-menu a {
-            color: var(--orange);
-            text-decoration: none;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-menu a:hover {
-            color: var(--gold-toned);
-        }
-
-        .nav-book-btn {
-            background: var(--gold-bright);
-            color: var(--bg-black);
-            padding: 10px 24px;
-            border-radius: 6px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 0.85em;
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 5px;
-            z-index: 1002;
-        }
-
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: var(--text-white);
-            transition: all 0.3s;
-            border-radius: 2px;
-        }
-
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(7px, 7px);
-        }
-
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        .mobile-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 999;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .mobile-menu-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .mobile-menu-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            padding: 80px 30px 30px;
-        }
-
-        .mobile-menu-content a {
-            color: var(--text-white);
-            text-decoration: none;
-            font-family: 'League Spartan', sans-serif;
-            font-size: 1.4em;
-            font-weight: 700;
-            padding: 20px;
-            width: 100%;
-            text-align: center;
-            transition: all 0.3s;
-            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
-        }
-
-        .mobile-sticky-cta {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(20px);
-            border-top: 2px solid var(--orange);
-            padding: 12px 20px;
-            z-index: 999;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .mobile-sticky-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1300px;
-            margin: 0 auto;
-            gap: 15px;
-        }
-
-        .mobile-sticky-info {
-            flex: 1;
-        }
-
-        .mobile-sticky-seats {
-            font-family: 'League Spartan', sans-serif;
-            font-size: 1.1em;
-            font-weight: 800;
-            color: var(--gold-bright);
-        }
-
-        .mobile-sticky-text {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75em;
-            color: var(--text-gray);
-        }
-
-        .mobile-sticky-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--gold-bright);
-            color: var(--bg-black);
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-family: 'League Spartan', sans-serif;
-            font-weight: 700;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            text-decoration: none;
-            white-space: nowrap;
-            min-height: 44px;
-        }
-
-        #hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            padding: 120px 0 60px;
-            background: var(--bg-black);
-        }
-
-        .hero-intro {
-            text-align: left;
-            font-family: 'Inter', sans-serif;
-            font-size: 1em;
-            letter-spacing: 3px;
-            color: var(--gold-toned);
-            margin-bottom: 50px;
-            font-weight: 500;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 55% 45%;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .hero-label {
-            display: inline-block;
-            font-family: 'League Spartan', sans-serif;
-            font-size: 0.7em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: var(--orange);
-            color: var(--bg-black);
-            padding: 10px 20px;
-            margin-bottom: 25px;
-            font-weight: 900;
-        }
-
-        .hero-artists {
-            font-family: 'League Spartan', sans-serif;
-            font-size: clamp(1.5em, 4vw, 2em);
-            font-weight: 800;
-            color: var(--text-white);
-            margin-bottom: 18px;
-            line-height: 1.35;
-        }
-
-        .artist-name {
-            color: var(--gold-toned);
-            font-weight: 900;
-        }
-
-        .artist-role {
-            color: var(--text-gray);
-            font-size: 0.55em;
-            font-weight: 500;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .hero-title {
-            font-size: clamp(1.2em, 3vw, 1.5em);
-            color: var(--text-light);
-            margin-bottom: 30px;
-            line-height: 1.4;
-            font-weight: 600;
-        }
-
-        .event-details {
-            background: var(--bg-dark);
-            border-left: 3px solid var(--orange);
-            padding: 20px 22px;
-            margin-bottom: 25px;
-            border-radius: 4px;
-        }
-
-        .detail-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 12px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.88em;
-            color: var(--text-gray);
-        }
-
-        .detail-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .icon-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--orange);
-            border-radius: 50%;
-            min-width: 8px;
-            flex-shrink: 0;
-            margin-top: 6px;
-        }
-
-        .detail-row strong {
-            color: var(--text-white);
-            min-width: 65px;
-            font-size: 0.95em;
-            flex-shrink: 0;
-        }
-
-        .seats-urgency {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--bg-dark);
-            border-left: 3px solid var(--orange);
-            padding: 12px 20px;
-            border-radius: 4px;
-            margin-bottom: 28px;
-        }
-
-        .seats-count {
-            font-family: 'League Spartan', sans-serif;
-            font-size: clamp(1.1em, 2.5vw, 1.3em);
-            font-weight: 800;
-            color: var(--gold-bright);
-            letter-spacing: 0.5px;
-        }
-
-        .hero-cta-group {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px 35px;
-            border-radius: 6px;
-            font-family: 'League Spartan', sans-serif;
-            font-weight: 700;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            text-decoration: none;
-            transition: all 0.3s;
-            min-height: 44px;
-        }
-
-        .btn-primary {
-            background: var(--gold-bright);
-            color: var(--bg-black);
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background: #ffd700;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(230, 194, 0, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-white);
-            border: 1.5px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--text-white);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* REMOVED: Orphaned nav-dots that served no purpose */
-        
-        .hero-quick-links {
-            display: flex;
-            gap: 20px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8em;
-            flex-wrap: wrap;
-        }
-
-        .hero-quick-links a {
-            color: var(--orange);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .hero-image {
-            width: 100%;
-            max-width: 500px;
-            aspect-ratio: 1;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-        }
-
-        .hero-tagline {
-            text-align: center;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85em;
-            color: var(--gold-bright);
-            margin-top: 50px;
-        }
-
-        .section-title {
-            font-size: 2.5em;
-            text-align: center;
-            margin-bottom: 60px;
-            color: var(--text-white);
-        }
-
-        .section-title .highlight {
-            color: var(--orange);
-        }
-
-        #how-it-works {
-            padding: 80px 0;
-            background: var(--bg-dark);
-        }
-
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            position: relative;
-        }
-
-        .step-card {
-            background: var(--bg-black);
-            border-left: 3px solid var(--orange);
-            border-radius: 8px;
-            padding: 30px 25px;
-            text-align: center;
-        }
-
-        .step-title {
-            font-family: 'League Spartan', sans-serif;
-            font-size: 1.2em;
-            color: var(--gold-toned);
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-
-        .step-desc {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9em;
-            color: var(--text-gray);
-            line-height: 1.6;
-            text-align: left;
-        }
-
-        /* FIXED: Custom bullets for reservation process */
-        .step-desc ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .step-desc ul li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 10px;
-        }
-
-        .step-desc ul li:before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--orange);
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        #past-events {
-            padding: 80px 0;
-            background: var(--bg-black);
-        }
-
-        .past-events-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .past-event-card {
-            background: var(--bg-dark);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid rgba(212, 165, 116, 0.2);
-            transition: all 0.3s;
-        }
-
-        .past-event-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 136, 0, 0.2);
-        }
-
-        .past-event-info {
-            padding: 20px;
-        }
-
-        .past-event-title {
-            font-family: 'League Spartan', sans-serif;
-            font-size: 1.1em;
-            color: var(--gold-toned);
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        .past-event-artist {
-            font-family: 'League Spartan', sans-serif;
-            font-size: 1.1em;
-            color: var(--orange);
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        .past-event-date {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85em;
-            color: var(--text-gray);
-        }
-
-        footer {
-            padding: 60px 0 40px;
-            background: var(--bg-dark);
-            border-top: 1px solid rgba(212, 165, 116, 0.2);
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 50px;
-            margin-bottom: 40px;
-        }
-
-        .footer-section h3 {
-            font-family: 'League Spartan', sans-serif;
-            font-size: 1.2em;
-            color: var(--gold-toned);
-            margin-bottom: 20px;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-gray);
-            text-decoration: none;
-            font-size: 0.9em;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--orange);
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 968px) {
-            body {
-                padding-bottom: 80px;
-            }
-
-            .hero-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .hero-image {
-                max-width: 100%;
-                margin: 0 auto;
-            }
-
-            .steps-container {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 35px;
-            }
-
-            .nav-menu a:not(.nav-book-btn) {
-                display: none;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .mobile-sticky-cta {
-                display: block;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                padding: 0 20px;
-            }
-
-            #hero {
-                padding: 100px 0 40px;
-            }
-
-            .hero-artists {
-                font-size: 1.5em;
-            }
-
-            .hero-cta-group {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            .section-title {
-                font-size: 2em;
-            }
-
-            .past-events-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+<!-- External CSS Files -->
+<link rel="stylesheet" href="./styles/core.css">
+<link rel="stylesheet" href="./styles/layout.css">
+<link rel="stylesheet" href="./styles/components.css">
+<link rel="stylesheet" href="./styles/booking-flow.css">
+<link rel="stylesheet" href="./styles/responsive.css">
 </head>
 <body>
 
 <nav class="nav">
     <div class="nav-container">
+        <a href="#" class="nav-back-btn" id="navBackBtn">
+            <span>←</span> Back to Home
+        </a>
         <div class="nav-menu">
             <a href="#how-it-works">Reservation Process</a>
-            <a href="#past-events">Past Baithaks</a>    
+            <a href="#past-events">Past Baithaks</a>
         </div>
         <div class="menu-toggle">
             <span></span>
@@ -711,7 +42,7 @@
         <a href="#hero">Home</a>
         <a href="#how-it-works">Reservation Process</a>
         <a href="#past-events">Past Baithaks</a>
-        <a href="#" class="nav-book-btn">Reserve Your Seat</a>
+        <a href="#" class="nav-book-btn booking-trigger">Reserve Your Seat</a>
     </div>
 </div>
 
@@ -721,30 +52,278 @@
             <div class="mobile-sticky-seats" id="stickySeatsCount">Loading...</div>
             <div class="mobile-sticky-text">Remain</div>
         </div>
-        <a href="#" class="mobile-sticky-btn" id="stickyBookBtn">Reserve Seat</a>
+        <a href="#" class="mobile-sticky-btn booking-trigger" id="stickyBookBtn">Reserve Seat</a>
     </div>
 </div>
 
 <section id="hero">
     <div class="container">
         <div class="hero-intro">Living Room Baithaks Presents</div>
-        
+
         <div id="heroContent">
             <div style="text-align: center; padding: 100px 20px; color: var(--text-gray);">
                 <p>Loading upcoming baithak...</p>
             </div>
         </div>
-        
+
         <div class="hero-tagline">
             <span class="highlight">Music</span> • Conversation • <span class="highlight">Connections</span> • Food
         </div>
     </div>
 </section>
 
+<section id="booking-flow">
+    <div class="container">
+        <div class="booking-header">
+            <h1 class="booking-title">Reserve Your Seat</h1>
+            <p class="booking-subtitle">Complete your booking in 6 simple steps</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-dot active" data-step="1"></div>
+            <div class="progress-dot" data-step="2"></div>
+            <div class="progress-dot" data-step="3"></div>
+            <div class="progress-dot" data-step="4"></div>
+            <div class="progress-dot" data-step="5"></div>
+            <div class="progress-dot" data-step="6"></div>
+        </div>
+
+        <!-- Step 1: Welcome & Guidelines -->
+        <div class="booking-step active" data-step="1">
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-number">Step 1 of 6</div>
+                    <h2 class="step-title">Before You Reserve Your Seat</h2>
+                    <p class="step-description">Please read these important details about our baithaks</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>🏠 What to Expect at a Living Room Baithak</h3>
+                    <ul class="info-list">
+                        <li>This is an intimate home concert with limited seating</li>
+                        <li>Seating is on carpets with cushions (a few chairs available on request)</li>
+                        <li>Your contribution goes entirely to the artist's remuneration</li>
+                        <li>Food is lovingly prepared and sponsored by the host</li>
+                        <li>Please arrive on time and respect the intimate setting</li>
+                    </ul>
+                </div>
+
+                <div class="checkbox-container" id="guidelinesCheckbox">
+                    <input type="checkbox" id="agreeGuidelines">
+                    <label for="agreeGuidelines">I understand this is a home concert and agree to the expectations above</label>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="step1Continue" disabled>Continue to Booking</button>
+                    <button class="btn btn-secondary" id="step1Cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Select Seats -->
+        <div class="booking-step" data-step="2">
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-number">Step 2 of 6</div>
+                    <h2 class="step-title">Select Your Seats</h2>
+                    <p class="step-description">Choose the number of seats you need</p>
+                </div>
+
+                <div class="price-note" style="margin-bottom: 30px;">
+                    ℹ <strong>Student Pricing:</strong> Currently studying in school, college, or pursuing music full-time
+                </div>
+
+                <div class="seats-list-minimal">
+                    <div class="seat-item-minimal" id="generalSeatSelector">
+                        <div class="seat-item-info-minimal">
+                            <div class="seat-name-minimal">General Seats</div>
+                            <div class="seat-price-minimal">₹<span id="generalPriceDisplay">1000</span> each</div>
+                        </div>
+                        <div class="seat-controls-minimal">
+                            <button class="seat-btn-minimal" id="generalMinus" disabled>−</button>
+                            <div class="seat-count-minimal" id="generalCount">0</div>
+                            <button class="seat-btn-minimal" id="generalPlus">+</button>
+                        </div>
+                    </div>
+
+                    <div class="seat-item-minimal" id="studentSeatSelector">
+                        <div class="seat-item-info-minimal">
+                            <div class="seat-name-minimal">Student Seats</div>
+                            <div class="seat-price-minimal">₹<span id="studentPriceDisplay">500</span> each</div>
+                        </div>
+                        <div class="seat-controls-minimal">
+                            <button class="seat-btn-minimal" id="studentMinus" disabled>−</button>
+                            <div class="seat-count-minimal" id="studentCount">0</div>
+                            <button class="seat-btn-minimal" id="studentPlus">+</button>
+                        </div>
+                    </div>
+
+                    <div class="seat-item-minimal" id="chairSeatSelector">
+                        <div class="seat-item-info-minimal">
+                            <div class="seat-name-minimal">Chairs Needed?</div>
+                            <div class="seat-price-minimal">Limited availability</div>
+                        </div>
+                        <div class="seat-controls-minimal">
+                            <button class="seat-btn-minimal" id="chairMinus" disabled>−</button>
+                            <div class="seat-count-minimal" id="chairCount">0</div>
+                            <button class="seat-btn-minimal" id="chairPlus">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="total-summary">
+                    <div class="total-label">Total Amount</div>
+                    <div class="total-amount">₹<span id="totalAmount">0</span></div>
+                    <div class="total-seats"><span id="totalSeats">0</span> seats selected</div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="step2Back">← Back</button>
+                    <button class="btn btn-primary" id="step2Continue" disabled>Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Attendee Details -->
+        <div class="booking-step" data-step="3">
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-number">Step 3 of 6</div>
+                    <h2 class="step-title">Who's Coming?</h2>
+                    <p class="step-description">Please provide details for all attendees</p>
+                </div>
+
+                <div id="attendeeFormsContainer">
+                    <!-- Dynamic forms will be generated here -->
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="step3Back">← Back</button>
+                    <button class="btn btn-primary" id="step3Continue">Continue to Payment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Payment -->
+        <div class="booking-step" data-step="4">
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-number">Step 4 of 6</div>
+                    <h2 class="step-title">Complete Your Contribution</h2>
+                    <p class="step-description">Make your payment and upload the screenshot</p>
+                </div>
+
+                <div class="payment-info">
+                    <div class="payment-amount">₹<span id="paymentAmount">0</span></div>
+
+                    <div class="upi-details">
+                        <div class="upi-label">Pay via UPI</div>
+                        <div class="upi-id" id="upiId">livingroombaithaks@upi</div>
+                        <button class="copy-btn" id="copyUpiBtn">Copy UPI ID</button>
+                    </div>
+
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(230, 194, 0, 0.1); border-radius: 6px; border: 1px solid rgba(230, 194, 0, 0.3);">
+                        <div style="font-family: 'Inter', sans-serif; font-size: 0.85em; color: var(--text-gray); margin-bottom: 8px;">
+                            Use this Transaction ID when making payment:
+                        </div>
+                        <div style="font-family: 'League Spartan', sans-serif; font-size: 1.3em; color: var(--gold-bright); font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <span id="displayTransactionId">LRB####</span>
+                            <button class="copy-btn" id="copyTransactionIdBtn" style="padding: 8px 16px; font-size: 0.8em;">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label required">Upload Payment Screenshot</label>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📸</div>
+                        <div class="upload-text">Drag & drop or click to upload</div>
+                        <div class="upload-hint">JPG, PNG, or PDF (max 5MB)</div>
+                    </div>
+                    <input type="file" id="paymentScreenshot" accept="image/*,.pdf" style="display: none;">
+                    <div id="previewContainer"></div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="step4Back">← Back</button>
+                    <button class="btn btn-primary" id="step4Continue" disabled>Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5: Review -->
+        <div class="booking-step" data-step="5">
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-number">Step 5 of 6</div>
+                    <h2 class="step-title">Review Your Booking</h2>
+                    <p class="step-description">Please verify all details before confirming</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>📋 Booking Summary</h3>
+                    <div class="summary-grid" id="reviewSummary">
+                        <!-- Summary will be populated here -->
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="step5Back">← Back</button>
+                    <button class="btn btn-primary" id="step5Confirm">Confirm Booking</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 6: Confirmation -->
+        <div class="booking-step" data-step="6">
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-number">Step 6 of 6</div>
+                    <h2 class="step-title">Booking Confirmed! 🎵</h2>
+                </div>
+
+                <div class="confirmation-card">
+                    <div class="success-icon">✓</div>
+                    <div class="booking-id">Booking ID: <span id="confirmationBookingId">LRB####</span></div>
+
+                    <div class="summary-grid" id="confirmationSummary">
+                        <!-- Confirmation details will be populated here -->
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                    <h3>What Happens Next?</h3>
+                    <ul>
+                        <li>We've received your booking request</li>
+                        <li>You'll receive confirmation within 24 hours via WhatsApp</li>
+                        <li>If seats are full, your contribution will be refunded promptly</li>
+                        <li>Reminders and directions will be shared closer to the baithak date</li>
+                    </ul>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="returnHome">Return to Home</button>
+                    <a href="https://wa.me/919880803110" class="btn btn-secondary" target="_blank">Join WhatsApp Community</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="booking-sticky-cta" id="bookingStickyCTA">
+    <div class="booking-sticky-content">
+        <div class="booking-sticky-info">
+            <div class="booking-sticky-step" id="stickyStepInfo">Step 1 of 6</div>
+            <div class="booking-sticky-total" id="stickyTotalAmount">Total: ₹0</div>
+        </div>
+        <button class="booking-sticky-btn" id="stickyNextBtn" disabled>Continue</button>
+    </div>
+</div>
+
 <section id="how-it-works">
     <div class="container">
         <h2 class="section-title">Reservation <span class="highlight">Process</span></h2>
-        
+
         <div class="steps-container">
             <div class="step-card">
                 <div class="step-title">Reserve Online</div>
@@ -756,7 +335,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="step-card">
                 <div class="step-title">Get Confirmation</div>
                 <div class="step-desc">
@@ -766,7 +345,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="step-card">
                 <div class="step-title">Get Reminders and Directions</div>
                 <div class="step-desc">
@@ -776,7 +355,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="step-card">
                 <div class="step-title">Immerse and Experience</div>
                 <div class="step-desc">
@@ -793,13 +372,13 @@
 <section id="past-events">
     <div class="container">
         <h2 class="section-title"><span class="highlight">Previous</span> Baithaks</h2>
-        
+
         <div class="past-events-grid" id="pastEventsGrid">
             <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; font-family: 'Inter', sans-serif; color: var(--text-gray);">
                 <p>Loading past baithaks...</p>
             </div>
         </div>
-        
+
         <div style="text-align: center; margin-top: 40px;">
             <button id="viewMoreBtn" class="btn btn-secondary" style="display: none;">
                 View More Past Baithaks
@@ -817,16 +396,16 @@
                     Bringing classical music back to its intimate roots through carefully curated home concerts in Bangalore.
                 </p>
             </div>
-            
+
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
                     <li><a href="#how-it-works">Reservation Process</a></li>
                     <li><a href="#past-events">Past Baithaks</a></li>
-                    <li><a href="#">Reserve a Seat</a></li>
+                    <li><a href="#" class="booking-trigger">Reserve a Seat</a></li>
                 </ul>
             </div>
-            
+
             <div class="footer-section">
                 <h3>Connect</h3>
                 <ul class="footer-links">
@@ -836,291 +415,16 @@
                 </ul>
             </div>
         </div>
-        
+
         <div style="text-align: center; padding-top: 30px; border-top: 1px solid rgba(212, 165, 116, 0.1); font-family: 'Inter', sans-serif; font-size: 0.85em; color: var(--text-muted);">
             © 2024 Living Room Baithaks. All rights reserved.
         </div>
     </div>
 </footer>
 
-<script>
-const menuToggle = document.querySelector('.menu-toggle');
-const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-const body = document.body;
-
-menuToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    menuToggle.classList.toggle('active');
-    mobileMenuOverlay.classList.toggle('active');
-    body.style.overflow = mobileMenuOverlay.classList.contains('active') ? 'hidden' : '';
-});
-
-mobileMenuOverlay.addEventListener('click', (e) => {
-    if (e.target === mobileMenuOverlay) {
-        menuToggle.classList.remove('active');
-        mobileMenuOverlay.classList.remove('active');
-        body.style.overflow = '';
-    }
-});
-
-document.querySelectorAll('.mobile-menu-content a').forEach(link => {
-    link.addEventListener('click', () => {
-        menuToggle.classList.remove('active');
-        mobileMenuOverlay.classList.remove('active');
-        body.style.overflow = '';
-    });
-});
-
-function formatTimeBlock(concert) {
-  if (!concert.concert_time) return "";
-
-  const mealType = concert.meal_type
-    ? concert.meal_type.charAt(0).toUpperCase() + concert.meal_type.slice(1).toLowerCase()
-    : "";
-
-  if (!concert.meal_time || !concert.meal_order) {
-    return `${concert.concert_time} – Baithak Begins`;
-  }
-
-  if (concert.meal_order.toLowerCase() === "before") {
-    return `
-      ${concert.meal_time} – ${mealType} followed by Baithak<br/>
-      ${concert.concert_time} – Baithak Begins
-    `;
-  }
-
-  return `
-    ${concert.concert_time} – Baithak<br/>
-    ${concert.meal_time} – ${mealType}
-  `;
-}
-
-fetch('test_case_4_max_past.json')
-    .then(response => response.json())
-    .then(data => {
-        const upcomingConcert = data.find(concert => 
-            concert.event_status && 
-            concert.event_status.toLowerCase() === 'upcoming' && 
-            concert.isCurrent === 'Y'
-        );
-        
-        if (!upcomingConcert) {
-            document.getElementById('heroContent').innerHTML = `
-                <div style="text-align: center; padding: 100px 20px;">
-                    <h2 style="font-family: 'League Spartan', sans-serif; color: var(--gold-toned); margin-bottom: 20px;">
-                        No Upcoming Baithak Currently
-                    </h2>
-                    <p style="font-family: 'Inter', sans-serif; color: var(--text-gray);">
-                        Please check back soon for our next intimate classical music gathering.
-                    </p>
-                </div>
-            `;
-            return;
-        }
-        
-        const artistNames = upcomingConcert.artists && upcomingConcert.artists.length > 0
-            ? upcomingConcert.artists.map(a => a.name).join(', ')
-            : 'Various Artists';
-        
-        const artistRoles = upcomingConcert.artists && upcomingConcert.artists.length > 0
-            ? upcomingConcert.artists.map(a => a.genre).join(', ')
-            : '';
-        
-        const heroHTML = `
-            <div class="hero-grid">
-                <div class="hero-image-container">
-                    <div class="hero-image image-container aspect-portrait">
-                        <img src="${upcomingConcert.image_hero}" 
-                             alt="${upcomingConcert.image_alt || upcomingConcert.title}"
-                             loading="eager"
-                             onerror="this.src='./Images/Baithaks/default_hero.jpg'">
-                    </div>
-                </div>
-                
-                <div class="hero-content">
-                    <div class="hero-label">UPCOMING BAITHAK</div>
-                    
-                    <div class="hero-artists">
-                        <span class="artist-name">${artistNames}</span>
-                        ${artistRoles ? `<br><span class="artist-role">(${artistRoles})</span>` : ''}
-                    </div>
-                    
-                    <h1 class="hero-title">
-                        ${upcomingConcert.title}${upcomingConcert.sub_title || ''}
-                    </h1>
-                    
-                    <div class="event-details">
-                        <div class="detail-row">
-                            <div class="icon-dot"></div>
-                            <strong>Date</strong>
-                            <span>${upcomingConcert.display_date || upcomingConcert.date}</span>
-                        </div>
-                       <div class="detail-row">
-                            <div class="icon-dot"></div>
-                            <strong>Time</strong>
-                            <span>${formatTimeBlock(upcomingConcert)}</span>
-                        </div>
-                        <div class="detail-row">
-                            <div class="icon-dot"></div>
-                            <strong>Venue</strong>
-                            <span>Sadashivnagar, Bangalore</span>
-                        </div>
-                        <div class="detail-row">
-                            <div class="icon-dot"></div>
-                            <strong>Includes</strong>
-                            <span>${upcomingConcert.inclusions || 'Home-cooked meal & Raagdhari mehfil'}</span>
-                        </div>
-                        <div class="detail-row">
-                            <div class="icon-dot"></div>
-                            <strong>Contribution</strong>
-                            <span>₹${upcomingConcert.ticket_price_general || 1000} (General) • ₹${upcomingConcert.ticket_price_student || 500} (Students)</span>
-                        </div>
-                    </div>
-                    
-                    <div style="font-family: 'Inter', sans-serif; font-size: 0.85em; color: var(--text-gray); margin-bottom: 25px; line-height: 1.6;">
-                        ${upcomingConcert.contribution_note || 'Your contribution goes entirely toward the artists and their music.'}
-                    </div>
-                    
-                    <div class="seats-urgency">
-                        <div class="seats-count">50 Baithak Seats</div>
-                        <div class="seats-text">Available</div>
-                    </div>
-                    
-                    <div class="hero-cta-group">
-                        <a href="${upcomingConcert.ticket_link || '#'}" class="btn btn-primary">Reserve a Seat</a>
-                        <a href="#past-events" class="btn btn-secondary">See Past Baithaks</a>
-                    </div>
-                    
-                    <div class="hero-quick-links">
-                        <a href="#how-it-works">Reservation Process</a>
-                        <a href="#past-events">Past Baithaks</a>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        document.getElementById('heroContent').innerHTML = heroHTML;
-        document.getElementById('stickySeatsCount').textContent = '50 Seats';
-        document.getElementById('stickyBookBtn').href = upcomingConcert.ticket_link || '#';
-    })
-    .catch(error => {
-        console.error('Error loading hero data:', error);
-        document.getElementById('heroContent').innerHTML = `
-            <div style="text-align: center; padding: 100px 20px;">
-                <p style="font-family: 'Inter', sans-serif; color: var(--orange);">
-                    Unable to load upcoming baithak information. Please refresh the page.
-                </p>
-            </div>
-        `;
-    });
-
-fetch('test_case_4_max_past.json')
-    .then(response => response.json())
-    .then(data => {
-        const container = document.getElementById('pastEventsGrid');
-        const viewMoreBtn = document.getElementById('viewMoreBtn');
-        
-        let pastConcerts = data.filter(c => 
-            c.event_status && 
-            c.event_status.toLowerCase() === 'past'
-        );
-        
-        pastConcerts.sort((a, b) => {
-            const dateA = new Date(a.date);
-            const dateB = new Date(b.date);
-            return dateB - dateA;
-        });
-        
-        const INITIAL_DISPLAY = 4;
-        let displayCount = INITIAL_DISPLAY;
-        
-        function displayConcerts() {
-            container.innerHTML = '';
-            
-            const concertsToShow = pastConcerts.slice(0, displayCount);
-            
-            concertsToShow.forEach((concert, index) => {
-                const artistNames = concert.artists && concert.artists.length > 0
-                    ? concert.artists.map(a => a.name).join(', ')
-                    : 'Various Artists';
-                
-                const imagePath = concert.image_past || './Images/Baithaks/default_past.jpg';
-                
-                const viewMoreLink = concert.event_gallery_link || 
-                                   concert.event_recording_link || 
-                                   'https://instagram.com/livingroombaithaks';
-                
-                const card = document.createElement('div');
-                card.className = 'past-event-card';
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.5s, transform 0.5s';
-                
-                card.innerHTML = `
-                    <div class="image-container aspect-story">
-                        <img alt="${concert.image_alt || concert.title}" 
-                             loading="lazy" 
-                             src="${imagePath}"
-                             onerror="this.src='./Images/Baithaks/default_past.jpg'"/>
-                    </div>
-                    <div class="past-event-info">
-                        <div class="past-event-title">${concert.title}${concert.sub_title || ''}</div>
-                        <div class="past-event-artist">${artistNames}</div>
-                        <div class="past-event-date">${concert.display_date || concert.date}</div>
-                        ${(concert.event_gallery_link || concert.event_recording_link) ? 
-                            `<a href="${viewMoreLink}" 
-                                target="_blank" 
-                                style="display: inline-block; margin-top: 12px; color: var(--orange); text-decoration: none; font-family: 'Inter', sans-serif; font-size: 0.85em; font-weight: 600; transition: color 0.3s;"
-                                onmouseover="this.style.color='var(--gold-bright)'"
-                                onmouseout="this.style.color='var(--orange)'">
-                               View Gallery/Recording →
-                             </a>` 
-                            : ''}
-                    </div>
-                `;
-                
-                container.appendChild(card);
-                
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-            
-            if (pastConcerts.length > displayCount) {
-                viewMoreBtn.style.display = 'inline-flex';
-            } else {
-                viewMoreBtn.style.display = 'none';
-            }
-        }
-        
-        viewMoreBtn.addEventListener('click', () => {
-            displayCount = pastConcerts.length;
-            displayConcerts();
-        });
-        
-        if (pastConcerts.length > 0) {
-            displayConcerts();
-        } else {
-            container.innerHTML = `
-                <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; font-family: 'Inter', sans-serif; color: var(--text-gray);">
-                    <p style="font-size: 1.1em; margin-bottom: 15px;">No past baithaks to display yet.</p>
-                    <p style="font-size: 0.9em;">Check back soon for recordings and photos from our concerts!</p>
-                </div>
-            `;
-        }
-    })
-    .catch(error => {
-        console.error('Error loading past concerts:', error);
-        document.getElementById('pastEventsGrid').innerHTML = `
-            <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; font-family: 'Inter', sans-serif; color: var(--text-gray);">
-                <p style="font-size: 1.1em; color: var(--orange);">Unable to load past baithaks.</p>
-                <p style="font-size: 0.9em; margin-top: 10px;">Please try refreshing the page.</p>
-            </div>
-        `;
-    });
-</script>
+<!-- Main JavaScript -->
+<script src="./scripts/main.js"></script>
+<script src="./scripts/booking-flow.js"></script>
 
 </body>
 </html>
-                

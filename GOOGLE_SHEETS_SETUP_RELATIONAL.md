@@ -171,27 +171,42 @@ BK_1699876543210    | ATT003      | Student   | Yes         | No              |
 
 ## Sheet 6: Seat Tracking
 
-**Purpose:** Real-time seat availability per concert
+**Purpose:** Real-time seat availability per concert (tracks General and Student seats separately)
 
 | Column Name | Type | Description | Example |
 |---|---|---|---|
 | concert_id | Text | Foreign key to Concerts | CONC004 |
 | total_seats | Number | Total capacity | 50 |
-| booked_seats | Number | Confirmed bookings | 15 |
-| available_seats | Number | Formula: =B2-C2 | 35 |
-| chairs_total | Number | Total chairs available | 10 |
-| chairs_booked | Number | Chairs confirmed | 3 |
-| chairs_available | Number | Formula: =E2-F2 | 7 |
+| general_seats_total | Number | General admission allocation | 40 |
+| general_seats_booked | Number | General seats confirmed | 12 |
+| general_seats_available | Number | Formula: =C2-D2 | 28 |
+| student_seats_total | Number | Student seats allocation | 10 |
+| student_seats_booked | Number | Student seats confirmed | 3 |
+| student_seats_available | Number | Formula: =F2-G2 | 7 |
+| chairs_total | Number | Total chairs available | 15 |
+| chairs_booked | Number | Chairs confirmed | 5 |
+| chairs_available | Number | Formula: =I2-J2 | 10 |
 
 **Formula Setup:**
-- Column D (available_seats): `=B2-C2`
-- Column G (chairs_available): `=E2-F2`
+- Column E (general_seats_available): `=C2-D2`
+- Column H (student_seats_available): `=F2-G2`
+- Column K (chairs_available): `=I2-J2`
+
+**Validation:**
+- Ensure `general_seats_total + student_seats_total <= total_seats`
+- Prevents overbooking of student vs general seats
 
 **Sample Data:**
 ```
-concert_id | total_seats | booked_seats | available_seats | chairs_total | chairs_booked |
-CONC004    | 50          | 15           | 35              | 10           | 3             |
+concert_id | total_seats | general_total | general_booked | general_avail | student_total | student_booked | student_avail | chairs_total | chairs_booked | chairs_avail |
+CONC004    | 50          | 40            | 12             | 28            | 10            | 3              | 7             | 15           | 5             | 10           |
+CONC001    | 30          | 25            | 25             | 0             | 5             | 5              | 0             | 10           | 10            | 0            |
 ```
+
+**Important:**
+- **student_seats_total** is the MAXIMUM number of discounted student seats per concert
+- Once student_seats_available = 0, no more student bookings accepted
+- Prevents revenue loss from too many discounted tickets
 
 ---
 

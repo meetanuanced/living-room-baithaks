@@ -896,29 +896,59 @@ function sendWhatsAppNotification(whatsapp, bookingId, concertName) {
 }
 
 // ========================================
-// TESTING FUNCTIONS
+// TESTING FUNCTIONS (RUN THESE IN EDITOR)
 // ========================================
 
 /**
  * Test getConcerts endpoint
+ * Run this with the ▶️ button to test if data loads correctly
  */
 function testGetConcerts() {
-  const result = getConcertsJSON();
-  Logger.log(result.getContent());
+  try {
+    const result = getConcertsWithArtistsEmbedded();
+    const concerts = JSON.parse(result.getContent());
+    Logger.log('✅ SUCCESS! Found ' + concerts.length + ' concerts');
+    Logger.log(JSON.stringify(concerts, null, 2));
+    return concerts;
+  } catch (error) {
+    Logger.log('❌ ERROR: ' + error.toString());
+  }
 }
 
 /**
  * Test seat availability endpoint
+ * Replace 'CONC001' with your actual concert ID
  */
 function testGetSeatAvailability() {
-  const result = getSeatAvailabilityJSON('CONC001');
-  Logger.log(result.getContent());
+  try {
+    const result = getSeatAvailabilityJSON('CONC001');
+    const availability = JSON.parse(result.getContent());
+    Logger.log('✅ Seat Availability:');
+    Logger.log(JSON.stringify(availability, null, 2));
+    return availability;
+  } catch (error) {
+    Logger.log('❌ ERROR: ' + error.toString());
+  }
 }
 
 /**
- * Test embedded artists format
+ * Test if SPREADSHEET_ID is set correctly
  */
-function testGetConcertsEmbedded() {
-  const result = getConcertsWithArtistsEmbedded();
-  Logger.log(result.getContent());
+function testConnection() {
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    Logger.log('✅ Connected to: ' + ss.getName());
+
+    // List all sheets
+    const sheets = ss.getSheets();
+    Logger.log('📊 Found ' + sheets.length + ' sheets:');
+    sheets.forEach(sheet => Logger.log('  - ' + sheet.getName()));
+
+    return true;
+  } catch (error) {
+    Logger.log('❌ ERROR connecting to spreadsheet:');
+    Logger.log('Check that SPREADSHEET_ID is correct on line 19');
+    Logger.log(error.toString());
+    return false;
+  }
 }

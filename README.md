@@ -8,26 +8,23 @@ A website for managing classical music concerts (Baithaks) with automated bookin
 
 ## 🚀 Quick Start
 
-### **1. For Website Setup (Already Done ✅)**
+### **Ready to Set Up the Backend?**
 
-Your website is ready at `index.html`. The website displays concerts and handles bookings.
+👉 **Read: [`QUICK_START.md`](QUICK_START.md)** ← Start here!
 
-**Current Setup:**
-- ✅ Website files (index.html, styles/, scripts/, Images/, Videos/)
-- ✅ Your concert data in `data/lrb_concerts_master_final_updated.json`
-- ✅ Original Excel data in `data/LRB_Master_Data.xlsx`
+This is a simple, step-by-step guide (2-3 hours total):
+1. Create Google Sheet (8 tabs)
+2. Deploy Google Apps Script
+3. Connect website to live data
 
-### **2. For Backend Setup (Next Step - Follow Migration Guide)**
+**Can't find where to insert IDs/URLs?**
 
-To enable automated bookings and attendee tracking:
+👉 **Read: [`WHERE_TO_INSERT_URLS.md`](WHERE_TO_INSERT_URLS.md)**
 
-👉 **Read: [`docs/MIGRATION_GUIDE.md`](docs/MIGRATION_GUIDE.md)**
-
-This guide walks you through:
-- Creating Google Sheets database (8 tables)
-- Deploying Google Apps Script backend
-- Connecting website to live data
-- Migrating your existing concert data
+Shows exactly:
+- Line 19 in Code.gs (SPREADSHEET_ID)
+- Where to update scripts/main.js (fetch URL)
+- Where to update scripts/booking-flow.js (API_URL)
 
 ---
 
@@ -58,37 +55,21 @@ living-room-baithaks/
 
 ## 📚 Documentation Guide
 
-### **If You Want to Set Up the Full Automated System:**
+### **If You Want to Set Up the Backend:**
 
-**Read in this order:**
+**Start here:**
+1. **[`QUICK_START.md`](QUICK_START.md)** ← Complete 4-step setup guide
+2. **[`WHERE_TO_INSERT_URLS.md`](WHERE_TO_INSERT_URLS.md)** ← Quick reference for IDs/URLs
 
-1. **[`docs/MIGRATION_GUIDE.md`](docs/MIGRATION_GUIDE.md)** ← Start here!
-   - Complete step-by-step migration process
-   - How to create Google Sheets database
-   - How to deploy Google Apps Script
-   - How to connect website to backend
-
-2. **[`docs/STUDENT_SEATS_UPDATE.md`](docs/STUDENT_SEATS_UPDATE.md)** ← Important fix!
-   - Explains separate student seat allocation
-   - Prevents unlimited student discount bookings
-   - Required updates to Code.gs
-
-3. **[`docs/GOOGLE_SHEETS_SETUP_RELATIONAL.md`](docs/GOOGLE_SHEETS_SETUP_RELATIONAL.md)**
-   - Detailed database structure (8 tables)
-   - Column definitions and examples
-   - Data validation setup
+**For detailed info:**
+- **[`GOOGLE_SHEETS_SETUP_RELATIONAL.md`](GOOGLE_SHEETS_SETUP_RELATIONAL.md)** - Database structure details
+- **[`STUDENT_SEATS_UPDATE.md`](STUDENT_SEATS_UPDATE.md)** - Why student seat tracking matters
+- **[`google_apps_script/README.md`](google_apps_script/README.md)** - API documentation
 
 ### **If You Just Want to Understand the System:**
 
-- **[`docs/IMPLEMENTATION_SUMMARY_RELATIONAL.md`](docs/IMPLEMENTATION_SUMMARY_RELATIONAL.md)**
-  - Complete overview of everything
-  - Design decisions explained
-  - Benefits breakdown
-
-- **[`google_apps_script/README.md`](google_apps_script/README.md)**
-  - API endpoints documentation
-  - Deployment instructions
-  - Troubleshooting guide
+- **[`IMPLEMENTATION_SUMMARY_RELATIONAL.md`](IMPLEMENTATION_SUMMARY_RELATIONAL.md)** - Complete overview
+- **[`BOOKINGS_EXCEL_TEMPLATE.md`](BOOKINGS_EXCEL_TEMPLATE.md)** - Excel vs Google Sheets comparison
 
 ---
 

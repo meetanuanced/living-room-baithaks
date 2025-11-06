@@ -34,19 +34,19 @@ function formatTimeBlock(concert) {
     : "";
 
   if (!concert.meal_time || !concert.meal_order) {
-    return `${concert.concert_time} â€“ Baithak Begins`;
+    return `${concert.concert_time} — Baithak Begins`;
   }
 
   if (concert.meal_order.toLowerCase() === "before") {
     return `
-      ${concert.meal_time} â€“ ${mealType} followed by Baithak<br/>
-      ${concert.concert_time} â€“ Baithak Begins
+      ${concert.meal_time} — ${mealType} followed by Baithak<br/>
+      ${concert.concert_time} — Baithak Begins
     `;
   }
 
   return `
-    ${concert.concert_time} â€“ Baithak<br/>
-    ${concert.meal_time} â€“ ${mealType}
+    ${concert.concert_time} — Baithak<br/>
+    ${concert.meal_time} — ${mealType}
   `;
 }
 
@@ -230,7 +230,7 @@ fetch('test_case_4_max_past.json')
                                 style="display: inline-block; margin-top: 12px; color: var(--orange); text-decoration: none; font-family: 'Inter', sans-serif; font-size: 0.85em; font-weight: 600; transition: color 0.3s;"
                                 onmouseover="this.style.color='var(--gold-bright)'"
                                 onmouseout="this.style.color='var(--orange)'">
-                               View Gallery/Recording â†’
+                               View Gallery/Recording →
                              </a>` 
                             : ''}
                     </div>

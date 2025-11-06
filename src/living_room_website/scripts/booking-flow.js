@@ -106,20 +106,23 @@ function reinitializeBookingTriggers() {
 }
 
 function loadConcertData() {
-    fetch('test_case_4_max_past.json')
+    // Use config.js to get the correct data source
+    const dataURL = getDataSourceURL();
+
+    fetch(dataURL)
         .then(response => response.json())
         .then(data => {
-            const upcomingConcert = data.find(concert => 
-                concert.event_status && 
-                concert.event_status.toLowerCase() === 'upcoming' && 
+            const upcomingConcert = data.find(concert =>
+                concert.event_status &&
+                concert.event_status.toLowerCase() === 'upcoming' &&
                 concert.isCurrent === 'Y'
             );
-            
+
             if (upcomingConcert) {
                 bookingState.concertData = upcomingConcert;
                 bookingState.generalPrice = upcomingConcert.ticket_price_general || 1000;
                 bookingState.studentPrice = upcomingConcert.ticket_price_student || 500;
-                
+
                 // Update prices in UI (seat selector displays)
                 document.querySelectorAll('#generalPriceDisplay').forEach(el => {
                     el.textContent = bookingState.generalPrice;
@@ -676,11 +679,21 @@ function populateReviewStep() {
     `;
 }
 
-function confirmBooking() {
+async function confirmBooking() {
     // Use the transaction ID that was already generated in step 4
     bookingState.bookingId = bookingState.transactionId; // Use same ID for consistency
-    
-    // Save booking data (in real implementation, this would go to a backend)
+
+    // Convert payment screenshot to base64 if present
+    let paymentScreenshotBase64 = null;
+    if (bookingState.paymentScreenshot) {
+        try {
+            paymentScreenshotBase64 = await fileToBase64(bookingState.paymentScreenshot);
+        } catch (error) {
+            console.error('Error converting screenshot to base64:', error);
+        }
+    }
+
+    // Prepare booking data
     const bookingData = {
         bookingId: bookingState.bookingId,
         transactionId: bookingState.transactionId,
@@ -692,17 +705,45 @@ function confirmBooking() {
             chairs: bookingState.chairs
         },
         totalAmount: bookingState.totalAmount,
-        attendees: bookingState.attendees,
-        paymentScreenshot: bookingState.paymentScreenshot?.name
+        attendees: bookingState.attendees.map(a => ({
+            name: a.name,
+            whatsapp: a.whatsapp || '',
+            email: a.email || '',
+            seatType: a.type,
+            needsChair: a.needsChair,
+            isMain: a.isMain
+        })),
+        paymentScreenshot: paymentScreenshotBase64
     };
-    
-    console.log('Booking Data:', bookingData);
-    
-    // TODO: Send to backend/email
-    
-    // Show confirmation
-    populateConfirmationStep();
-    goToStep(6);
+
+    console.log('📤 Submitting Booking Data:', bookingData);
+
+    try {
+        // Submit to backend (uses config.js function)
+        const result = await submitBookingToBackend(bookingData);
+
+        console.log('✅ Booking submitted successfully:', result);
+
+        // Show confirmation
+        populateConfirmationStep();
+        goToStep(6);
+
+    } catch (error) {
+        console.error('❌ Error submitting booking:', error);
+        alert('There was an error submitting your booking. Please try again or contact support.');
+    }
+}
+
+/**
+ * Helper function to convert file to base64
+ */
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+    });
 }
 
 function populateConfirmationStep() {

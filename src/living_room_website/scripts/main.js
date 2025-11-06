@@ -50,12 +50,15 @@ function formatTimeBlock(concert) {
   `;
 }
 
-fetch('test_case_4_max_past.json')
+// Use config.js to get the correct data source
+const dataURL = getDataSourceURL();
+
+fetch(dataURL)
     .then(response => response.json())
     .then(data => {
-        const upcomingConcert = data.find(concert => 
-            concert.event_status && 
-            concert.event_status.toLowerCase() === 'upcoming' && 
+        const upcomingConcert = data.find(concert =>
+            concert.event_status &&
+            concert.event_status.toLowerCase() === 'upcoming' &&
             concert.isCurrent === 'Y'
         );
         
@@ -171,14 +174,15 @@ fetch('test_case_4_max_past.json')
         `;
     });
 
-fetch('test_case_4_max_past.json')
+// Use config.js to get the correct data source (reuse dataURL from above)
+fetch(dataURL)
     .then(response => response.json())
     .then(data => {
         const container = document.getElementById('pastEventsGrid');
         const viewMoreBtn = document.getElementById('viewMoreBtn');
-        
-        let pastConcerts = data.filter(c => 
-            c.event_status && 
+
+        let pastConcerts = data.filter(c =>
+            c.event_status &&
             c.event_status.toLowerCase() === 'past'
         );
         

@@ -1,5 +1,18 @@
 # Student Seats Tracking - Code Updates
 
+## ✅ STATUS: FIXED (November 6, 2025)
+
+**Code.gs has been updated with all student seat tracking fixes!**
+
+All three functions have been corrected:
+- ✅ `getSeatAvailabilityJSON()` - Returns separate general/student data
+- ✅ `submitBooking()` - Validates student seat quota before accepting
+- ✅ `updateSeatAvailability()` - Updates general/student separately
+
+**You can now deploy Code.gs directly - no manual changes needed!**
+
+---
+
 ## Issue Identified
 
 The original implementation was missing **separate tracking for student seats allocation**.

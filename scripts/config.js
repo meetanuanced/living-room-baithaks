@@ -19,7 +19,7 @@
  *
  * Example: 'https://script.google.com/macros/s/AKfycby...ABC123/exec'
  */
-const API_URL = 'YOUR_WEB_APP_URL_HERE';
+const API_URL = 'https://script.google.com/macros/s/AKfycbx9kZ5u4wrRng9V_l2sUsc8CnnpW-sLKfZ_etnDUCJShmtY4tL-bEOa8OQj-zBbfuHo/exec';
 
 /**
  * Use local JSON for testing?
@@ -27,7 +27,7 @@ const API_URL = 'YOUR_WEB_APP_URL_HERE';
  * Set to true to use local data/lrb_concerts_master_final_updated.json file
  * Set to false to use Google Apps Script API
  */
-const USE_LOCAL_DATA = true;
+const USE_LOCAL_DATA = false;
 
 /**
  * Local JSON file path (for testing only)

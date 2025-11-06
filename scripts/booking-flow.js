@@ -114,8 +114,7 @@ function loadConcertData() {
         .then(data => {
             const upcomingConcert = data.find(concert =>
                 concert.event_status &&
-                concert.event_status.toLowerCase() === 'upcoming' &&
-                concert.isCurrent === 'Y'
+                concert.event_status.toLowerCase() === 'upcoming'
             );
 
             if (upcomingConcert) {
@@ -323,10 +322,12 @@ function updateSeatDisplay() {
 function generateAttendeeForms() {
     const container = document.getElementById('attendeeFormsContainer');
     container.innerHTML = '';
-    
+
     bookingState.attendees = [];
-    
-    // Main Attendee Card (full form)
+
+    const totalSeats = bookingState.generalSeats + bookingState.studentSeats;
+
+    // Main Attendee Card (full form with student and chair checkboxes)
     const mainCard = document.createElement('div');
     mainCard.className = 'main-attendee-card';
     mainCard.innerHTML = `
@@ -345,121 +346,153 @@ function generateAttendeeForms() {
                 <input type="email" class="attendee-email" data-index="0" placeholder="your@email.com">
             </div>
         </div>
+        <div class="field-checkboxes">
+            ${bookingState.studentSeats > 0 ? `
+                <label class="checkbox-label">
+                    <input type="checkbox" class="attendee-student" data-index="0">
+                    <span>Student Ticket (₹${bookingState.studentPrice})</span>
+                </label>
+            ` : ''}
+            ${bookingState.chairs > 0 ? `
+                <label class="checkbox-label">
+                    <input type="checkbox" class="attendee-chair" data-index="0">
+                    <span>Needs Chair</span>
+                </label>
+            ` : ''}
+        </div>
     `;
-    
+
     bookingState.attendees.push({
         index: 0,
-        type: bookingState.generalSeats > 0 ? 'General' : 'Student',
+        type: 'General',
         isMain: true,
         name: '',
         whatsapp: '',
         email: '',
         needsChair: false
     });
-    
+
     container.appendChild(mainCard);
-    
-    // Additional Attendees (simple names only)
-    const totalSeats = bookingState.generalSeats + bookingState.studentSeats;
+
+    // Additional Attendees (with student and chair checkboxes)
     if (totalSeats > 1) {
         const additionalCard = document.createElement('div');
         additionalCard.className = 'additional-attendees-card';
-        
+
         const headerText = totalSeats === 2 ? '1 seat' : `${totalSeats - 1} seats`;
-        additionalCard.innerHTML = `<div class="header">👥 Additional Attendees (${headerText})</div>`;
-        
-        let attendeeIndex = 1;
-        
-        // Add remaining general seats
-        for (let i = 1; i < bookingState.generalSeats; i++) {
-            const row = createSimpleNameRow(attendeeIndex, 'General');
+        additionalCard.innerHTML = `
+            <div class="header">👥 Additional Attendees (${headerText})</div>
+            <div class="attendee-limit-info">
+                ${bookingState.studentSeats > 0 ? `<span>✓ ${bookingState.studentSeats} student ticket${bookingState.studentSeats > 1 ? 's' : ''} available</span>` : ''}
+                ${bookingState.chairs > 0 ? `<span>✓ ${bookingState.chairs} chair${bookingState.chairs > 1 ? 's' : ''} available</span>` : ''}
+            </div>
+        `;
+
+        for (let i = 1; i < totalSeats; i++) {
+            const row = createAttendeeRow(i);
             additionalCard.appendChild(row);
-            attendeeIndex++;
         }
-        
-        // Add student seats
-        for (let i = 0; i < bookingState.studentSeats; i++) {
-            // Skip first if main attendee is student
-            if (i === 0 && bookingState.generalSeats === 0) continue;
-            
-            const row = createSimpleNameRow(attendeeIndex, 'Student');
-            additionalCard.appendChild(row);
-            attendeeIndex++;
-        }
-        
+
         container.appendChild(additionalCard);
     }
+
+    // Add event listeners for checkboxes
+    attachCheckboxListeners();
 }
 
-function createSimpleNameRow(index, seatType) {
+function createAttendeeRow(index) {
     const row = document.createElement('div');
-    row.className = 'simple-name-row';
-    
-    const hasChairs = bookingState.chairs > 0;
-    const chairIcon = hasChairs ? '🪑' : '';
-    const chairClass = hasChairs ? '' : 'disabled';
-    
+    row.className = 'attendee-row';
+
     row.innerHTML = `
-        <div class="person-number">Person ${index + 1}</div>
-        <input type="text" class="attendee-name" data-index="${index}" placeholder="Full name" required>
-        ${chairIcon ? `<span class="chair-icon ${chairClass}" data-index="${index}" title="Click to request chair">${chairIcon}</span>` : ''}
+        <div class="attendee-row-header">
+            <div class="person-number">Person ${index + 1}</div>
+        </div>
+        <div class="attendee-row-content">
+            <input type="text" class="attendee-name" data-index="${index}" placeholder="Full name" required>
+            <div class="attendee-row-checkboxes">
+                ${bookingState.studentSeats > 0 ? `
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="attendee-student" data-index="${index}">
+                        <span>Student</span>
+                    </label>
+                ` : ''}
+                ${bookingState.chairs > 0 ? `
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="attendee-chair" data-index="${index}">
+                        <span>Chair</span>
+                    </label>
+                ` : ''}
+            </div>
+        </div>
     `;
-    
+
     // Store reference
     bookingState.attendees.push({
         index,
-        type: seatType,
+        type: 'General',
         isMain: false,
         name: '',
         whatsapp: '',
         email: '',
         needsChair: false
     });
-    
-    // Add chair icon click handler
-    if (hasChairs) {
-        setTimeout(() => {
-            const chairIconEl = row.querySelector('.chair-icon');
-            if (chairIconEl) {
-                chairIconEl.addEventListener('click', function() {
-                    if (this.classList.contains('disabled')) return;
-                    
-                    const isActive = this.classList.contains('active');
-                    const index = parseInt(this.dataset.index);
-                    
-                    // Count currently selected chairs
-                    const selectedChairs = document.querySelectorAll('.chair-icon.active').length;
-                    
-                    if (!isActive && selectedChairs >= bookingState.chairs) {
-                        // Already at limit
-                        return;
-                    }
-                    
-                    // Toggle this icon
-                    this.classList.toggle('active');
-                    bookingState.attendees[index].needsChair = this.classList.contains('active');
-                    
-                    // Update all icons based on new count
-                    updateChairIcons();
-                });
-            }
-        }, 50);
-    }
-    
+
     return row;
 }
 
-function updateChairIcons() {
-    const selectedChairs = document.querySelectorAll('.chair-icon.active').length;
-    const allChairIcons = document.querySelectorAll('.chair-icon');
-    
-    allChairIcons.forEach(icon => {
-        if (!icon.classList.contains('active') && selectedChairs >= bookingState.chairs) {
-            icon.classList.add('disabled');
-        } else if (icon.classList.contains('disabled') && selectedChairs < bookingState.chairs) {
-            icon.classList.remove('disabled');
-        }
+function attachCheckboxListeners() {
+    // Student checkboxes
+    const studentCheckboxes = document.querySelectorAll('.attendee-student');
+    studentCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            validateStudentSelection(this);
+        });
     });
+
+    // Chair checkboxes
+    const chairCheckboxes = document.querySelectorAll('.attendee-chair');
+    chairCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            validateChairSelection(this);
+        });
+    });
+}
+
+function validateStudentSelection(checkbox) {
+    const index = parseInt(checkbox.dataset.index);
+    const isChecked = checkbox.checked;
+
+    // Count currently selected students
+    const selectedStudents = document.querySelectorAll('.attendee-student:checked').length;
+
+    if (isChecked && selectedStudents > bookingState.studentSeats) {
+        // Exceeded limit - uncheck
+        checkbox.checked = false;
+        alert(`You can only select ${bookingState.studentSeats} student ticket${bookingState.studentSeats > 1 ? 's' : ''}. ${bookingState.studentSeats} already selected.`);
+        return;
+    }
+
+    // Update attendee type
+    bookingState.attendees[index].type = isChecked ? 'Student' : 'General';
+}
+
+function validateChairSelection(checkbox) {
+    const index = parseInt(checkbox.dataset.index);
+    const isChecked = checkbox.checked;
+
+    // Count currently selected chairs
+    const selectedChairs = document.querySelectorAll('.attendee-chair:checked').length;
+
+    if (isChecked && selectedChairs > bookingState.chairs) {
+        // Exceeded limit - uncheck
+        checkbox.checked = false;
+        alert(`You can only select ${bookingState.chairs} chair${bookingState.chairs > 1 ? 's' : ''}. ${bookingState.chairs} already selected.`);
+        return;
+    }
+
+    // Update attendee needsChair
+    bookingState.attendees[index].needsChair = isChecked;
 }
 
 function validateAttendeeDetails() {

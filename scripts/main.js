@@ -58,8 +58,7 @@ fetch(dataURL)
     .then(data => {
         const upcomingConcert = data.find(concert =>
             concert.event_status &&
-            concert.event_status.toLowerCase() === 'upcoming' &&
-            concert.isCurrent === 'Y'
+            concert.event_status.toLowerCase() === 'upcoming'
         );
         
         if (!upcomingConcert) {
@@ -158,8 +157,10 @@ fetch(dataURL)
         `;
         
         document.getElementById('heroContent').innerHTML = heroHTML;
-        document.getElementById('stickySeatsCount').textContent = '50 Seats';
-        
+
+        // Fetch and display seat availability
+        fetchAndDisplaySeatAvailability(upcomingConcert.concert_id);
+
         // Reinitialize booking triggers for dynamically added buttons
         reinitializeBookingTriggers();
     })
@@ -280,3 +281,50 @@ fetch(dataURL)
             </div>
         `;
     });
+
+// Fetch and display seat availability
+async function fetchAndDisplaySeatAvailability(concertId) {
+    try {
+        // Get seat availability from config.js function
+        const availability = await getSeatAvailability(concertId);
+
+        // Calculate total available seats
+        const totalAvailable = availability.general_seats_available + availability.student_seats_available;
+        const totalSeats = availability.total_seats;
+
+        // Update hero section
+        const seatsCountEl = document.querySelector('.seats-count');
+        const seatsTextEl = document.querySelector('.seats-text');
+
+        if (seatsCountEl) {
+            if (totalAvailable === 0) {
+                seatsCountEl.textContent = 'Sold Out';
+                seatsTextEl.textContent = 'All seats booked';
+                seatsCountEl.style.color = 'var(--orange)';
+            } else if (totalAvailable <= 5) {
+                seatsCountEl.textContent = `Only ${totalAvailable} Seats Left!`;
+                seatsTextEl.textContent = 'Book now';
+                seatsCountEl.style.color = 'var(--orange)';
+            } else {
+                seatsCountEl.textContent = `${totalAvailable} of ${totalSeats} Seats`;
+                seatsTextEl.textContent = 'Available';
+            }
+        }
+
+        // Update sticky CTA
+        const stickySeatsCount = document.getElementById('stickySeatsCount');
+        if (stickySeatsCount) {
+            if (totalAvailable === 0) {
+                stickySeatsCount.textContent = 'Sold Out';
+            } else {
+                stickySeatsCount.textContent = `${totalAvailable} Seats`;
+            }
+        }
+
+        console.log('✅ Seat availability loaded:', availability);
+
+    } catch (error) {
+        console.error('❌ Error fetching seat availability:', error);
+        // Keep default display if fetch fails
+    }
+}

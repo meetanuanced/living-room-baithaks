@@ -34,6 +34,17 @@ const USE_LOCAL_DATA = true;
  */
 const LOCAL_DATA_PATH = './data/lrb_concerts_master_final_updated.json';
 
+/**
+ * CORS Proxy for local testing
+ *
+ * If you're getting CORS errors when testing on localhost,
+ * set USE_CORS_PROXY = true
+ *
+ * ⚠️ Only use for local testing! Disable for production.
+ */
+const USE_CORS_PROXY = false;
+const CORS_PROXY = 'https://corsproxy.io/?';
+
 // ========================================
 // DO NOT EDIT BELOW THIS LINE
 // ========================================
@@ -54,8 +65,16 @@ function getDataSourceURL() {
         return LOCAL_DATA_PATH; // Fallback to local
     }
 
+    const baseUrl = API_URL + '?action=getConcerts';
+
+    if (USE_CORS_PROXY) {
+        console.warn('🔄 Using CORS proxy for local testing:', CORS_PROXY);
+        console.warn('⚠️ Remember to disable USE_CORS_PROXY in production!');
+        return CORS_PROXY + encodeURIComponent(baseUrl);
+    }
+
     console.log('✅ Using Google Apps Script API:', API_URL);
-    return API_URL + '?action=getConcerts';
+    return baseUrl;
 }
 
 /**
@@ -73,7 +92,14 @@ async function submitBookingToBackend(bookingData) {
     }
 
     try {
-        const response = await fetch(API_URL + '?action=submitBooking', {
+        let url = API_URL + '?action=submitBooking';
+
+        if (USE_CORS_PROXY) {
+            console.warn('🔄 Using CORS proxy for booking submission');
+            url = CORS_PROXY + encodeURIComponent(url);
+        }
+
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -116,7 +142,13 @@ async function getSeatAvailability(concertId) {
     }
 
     try {
-        const response = await fetch(`${API_URL}?action=getSeatAvailability&concertId=${concertId}`);
+        let url = `${API_URL}?action=getSeatAvailability&concertId=${concertId}`;
+
+        if (USE_CORS_PROXY) {
+            url = CORS_PROXY + encodeURIComponent(url);
+        }
+
+        const response = await fetch(url);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

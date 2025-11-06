@@ -111,6 +111,16 @@ function doPost(e) {
   }
 }
 
+/**
+ * Handle OPTIONS requests - Required for CORS preflight
+ * This fixes the CORS error when testing from localhost
+ */
+function doOptions(e) {
+  return ContentService.createTextOutput('')
+    .setMimeType(ContentService.MimeType.TEXT)
+    .setContent('');
+}
+
 // ========================================
 // GET CONCERTS DATA (Relational Structure)
 // ========================================

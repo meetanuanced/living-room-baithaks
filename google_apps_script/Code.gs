@@ -277,11 +277,13 @@ function getConcertsWithArtistsEmbedded() {
 
 /**
  * Returns seat availability for a specific concert
+ * NOW WITH SEPARATE STUDENT SEAT TRACKING!
  */
 function getSeatAvailabilityJSON(concertId) {
   const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   const sheet = ss.getSheetByName(SHEET_NAMES.SEAT_TRACKING);
   const data = sheet.getDataRange().getValues();
+  const headers = data[0];
 
   // Find row with matching concert_id
   for (let i = 1; i < data.length; i++) {
@@ -289,11 +291,15 @@ function getSeatAvailabilityJSON(concertId) {
       return createResponse({
         concert_id: data[i][0],
         total_seats: data[i][1],
-        booked_seats: data[i][2],
-        available_seats: data[i][3],
-        chairs_total: data[i][4],
-        chairs_booked: data[i][5],
-        chairs_available: data[i][4] - data[i][5]
+        general_seats_total: data[i][2],
+        general_seats_booked: data[i][3],
+        general_seats_available: data[i][4],
+        student_seats_total: data[i][5],
+        student_seats_booked: data[i][6],
+        student_seats_available: data[i][7],
+        chairs_total: data[i][8],
+        chairs_booked: data[i][9],
+        chairs_available: data[i][10]
       });
     }
   }
@@ -302,8 +308,12 @@ function getSeatAvailabilityJSON(concertId) {
   return createResponse({
     concert_id: concertId,
     total_seats: 50,
-    booked_seats: 0,
-    available_seats: 50,
+    general_seats_total: 45,
+    general_seats_booked: 0,
+    general_seats_available: 45,
+    student_seats_total: 5,
+    student_seats_booked: 0,
+    student_seats_available: 5,
     chairs_total: 10,
     chairs_booked: 0,
     chairs_available: 10
@@ -462,6 +472,41 @@ function submitBooking(data) {
     const studentSeats = data.seats.student || 0;
     const chairsRequested = data.seats.chairs || 0;
     const totalAmount = data.totalAmount || 0;
+
+    // ========================================
+    // VALIDATE SEAT AVAILABILITY BEFORE ACCEPTING BOOKING
+    // ========================================
+
+    // Get current seat availability
+    const availabilityResponse = getSeatAvailabilityJSON(concertId);
+    const availability = JSON.parse(availabilityResponse.getContent());
+
+    // Validate general seats
+    if (generalSeats > availability.general_seats_available) {
+      return createResponse({
+        success: false,
+        error: `Only ${availability.general_seats_available} general seats available. You requested ${generalSeats}.`
+      }, 400);
+    }
+
+    // Validate student seats (CRITICAL - prevents revenue loss!)
+    if (studentSeats > availability.student_seats_available) {
+      return createResponse({
+        success: false,
+        error: `Only ${availability.student_seats_available} student seats available. You requested ${studentSeats}.`
+      }, 400);
+    }
+
+    // Validate chairs
+    if (chairsRequested > availability.chairs_available) {
+      return createResponse({
+        success: false,
+        error: `Only ${availability.chairs_available} chairs available. You requested ${chairsRequested}.`
+      }, 400);
+    }
+
+    // All validations passed - proceed with booking
+    // ========================================
 
     // Find main attendee
     const mainAttendee = data.attendees.find(a => a.isMain) || data.attendees[0] || {};
@@ -649,8 +694,8 @@ function confirmBooking(data) {
       bookingsSheet.getRange(i + 1, bookingHeaders.indexOf('booking_status') + 1).setValue('confirmed');
       bookingsSheet.getRange(i + 1, bookingHeaders.indexOf('confirmation_sent') + 1).setValue('Yes');
 
-      // Update seat availability
-      updateSeatAvailability(concertId, generalSeats + studentSeats, chairsRequested);
+      // Update seat availability (pass general and student separately!)
+      updateSeatAvailability(concertId, generalSeats, studentSeats, chairsRequested);
 
       // Update attendee history
       const bookingAttendeesSheet = ss.getSheetByName(SHEET_NAMES.BOOKING_ATTENDEES);
@@ -690,29 +735,56 @@ function confirmBooking(data) {
 
 /**
  * Updates seat availability in Seat Tracking sheet
+ * NOW HANDLES GENERAL AND STUDENT SEATS SEPARATELY!
+ *
+ * @param {string} concertId - Concert ID
+ * @param {number} generalSeatsToBook - Number of general seats to book
+ * @param {number} studentSeatsToBook - Number of student seats to book
+ * @param {number} chairsToBook - Number of chairs to book
  */
-function updateSeatAvailability(concertId, seatsToBook, chairsToBook) {
+function updateSeatAvailability(concertId, generalSeatsToBook, studentSeatsToBook, chairsToBook) {
   const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   const sheet = ss.getSheetByName(SHEET_NAMES.SEAT_TRACKING);
   const data = sheet.getDataRange().getValues();
+  const headers = data[0];
 
   for (let i = 1; i < data.length; i++) {
     if (data[i][0] === concertId) {
-      // Update booked seats
-      const currentBookedSeats = data[i][2];
-      const newBookedSeats = currentBookedSeats + seatsToBook;
-      sheet.getRange(i + 1, 3).setValue(newBookedSeats); // booked_seats column
+      const rowNum = i + 1;
 
-      // Calculate available seats (formula will auto-update if you set it up)
-      const totalSeats = data[i][1];
-      const availableSeats = totalSeats - newBookedSeats;
-      sheet.getRange(i + 1, 4).setValue(availableSeats); // available_seats column
+      // Column indices (based on new structure)
+      const generalBookedCol = 4;  // Column D: general_seats_booked
+      const generalAvailCol = 5;   // Column E: general_seats_available
+      const studentBookedCol = 7;  // Column G: student_seats_booked
+      const studentAvailCol = 8;   // Column H: student_seats_available
+      const chairsBookedCol = 10;  // Column J: chairs_booked
+      const chairsAvailCol = 11;   // Column K: chairs_available
 
-      // Update chairs
-      const currentChairsBooked = data[i][5];
+      // Update GENERAL seats
+      const currentGeneralBooked = data[i][generalBookedCol - 1];
+      const newGeneralBooked = currentGeneralBooked + generalSeatsToBook;
+      sheet.getRange(rowNum, generalBookedCol).setValue(newGeneralBooked);
+
+      const generalTotal = data[i][2];  // Column C: general_seats_total
+      sheet.getRange(rowNum, generalAvailCol).setValue(generalTotal - newGeneralBooked);
+
+      // Update STUDENT seats
+      const currentStudentBooked = data[i][studentBookedCol - 1];
+      const newStudentBooked = currentStudentBooked + studentSeatsToBook;
+      sheet.getRange(rowNum, studentBookedCol).setValue(newStudentBooked);
+
+      const studentTotal = data[i][5];  // Column F: student_seats_total
+      sheet.getRange(rowNum, studentAvailCol).setValue(studentTotal - newStudentBooked);
+
+      // Update CHAIRS
+      const currentChairsBooked = data[i][chairsBookedCol - 1];
       const newChairsBooked = currentChairsBooked + chairsToBook;
-      sheet.getRange(i + 1, 6).setValue(newChairsBooked); // chairs_booked column
+      sheet.getRange(rowNum, chairsBookedCol).setValue(newChairsBooked);
 
+      const chairsTotal = data[i][8];  // Column I: chairs_total
+      sheet.getRange(rowNum, chairsAvailCol).setValue(chairsTotal - newChairsBooked);
+
+      Logger.log(`Updated seats for ${concertId}: +${generalSeatsToBook} general, +${studentSeatsToBook} student, +${chairsToBook} chairs`);
       break;
     }
   }

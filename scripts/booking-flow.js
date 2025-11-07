@@ -331,7 +331,7 @@ function generateAttendeeForms() {
     const mainCard = document.createElement('div');
     mainCard.className = 'main-attendee-card';
     mainCard.innerHTML = `
-        <div class="header">👤 Main Attendee (Primary Contact)</div>
+        <div class="header">Main Attendee (Primary Contact)</div>
         <div class="field-grid">
             <div class="field">
                 <label>Full Name *</label>
@@ -339,7 +339,7 @@ function generateAttendeeForms() {
             </div>
             <div class="field">
                 <label>WhatsApp Number *</label>
-                <input type="tel" class="attendee-whatsapp" data-index="0" placeholder="+91" required>
+                <input type="tel" class="attendee-whatsapp" data-index="0" placeholder="+91 XXXXX XXXXX" required>
             </div>
             <div class="field">
                 <label>Email (Optional)</label>
@@ -381,11 +381,7 @@ function generateAttendeeForms() {
 
         const headerText = totalSeats === 2 ? '1 seat' : `${totalSeats - 1} seats`;
         additionalCard.innerHTML = `
-            <div class="header">👥 Additional Attendees (${headerText})</div>
-            <div class="attendee-limit-info">
-                ${bookingState.studentSeats > 0 ? `<span>✓ ${bookingState.studentSeats} student ticket${bookingState.studentSeats > 1 ? 's' : ''} available</span>` : ''}
-                ${bookingState.chairs > 0 ? `<span>✓ ${bookingState.chairs} chair${bookingState.chairs > 1 ? 's' : ''} available</span>` : ''}
-            </div>
+            <div class="header">Additional Attendees (${headerText})</div>
         `;
 
         for (let i = 1; i < totalSeats; i++) {
@@ -513,12 +509,29 @@ function validateAttendeeDetails() {
         }
     });
     
-    // Get main attendee WhatsApp
+    // Get main attendee WhatsApp with Indian number validation
     const whatsappInput = document.querySelector('.attendee-whatsapp');
     if (whatsappInput) {
-        const whatsapp = whatsappInput.value.trim();
-        if (!whatsapp || whatsapp.length < 10) {
+        let whatsapp = whatsappInput.value.trim();
+
+        // Remove spaces and dashes
+        whatsapp = whatsapp.replace(/[\s-]/g, '');
+
+        // If doesn't start with +91, add it
+        if (!whatsapp.startsWith('+91')) {
+            if (whatsapp.startsWith('91')) {
+                whatsapp = '+' + whatsapp;
+            } else if (whatsapp.length === 10) {
+                whatsapp = '+91' + whatsapp;
+            }
+        }
+
+        // Validate: Must be +91 followed by exactly 10 digits
+        const indianMobileRegex = /^\+91[6-9]\d{9}$/;
+
+        if (!indianMobileRegex.test(whatsapp)) {
             whatsappInput.style.borderColor = 'var(--orange)';
+            alert('Please enter a valid Indian mobile number (10 digits starting with 6-9)');
             isValid = false;
         } else {
             whatsappInput.style.borderColor = '';
@@ -541,15 +554,15 @@ function validateAttendeeDetails() {
 
 function populatePaymentStep() {
     document.getElementById('paymentAmount').textContent = bookingState.totalAmount;
-    
+
     // Generate transaction ID if not already generated
     if (!bookingState.transactionId) {
         bookingState.transactionId = 'LRB' + Math.floor(1000 + Math.random() * 9000);
     }
-    
+
     // Display transaction ID
     document.getElementById('displayTransactionId').textContent = bookingState.transactionId;
-    
+
     // Setup copy transaction ID button
     document.getElementById('copyTransactionIdBtn').addEventListener('click', (e) => {
         e.stopPropagation();
@@ -559,13 +572,17 @@ function populatePaymentStep() {
             const originalText = btn.textContent;
             btn.textContent = '✓ Copied!';
             btn.style.background = 'var(--gold-bright)';
-            
+
             setTimeout(() => {
                 btn.textContent = originalText;
                 btn.style.background = '';
             }, 2000);
         });
     });
+
+    // Payment screenshot is now optional - enable continue button by default
+    document.getElementById('step4Continue').disabled = false;
+    updateStickyCTA();
 }
 
 function setupPaymentUpload() {
@@ -839,7 +856,7 @@ function updateStickyCTA() {
             buttonText = 'Continue to Payment';
             break;
         case 4:
-            canProceed = bookingState.paymentScreenshot !== null;
+            canProceed = true; // Payment screenshot is optional
             break;
         case 5:
             canProceed = true;

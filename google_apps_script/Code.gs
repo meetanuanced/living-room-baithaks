@@ -593,13 +593,19 @@ function submitBooking(data) {
       ]);
     }
 
+    // ========================================
+    // UPDATE SEAT AVAILABILITY IMMEDIATELY
+    // ========================================
+    updateSeatAvailability(concertId, generalSeats, studentSeats, chairsRequested);
+    Logger.log(`✅ Updated seat availability for ${concertId}: -${generalSeats} general, -${studentSeats} student, -${chairsRequested} chairs`);
+
     // Send confirmation email/WhatsApp (optional)
     // sendConfirmationNotification(mainAttendee.whatsapp, bookingId, concertName);
 
     return createResponse({
       success: true,
       bookingId: bookingId,
-      message: 'Booking submitted successfully. You will receive confirmation within 24 hours.'
+      message: 'Booking submitted successfully. Seats have been reserved for you!'
     });
 
   } catch (error) {

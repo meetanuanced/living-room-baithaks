@@ -331,6 +331,22 @@
     border-color: var(--orange);
 }
 
+.seat-selector.unavailable {
+    opacity: 0.5;
+    background: var(--bg-black);
+    border-color: var(--text-muted);
+}
+
+.seat-selector.unavailable .seat-title,
+.seat-selector.unavailable .seat-price {
+    color: var(--text-muted);
+}
+
+.seat-selector.unavailable .seat-btn {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
 .seat-header {
     display: flex;
     justify-content: space-between;

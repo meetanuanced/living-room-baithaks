@@ -158,28 +158,127 @@ async function loadConcertData() {
     }
 }
 
-function startBookingFlow() {
-    // Hide hero and main sticky CTA
-    document.getElementById('hero').style.display = 'none';
-    document.getElementById('mobileStickyCTA').style.display = 'none';
-    
-    // Show booking flow and its sticky CTA
-    const bookingFlow = document.getElementById('booking-flow');
-    bookingFlow.classList.add('active');
-    bookingFlow.style.display = 'block';
-    
-    document.getElementById('navBackBtn').classList.add('visible');
-    
-    // Show booking sticky on mobile
-    if (window.innerWidth <= 968) {
-        document.getElementById('bookingStickyCTA').classList.add('active');
+// Debouncing flag to prevent double-clicks on booking triggers
+let isBookingFlowStarting = false;
+
+async function startBookingFlow() {
+    console.log('========================================');
+    console.log('🎫 STARTING BOOKING FLOW');
+    console.log('========================================');
+
+    // Prevent double-clicks / rapid multiple starts
+    if (isBookingFlowStarting) {
+        console.warn('⚠️ Booking flow already starting, ignoring duplicate request');
+        return;
     }
-    
-    // Reset to step 1
-    goToStep(1);
-    
-    // Scroll to top smoothly
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    isBookingFlowStarting = true;
+
+    try {
+        // 1. Validate concert data is loaded
+        if (!bookingState.concertData) {
+            console.warn('⚠️ Concert data not yet loaded, waiting...');
+
+            // Wait up to 5 seconds for data to load
+            let attempts = 0;
+            while (!bookingState.concertData && attempts < 50) {
+                await new Promise(resolve => setTimeout(resolve, 100)); // Wait 100ms
+                attempts++;
+            }
+
+            if (!bookingState.concertData) {
+                console.error('❌ Concert data failed to load after 5 seconds');
+                alert('Unable to load concert information. Please refresh the page and try again.');
+                isBookingFlowStarting = false;
+                return;
+            }
+
+            console.log('✅ Concert data loaded after waiting');
+        }
+
+        console.log('📋 Concert:', bookingState.concertData.concert_id, bookingState.concertData.title);
+
+        // 2. Fetch FRESH seat availability
+        console.log('🔄 Fetching fresh seat availability...');
+        console.log('   Previous availability:', bookingState.seatAvailability);
+
+        const freshAvailability = await getSeatAvailability(bookingState.concertData.concert_id);
+
+        console.log('   Fresh availability:', freshAvailability);
+
+        // 3. Check if sold out
+        const totalAvailable = freshAvailability.general_seats_available +
+                               freshAvailability.student_seats_available;
+
+        console.log('   Total seats available:', totalAvailable);
+
+        if (totalAvailable === 0) {
+            console.warn('⚠️ Concert is SOLD OUT');
+            alert('Sorry, this baithak is completely sold out.\n\nPlease check back for future events.');
+            isBookingFlowStarting = false;
+            return;
+        }
+
+        // 4. Update state with fresh data
+        bookingState.seatAvailability = freshAvailability;
+        console.log('✅ Updated seat availability in booking state');
+
+        // 5. Reset booking selections (fresh start)
+        bookingState.generalSeats = 0;
+        bookingState.studentSeats = 0;
+        bookingState.chairs = 0;
+        bookingState.totalAmount = 0;
+        bookingState.attendees = [];
+        bookingState.paymentScreenshot = null;
+        bookingState.transactionId = '';
+        console.log('✅ Reset booking selections');
+
+        // 6. Show booking flow UI
+        document.getElementById('hero').style.display = 'none';
+        document.getElementById('mobileStickyCTA').style.display = 'none';
+
+        const bookingFlow = document.getElementById('booking-flow');
+        bookingFlow.classList.add('active');
+        bookingFlow.style.display = 'block';
+
+        document.getElementById('navBackBtn').classList.add('visible');
+
+        if (window.innerWidth <= 968) {
+            document.getElementById('bookingStickyCTA').classList.add('active');
+        }
+
+        // 7. Reset UI elements
+        document.getElementById('agreeGuidelines').checked = false;
+        updateSeatDisplay(); // This will also update button states based on new availability
+
+        // 8. Go to Step 1
+        goToStep(1);
+
+        // 9. Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        console.log('========================================');
+        console.log('✅ BOOKING FLOW STARTED SUCCESSFULLY');
+        console.log('========================================');
+        console.log('Fresh availability:');
+        console.log('  General:', freshAvailability.general_seats_available, 'of', freshAvailability.general_seats_total);
+        console.log('  Student:', freshAvailability.student_seats_available, 'of', freshAvailability.student_seats_total);
+        console.log('  Chairs:', freshAvailability.chairs_available, 'of', freshAvailability.chairs_total);
+        console.log('========================================');
+
+    } catch (error) {
+        console.error('========================================');
+        console.error('❌ ERROR STARTING BOOKING FLOW');
+        console.error('========================================');
+        console.error('Error:', error);
+        console.error('Stack:', error.stack);
+        console.error('========================================');
+
+        alert('Unable to start booking. Please check your internet connection and try again.\n\nIf the problem persists, please refresh the page.');
+    } finally {
+        // Always reset the debouncing flag
+        isBookingFlowStarting = false;
+    }
 }
 
 function exitBookingFlow() {
@@ -328,40 +427,69 @@ function updateSeatDisplay() {
     document.getElementById('generalCount').textContent = bookingState.generalSeats;
     document.getElementById('studentCount').textContent = bookingState.studentSeats;
     document.getElementById('chairCount').textContent = bookingState.chairs;
-    
-    // Update button states
+
+    // Get availability (use ?? to handle 0 correctly)
+    const generalAvailable = bookingState.seatAvailability?.general_seats_available ?? 10;
+    const studentAvailable = bookingState.seatAvailability?.student_seats_available ?? 10;
+    const chairsAvailable = bookingState.seatAvailability?.chairs_available ?? 10;
+
+    // Update minus button states
     document.getElementById('generalMinus').disabled = bookingState.generalSeats === 0;
     document.getElementById('studentMinus').disabled = bookingState.studentSeats === 0;
     document.getElementById('chairMinus').disabled = bookingState.chairs === 0;
-    
-    // Calculate total
-    bookingState.totalAmount = 
-        (bookingState.generalSeats * bookingState.generalPrice) + 
-        (bookingState.studentSeats * bookingState.studentPrice);
-    
+
+    // Update plus button states - disable if 0 available OR already at max
+    const generalPlus = document.getElementById('generalPlus');
+    const studentPlus = document.getElementById('studentPlus');
+    const chairPlus = document.getElementById('chairPlus');
+
     const totalSeats = bookingState.generalSeats + bookingState.studentSeats;
-    
-    document.getElementById('totalAmount').textContent = bookingState.totalAmount;
-    document.getElementById('totalSeats').textContent = totalSeats;
-    
-    // Enable/disable continue button
-    document.getElementById('step2Continue').disabled = totalSeats === 0;
-    
-    // Highlight selectors with selections (using minimal classes)
+
+    // Disable general + if 0 available or already selected all available
+    generalPlus.disabled = (generalAvailable === 0) ||
+                           (bookingState.generalSeats >= generalAvailable) ||
+                           (bookingState.generalSeats >= 10);
+
+    // Disable student + if 0 available or already selected all available
+    studentPlus.disabled = (studentAvailable === 0) ||
+                           (bookingState.studentSeats >= studentAvailable) ||
+                           (bookingState.studentSeats >= 10);
+
+    // Disable chair + if 0 available or already selected all available or more chairs than seats
+    chairPlus.disabled = (chairsAvailable === 0) ||
+                         (bookingState.chairs >= chairsAvailable) ||
+                         (bookingState.chairs >= totalSeats) ||
+                         (bookingState.chairs >= 5);
+
+    // Add visual disabled state to selectors
     const generalSelector = document.getElementById('generalSeatSelector');
     const studentSelector = document.getElementById('studentSeatSelector');
     const chairSelector = document.getElementById('chairSeatSelector');
-    
+
     if (generalSelector) {
+        generalSelector.classList.toggle('unavailable', generalAvailable === 0);
         generalSelector.classList.toggle('has-selection', bookingState.generalSeats > 0);
     }
     if (studentSelector) {
+        studentSelector.classList.toggle('unavailable', studentAvailable === 0);
         studentSelector.classList.toggle('has-selection', bookingState.studentSeats > 0);
     }
     if (chairSelector) {
+        chairSelector.classList.toggle('unavailable', chairsAvailable === 0);
         chairSelector.classList.toggle('has-selection', bookingState.chairs > 0);
     }
-    
+
+    // Calculate total
+    bookingState.totalAmount =
+        (bookingState.generalSeats * bookingState.generalPrice) +
+        (bookingState.studentSeats * bookingState.studentPrice);
+
+    document.getElementById('totalAmount').textContent = bookingState.totalAmount;
+    document.getElementById('totalSeats').textContent = totalSeats;
+
+    // Enable/disable continue button
+    document.getElementById('step2Continue').disabled = totalSeats === 0;
+
     updateStickyCTA();
 }
 
@@ -460,15 +588,16 @@ function generateAttendeeForms() {
                 <input type="email" class="attendee-email" data-index="0" placeholder="your@email.com">
             </div>
         </div>
-        ${(bookingState.studentSeats > 0 || bookingState.chairs > 0) ? `
+        ${(bookingState.studentSeats > 0 || bookingState.seatAvailability?.student_seats_available > 0 ||
+           bookingState.chairs > 0 || bookingState.seatAvailability?.chairs_available > 0) ? `
             <div class="field-checkboxes">
-                ${bookingState.studentSeats > 0 ? `
+                ${(bookingState.studentSeats > 0 || bookingState.seatAvailability?.student_seats_available > 0) ? `
                     <label class="checkbox-label">
                         <input type="checkbox" class="attendee-student" data-index="0">
                         <span>Student Ticket</span>
                     </label>
                 ` : ''}
-                ${bookingState.chairs > 0 ? `
+                ${(bookingState.chairs > 0 || bookingState.seatAvailability?.chairs_available > 0) ? `
                     <label class="checkbox-label">
                         <input type="checkbox" class="attendee-chair" data-index="0">
                         <span>Need a Chair</span>
@@ -524,15 +653,16 @@ function createAttendeeRow(index) {
         <div class="attendee-row-field">
             <input type="text" class="attendee-name" data-index="${index}" placeholder="Enter full name" required>
         </div>
-        ${(bookingState.studentSeats > 0 || bookingState.chairs > 0) ? `
+        ${(bookingState.studentSeats > 0 || bookingState.seatAvailability?.student_seats_available > 0 ||
+           bookingState.chairs > 0 || bookingState.seatAvailability?.chairs_available > 0) ? `
             <div class="attendee-row-checkboxes">
-                ${bookingState.studentSeats > 0 ? `
+                ${(bookingState.studentSeats > 0 || bookingState.seatAvailability?.student_seats_available > 0) ? `
                     <label class="checkbox-label">
                         <input type="checkbox" class="attendee-student" data-index="${index}">
                         <span>Student Ticket</span>
                     </label>
                 ` : ''}
-                ${bookingState.chairs > 0 ? `
+                ${(bookingState.chairs > 0 || bookingState.seatAvailability?.chairs_available > 0) ? `
                     <label class="checkbox-label">
                         <input type="checkbox" class="attendee-chair" data-index="${index}">
                         <span>Need a Chair</span>

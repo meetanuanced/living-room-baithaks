@@ -807,6 +807,10 @@ function validateChairSelection(checkbox) {
 function validateAttendeeDetails() {
     let isValid = true;
 
+    console.log('========================================');
+    console.log('🔍 VALIDATING ATTENDEE DETAILS');
+    console.log('========================================');
+
     // Get all name inputs
     const nameInputs = document.querySelectorAll('.attendee-name');
     nameInputs.forEach(input => {
@@ -824,7 +828,7 @@ function validateAttendeeDetails() {
             bookingState.attendees[index].name = name;
         }
     });
-    
+
     // Get main attendee WhatsApp with Indian number validation
     const whatsappInput = document.querySelector('.attendee-whatsapp');
     if (whatsappInput) {
@@ -854,17 +858,75 @@ function validateAttendeeDetails() {
             bookingState.attendees[0].whatsapp = whatsapp;
         }
     }
-    
+
     // Get main attendee email (optional)
     const emailInput = document.querySelector('.attendee-email');
     if (emailInput) {
         bookingState.attendees[0].email = emailInput.value.trim();
     }
-    
-    if (!isValid) {
-        alert('Please fill in all required fields');
+
+    // ========================================
+    // CRITICAL VALIDATION: Chair and Student Allocation
+    // ========================================
+
+    // Count actual selections from checkboxes
+    const actualStudentSeats = bookingState.attendees.filter(a => a.type === 'Student').length;
+    const actualChairsAllocated = bookingState.attendees.filter(a => a.needsChair).length;
+
+    console.log('📊 Allocation Check:');
+    console.log(`   Selected in Step 2: ${bookingState.studentSeats} student, ${bookingState.chairs} chairs`);
+    console.log(`   Allocated in Step 3: ${actualStudentSeats} student, ${actualChairsAllocated} chairs`);
+
+    // Validate student seat allocation
+    if (bookingState.studentSeats > 0 && actualStudentSeats !== bookingState.studentSeats) {
+        console.error(`❌ Student seat mismatch: Expected ${bookingState.studentSeats}, got ${actualStudentSeats}`);
+
+        const message = actualStudentSeats < bookingState.studentSeats
+            ? `You selected ${bookingState.studentSeats} student seat${bookingState.studentSeats > 1 ? 's' : ''} in Step 2, but only marked ${actualStudentSeats} attendee${actualStudentSeats !== 1 ? 's' : ''} as student.\n\nPlease check the "Student Ticket" box for exactly ${bookingState.studentSeats} attendee${bookingState.studentSeats > 1 ? 's' : ''}.`
+            : `You marked ${actualStudentSeats} attendee${actualStudentSeats > 1 ? 's' : ''} as student, but only selected ${bookingState.studentSeats} student seat${bookingState.studentSeats > 1 ? 's' : ''} in Step 2.\n\nPlease uncheck some "Student Ticket" boxes or go back to Step 2 to select more student seats.`;
+
+        alert(message);
+        isValid = false;
     }
-    
+
+    // Validate chair allocation
+    if (bookingState.chairs > 0 && actualChairsAllocated !== bookingState.chairs) {
+        console.error(`❌ Chair allocation mismatch: Expected ${bookingState.chairs}, got ${actualChairsAllocated}`);
+
+        const message = actualChairsAllocated < bookingState.chairs
+            ? `You selected ${bookingState.chairs} chair${bookingState.chairs > 1 ? 's' : ''} in Step 2, but only allocated ${actualChairsAllocated} chair${actualChairsAllocated !== 1 ? 's' : ''}.\n\nPlease check the "Need a Chair" box for exactly ${bookingState.chairs} attendee${bookingState.chairs > 1 ? 's' : ''}.`
+            : `You allocated ${actualChairsAllocated} chair${actualChairsAllocated > 1 ? 's' : ''}, but only selected ${bookingState.chairs} chair${bookingState.chairs > 1 ? 's' : ''} in Step 2.\n\nPlease uncheck some "Need a Chair" boxes or go back to Step 2 to select more chairs.`;
+
+        alert(message);
+        isValid = false;
+    }
+
+    // Validate: Cannot allocate more student seats than total seats
+    const totalSeats = bookingState.generalSeats + bookingState.studentSeats;
+    if (actualStudentSeats > totalSeats) {
+        console.error(`❌ More student tickets than total seats: ${actualStudentSeats} > ${totalSeats}`);
+        alert(`You cannot have more student tickets (${actualStudentSeats}) than total seats (${totalSeats}).\n\nPlease uncheck some "Student Ticket" boxes.`);
+        isValid = false;
+    }
+
+    // Validate: Cannot allocate more chairs than attendees
+    if (actualChairsAllocated > totalSeats) {
+        console.error(`❌ More chairs than attendees: ${actualChairsAllocated} > ${totalSeats}`);
+        alert(`You cannot allocate more chairs (${actualChairsAllocated}) than total attendees (${totalSeats}).\n\nPlease uncheck some "Need a Chair" boxes.`);
+        isValid = false;
+    }
+
+    if (!isValid) {
+        console.log('❌ Validation failed');
+        if (nameInputs.length > 0 && !nameInputs[0].value.trim()) {
+            alert('Please fill in all required fields');
+        }
+    } else {
+        console.log('✅ All validations passed');
+    }
+
+    console.log('========================================');
+
     return isValid;
 }
 

@@ -657,20 +657,51 @@ function submitBooking(data) {
 
     // Append to Booking_Attendees junction table
     Logger.log('   ✍ Writing to BOOKING_ATTENDEES sheet:');
+    let successfullyWrittenRows = 0;
+
     for (let i = 0; i < attendeeIds.length; i++) {
       const attendeeInfo = attendeeIds[i];
-      Logger.log(`      Row ${i + 1}: [${bookingId}, ${attendeeInfo.attendeeId}, ${attendeeInfo.seatType}, `
+      Logger.log(`      Attempting Row ${i + 1}/${attendeeIds.length}: [${bookingId}, ${attendeeInfo.attendeeId}, ${attendeeInfo.seatType}, `
                 + `${attendeeInfo.needsChair ? 'Yes' : 'No'}, ${attendeeInfo.isMain ? 'Yes' : 'No'}]`);
 
-      bookingAttendeesSheet.appendRow([
-        bookingId,
-        attendeeInfo.attendeeId,
-        attendeeInfo.seatType,
-        attendeeInfo.needsChair ? 'Yes' : 'No',
-        attendeeInfo.isMain ? 'Yes' : 'No'
-      ]);
+      try {
+        // Validate data before writing
+        if (!bookingId || !attendeeInfo.attendeeId) {
+          Logger.log(`      ⚠️ Row ${i + 1} SKIPPED: Missing required data (bookingId=${bookingId}, attendeeId=${attendeeInfo.attendeeId})`);
+          continue;
+        }
+
+        // Write to sheet
+        bookingAttendeesSheet.appendRow([
+          bookingId,
+          attendeeInfo.attendeeId,
+          attendeeInfo.seatType || 'General',
+          attendeeInfo.needsChair ? 'Yes' : 'No',
+          attendeeInfo.isMain ? 'Yes' : 'No'
+        ]);
+
+        successfullyWrittenRows++;
+        Logger.log(`      ✓ Row ${i + 1} written successfully`);
+
+      } catch (rowError) {
+        Logger.log(`      ❌ ERROR writing Row ${i + 1}: ${rowError.toString()}`);
+        Logger.log(`      ❌ Failed data: bookingId=${bookingId}, attendeeId=${attendeeInfo.attendeeId}, seatType=${attendeeInfo.seatType}, needsChair=${attendeeInfo.needsChair}, isMain=${attendeeInfo.isMain}`);
+        // Continue to next row instead of failing entire booking
+      }
     }
-    Logger.log(`   ✓ Added ${attendeeIds.length} rows to BOOKING_ATTENDEES sheet`);
+
+    Logger.log(`   ✓ Successfully added ${successfullyWrittenRows}/${attendeeIds.length} rows to BOOKING_ATTENDEES sheet`);
+
+    // If ZERO rows written, this is a critical error
+    if (successfullyWrittenRows === 0 && attendeeIds.length > 0) {
+      Logger.log(`   ❌ CRITICAL: Failed to write ANY attendee rows!`);
+      throw new Error(`Failed to save attendee data to Booking_Attendees sheet. All ${attendeeIds.length} rows failed.`);
+    }
+
+    // Warn if partial failure
+    if (successfullyWrittenRows < attendeeIds.length) {
+      Logger.log(`   ⚠️ WARNING: Only ${successfullyWrittenRows}/${attendeeIds.length} attendee rows were saved successfully`);
+    }
 
     // ========================================
     // UPDATE SEAT AVAILABILITY IMMEDIATELY

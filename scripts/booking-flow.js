@@ -110,9 +110,13 @@ async function loadConcertData() {
     // Use config.js to get the correct data source
     const dataURL = getDataSourceURL();
 
+    console.log('🔄 Loading concert data from:', dataURL);
+
     try {
         const response = await fetch(dataURL);
         const data = await response.json();
+
+        console.log('📦 Concert data received:', data?.length || 0, 'concerts');
 
         const upcomingConcert = data.find(concert =>
             concert.event_status &&
@@ -124,11 +128,17 @@ async function loadConcertData() {
             bookingState.generalPrice = upcomingConcert.ticket_price_general || 1000;
             bookingState.studentPrice = upcomingConcert.ticket_price_student || 500;
 
+            console.log('🎵 Upcoming concert:', upcomingConcert.concert_id, upcomingConcert.title);
+
             // Fetch seat availability from config.js
+            console.log('🔄 Fetching seat availability for:', upcomingConcert.concert_id);
             const availability = await getSeatAvailability(upcomingConcert.concert_id);
             bookingState.seatAvailability = availability;
 
-            console.log('💺 Seat Availability:', availability);
+            console.log('💺 Seat Availability loaded:');
+            console.log('   General: ' + availability.general_seats_available + ' of ' + availability.general_seats_total);
+            console.log('   Student: ' + availability.student_seats_available + ' of ' + availability.student_seats_total);
+            console.log('   Chairs: ' + availability.chairs_available + ' of ' + availability.chairs_total);
 
             // Update prices in UI (seat selector displays)
             document.querySelectorAll('#generalPriceDisplay').forEach(el => {
@@ -137,9 +147,13 @@ async function loadConcertData() {
             document.querySelectorAll('#studentPriceDisplay').forEach(el => {
                 el.textContent = bookingState.studentPrice;
             });
+        } else {
+            console.warn('⚠️ No upcoming concert found in data');
         }
     } catch (error) {
-        console.error('Error loading concert data:', error);
+        console.error('❌ Error loading concert data:', error);
+        console.error('Stack:', error.stack);
+        alert('Error loading concert information. Please refresh the page and check console.');
     }
 }
 

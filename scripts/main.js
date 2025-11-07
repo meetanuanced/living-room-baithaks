@@ -295,19 +295,64 @@ async function fetchAndDisplaySeatAvailability(concertId) {
         // Update hero section
         const seatsCountEl = document.querySelector('.seats-count');
         const seatsTextEl = document.querySelector('.seats-text');
+        const reserveButtons = document.querySelectorAll('.booking-trigger');
 
         if (seatsCountEl) {
             if (totalAvailable === 0) {
                 seatsCountEl.textContent = 'Sold Out';
                 seatsTextEl.textContent = 'All seats booked';
                 seatsCountEl.style.color = 'var(--orange)';
+                seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";  // Match site font
+                seatsTextEl.style.fontFamily = "'Inter', sans-serif";
+
+                // Disable all Reserve/Book buttons when sold out
+                reserveButtons.forEach(btn => {
+                    btn.style.opacity = '0.5';
+                    btn.style.cursor = 'not-allowed';
+                    btn.style.pointerEvents = 'none';
+                    btn.setAttribute('disabled', 'true');
+                    btn.setAttribute('aria-disabled', 'true');
+                    btn.textContent = 'Sold Out';
+                });
             } else if (totalAvailable <= 5) {
                 seatsCountEl.textContent = `Only ${totalAvailable} Seats Left!`;
                 seatsTextEl.textContent = 'Book now';
                 seatsCountEl.style.color = 'var(--orange)';
+                seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";
+                seatsTextEl.style.fontFamily = "'Inter', sans-serif";
+
+                // Re-enable buttons if previously disabled
+                reserveButtons.forEach(btn => {
+                    btn.style.opacity = '1';
+                    btn.style.cursor = 'pointer';
+                    btn.style.pointerEvents = 'auto';
+                    btn.removeAttribute('disabled');
+                    btn.removeAttribute('aria-disabled');
+                    if (btn.classList.contains('mobile-sticky-btn')) {
+                        btn.textContent = 'Reserve Seat';
+                    } else {
+                        btn.textContent = 'Reserve a Seat';
+                    }
+                });
             } else {
                 seatsCountEl.textContent = `${totalAvailable} of ${totalSeats} Seats`;
                 seatsTextEl.textContent = 'Available';
+                seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";
+                seatsTextEl.style.fontFamily = "'Inter', sans-serif";
+
+                // Re-enable buttons if previously disabled
+                reserveButtons.forEach(btn => {
+                    btn.style.opacity = '1';
+                    btn.style.cursor = 'pointer';
+                    btn.style.pointerEvents = 'auto';
+                    btn.removeAttribute('disabled');
+                    btn.removeAttribute('aria-disabled');
+                    if (btn.classList.contains('mobile-sticky-btn')) {
+                        btn.textContent = 'Reserve Seat';
+                    } else {
+                        btn.textContent = 'Reserve a Seat';
+                    }
+                });
             }
         }
 
@@ -316,8 +361,10 @@ async function fetchAndDisplaySeatAvailability(concertId) {
         if (stickySeatsCount) {
             if (totalAvailable === 0) {
                 stickySeatsCount.textContent = 'Sold Out';
+                stickySeatsCount.style.fontFamily = "'League Spartan', sans-serif";
             } else {
                 stickySeatsCount.textContent = `${totalAvailable} Seats`;
+                stickySeatsCount.style.fontFamily = "'League Spartan', sans-serif";
             }
         }
 

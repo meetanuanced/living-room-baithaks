@@ -469,14 +469,53 @@ function updateSeatDisplay() {
     if (generalSelector) {
         generalSelector.classList.toggle('unavailable', generalAvailable === 0);
         generalSelector.classList.toggle('has-selection', bookingState.generalSeats > 0);
+
+        // Add/remove unavailability message
+        let generalMsg = generalSelector.querySelector('.unavailable-message');
+        if (generalAvailable === 0) {
+            if (!generalMsg) {
+                generalMsg = document.createElement('div');
+                generalMsg.className = 'unavailable-message';
+                generalMsg.textContent = 'Sold out';
+                generalSelector.appendChild(generalMsg);
+            }
+        } else if (generalMsg) {
+            generalMsg.remove();
+        }
     }
     if (studentSelector) {
         studentSelector.classList.toggle('unavailable', studentAvailable === 0);
         studentSelector.classList.toggle('has-selection', bookingState.studentSeats > 0);
+
+        // Add/remove unavailability message
+        let studentMsg = studentSelector.querySelector('.unavailable-message');
+        if (studentAvailable === 0) {
+            if (!studentMsg) {
+                studentMsg = document.createElement('div');
+                studentMsg.className = 'unavailable-message';
+                studentMsg.textContent = 'Not available';
+                studentSelector.appendChild(studentMsg);
+            }
+        } else if (studentMsg) {
+            studentMsg.remove();
+        }
     }
     if (chairSelector) {
         chairSelector.classList.toggle('unavailable', chairsAvailable === 0);
         chairSelector.classList.toggle('has-selection', bookingState.chairs > 0);
+
+        // Add/remove unavailability message
+        let chairMsg = chairSelector.querySelector('.unavailable-message');
+        if (chairsAvailable === 0) {
+            if (!chairMsg) {
+                chairMsg = document.createElement('div');
+                chairMsg.className = 'unavailable-message';
+                chairMsg.textContent = 'None available';
+                chairSelector.appendChild(chairMsg);
+            }
+        } else if (chairMsg) {
+            chairMsg.remove();
+        }
     }
 
     // Calculate total

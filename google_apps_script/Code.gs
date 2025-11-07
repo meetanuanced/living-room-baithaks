@@ -16,7 +16,7 @@
 // CONFIGURATION
 // ========================================
 
-const SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID_HERE'; // Replace with your Google Sheet ID
+const SPREADSHEET_ID = '1LoZpbmvh1lVYWsOWYeYB3m2ZQy7qNxyh5imnil4ngvw'; // Living Room Baithaks Google Sheet
 const SHEET_NAMES = {
   ARTISTS: 'Artists',
   CONCERTS: 'Concerts',

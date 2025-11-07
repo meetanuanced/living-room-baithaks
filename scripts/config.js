@@ -35,15 +35,24 @@ const USE_LOCAL_DATA = false;
 const LOCAL_DATA_PATH = './data/lrb_concerts_master_final_updated.json';
 
 /**
- * CORS Proxy for local testing
+ * Local Proxy Server (RECOMMENDED for local testing)
  *
- * If you're getting CORS errors when testing on localhost,
- * set USE_CORS_PROXY = true
+ * Run the local proxy server: node cors-proxy.js
+ * Then set USE_LOCAL_PROXY = true
  *
+ * This is better than third-party CORS proxies!
+ */
+const USE_LOCAL_PROXY = false;
+const LOCAL_PROXY_URL = 'http://localhost:3001';
+
+/**
+ * Third-party CORS Proxy (backup option)
+ *
+ * If you don't want to run a local proxy, set USE_CORS_PROXY = true
  * ⚠️ Only use for local testing! Disable for production.
  */
 const USE_CORS_PROXY = false;
-const CORS_PROXY = 'https://corsproxy.io/?';
+const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
 
 // ========================================
 // DO NOT EDIT BELOW THIS LINE
@@ -65,15 +74,23 @@ function getDataSourceURL() {
         return LOCAL_DATA_PATH; // Fallback to local
     }
 
+    // Use local proxy server (recommended for development)
+    if (USE_LOCAL_PROXY) {
+        console.log('✅ Using LOCAL PROXY SERVER:', LOCAL_PROXY_URL);
+        console.log('🔄 Proxying to:', API_URL);
+        return LOCAL_PROXY_URL + '?action=getConcerts';
+    }
+
     const baseUrl = API_URL + '?action=getConcerts';
 
+    // Use third-party CORS proxy (backup option)
     if (USE_CORS_PROXY) {
-        console.warn('🔄 Using CORS proxy for local testing:', CORS_PROXY);
+        console.warn('🔄 Using third-party CORS proxy:', CORS_PROXY);
         console.warn('⚠️ Remember to disable USE_CORS_PROXY in production!');
         return CORS_PROXY + encodeURIComponent(baseUrl);
     }
 
-    console.log('✅ Using Google Apps Script API:', API_URL);
+    console.log('✅ Using Google Apps Script API directly:', API_URL);
     return baseUrl;
 }
 
@@ -92,11 +109,21 @@ async function submitBookingToBackend(bookingData) {
     }
 
     try {
-        let url = API_URL + '?action=submitBooking';
+        let url;
 
-        if (USE_CORS_PROXY) {
-            console.warn('🔄 Using CORS proxy for booking submission');
-            url = CORS_PROXY + encodeURIComponent(url);
+        // Use local proxy server
+        if (USE_LOCAL_PROXY) {
+            url = LOCAL_PROXY_URL + '?action=submitBooking';
+            console.log('📤 Submitting booking via local proxy');
+        }
+        // Use third-party CORS proxy
+        else if (USE_CORS_PROXY) {
+            url = CORS_PROXY + encodeURIComponent(API_URL + '?action=submitBooking');
+            console.warn('🔄 Using third-party CORS proxy for booking submission');
+        }
+        // Direct API call
+        else {
+            url = API_URL + '?action=submitBooking';
         }
 
         const response = await fetch(url, {
@@ -142,10 +169,19 @@ async function getSeatAvailability(concertId) {
     }
 
     try {
-        let url = `${API_URL}?action=getSeatAvailability&concertId=${concertId}`;
+        let url;
 
-        if (USE_CORS_PROXY) {
-            url = CORS_PROXY + encodeURIComponent(url);
+        // Use local proxy server
+        if (USE_LOCAL_PROXY) {
+            url = `${LOCAL_PROXY_URL}?action=getSeatAvailability&concertId=${concertId}`;
+        }
+        // Use third-party CORS proxy
+        else if (USE_CORS_PROXY) {
+            url = CORS_PROXY + encodeURIComponent(`${API_URL}?action=getSeatAvailability&concertId=${concertId}`);
+        }
+        // Direct API call
+        else {
+            url = `${API_URL}?action=getSeatAvailability&concertId=${concertId}`;
         }
 
         const response = await fetch(url);

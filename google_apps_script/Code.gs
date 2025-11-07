@@ -26,8 +26,64 @@ const SHEET_NAMES = {
   BOOKING_ATTENDEES: 'Booking_Attendees',
   SEAT_TRACKING: 'Seat Tracking',
   PAYMENT_LOGS: 'Payment Logs',
-  CONFIG: 'Config'
+  CONFIG: 'Config',
+  DEBUG_LOGS: 'Debug Logs'  // Optional: For easier debugging of web app executions
 };
+
+// ========================================
+// DEBUG LOGGING CONFIGURATION
+// ========================================
+
+/**
+ * Set to true to enable writing logs to Debug Logs sheet
+ * This is useful because doPost execution logs don't show up in
+ * the standard Apps Script executions dashboard
+ */
+const ENABLE_SHEET_LOGGING = true;  // Change to false to disable
+
+/**
+ * Helper function to write debug logs to a Google Sheet
+ * This makes it much easier to see what's happening with doPost calls
+ */
+function debugLog(message, data = null) {
+  // Always log to Apps Script Logger (for Cloud Logging)
+  if (data) {
+    Logger.log(message + ': ' + JSON.stringify(data));
+  } else {
+    Logger.log(message);
+  }
+
+  // Optionally also write to Debug Logs sheet for easy viewing
+  if (!ENABLE_SHEET_LOGGING) return;
+
+  try {
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    let debugSheet = ss.getSheetByName(SHEET_NAMES.DEBUG_LOGS);
+
+    // Create Debug Logs sheet if it doesn't exist
+    if (!debugSheet) {
+      debugSheet = ss.insertSheet(SHEET_NAMES.DEBUG_LOGS);
+      // Add header row
+      debugSheet.appendRow(['Timestamp', 'Message', 'Data']);
+      debugSheet.getRange('A1:C1').setFontWeight('bold');
+      debugSheet.setFrozenRows(1);
+    }
+
+    // Append log entry
+    const timestamp = new Date().toISOString();
+    const dataStr = data ? JSON.stringify(data) : '';
+    debugSheet.appendRow([timestamp, message, dataStr]);
+
+    // Keep only last 500 rows (prevent sheet from getting too large)
+    if (debugSheet.getLastRow() > 501) {
+      debugSheet.deleteRows(2, debugSheet.getLastRow() - 501);
+    }
+
+  } catch (error) {
+    // If debug logging fails, don't break the main function
+    Logger.log('Debug logging error: ' + error.toString());
+  }
+}
 
 // ========================================
 // WEB APP ENDPOINTS
@@ -89,8 +145,18 @@ function doPost(e) {
   try {
     const action = e.parameter.action || 'submitBooking';
 
+    // DEBUG: Log that doPost was called (visible in Debug Logs sheet)
+    debugLog('🌐 doPost CALLED', { action: action, timestamp: new Date().toISOString() });
+
     // Parse JSON body
     const data = JSON.parse(e.postData.contents);
+
+    debugLog('📥 Received data', {
+      action: action,
+      bookingId: data.bookingId,
+      attendeeCount: data.attendees?.length,
+      seats: data.seats
+    });
 
     switch (action) {
       case 'submitBooking':
@@ -107,6 +173,7 @@ function doPost(e) {
     }
   } catch (error) {
     Logger.log('doPost Error: ' + error.toString());
+    debugLog('❌ doPost ERROR', { error: error.toString(), stack: error.stack });
     return createResponse({ error: error.toString() }, 500);
   }
 }
@@ -507,6 +574,14 @@ function submitBooking(data) {
     Logger.log(`   Total Amount: ₹${totalAmount}`);
     Logger.log(`   Total Attendees: ${data.attendees?.length || 0}`);
 
+    // DEBUG: Log booking start
+    debugLog('📥 submitBooking STARTED', {
+      bookingId: bookingId,
+      concertId: concertId,
+      attendeeCount: data.attendees?.length,
+      seats: { general: generalSeats, student: studentSeats, chairs: chairsRequested }
+    });
+
     // ========================================
     // VALIDATE SEAT AVAILABILITY BEFORE ACCEPTING BOOKING
     // ========================================
@@ -692,15 +767,29 @@ function submitBooking(data) {
 
     Logger.log(`   ✓ Successfully added ${successfullyWrittenRows}/${attendeeIds.length} rows to BOOKING_ATTENDEES sheet`);
 
+    // DEBUG: Log attendee save results
+    debugLog('💾 Booking_Attendees WRITE', {
+      bookingId: bookingId,
+      totalAttendees: attendeeIds.length,
+      successfullyWritten: successfullyWrittenRows,
+      failed: attendeeIds.length - successfullyWrittenRows
+    });
+
     // If ZERO rows written, this is a critical error
     if (successfullyWrittenRows === 0 && attendeeIds.length > 0) {
       Logger.log(`   ❌ CRITICAL: Failed to write ANY attendee rows!`);
+      debugLog('❌ CRITICAL: Zero attendees saved', { bookingId: bookingId, attemptedCount: attendeeIds.length });
       throw new Error(`Failed to save attendee data to Booking_Attendees sheet. All ${attendeeIds.length} rows failed.`);
     }
 
     // Warn if partial failure
     if (successfullyWrittenRows < attendeeIds.length) {
       Logger.log(`   ⚠️ WARNING: Only ${successfullyWrittenRows}/${attendeeIds.length} attendee rows were saved successfully`);
+      debugLog('⚠️ Partial attendee save failure', {
+        bookingId: bookingId,
+        saved: successfullyWrittenRows,
+        total: attendeeIds.length
+      });
     }
 
     // ========================================
@@ -729,6 +818,16 @@ function submitBooking(data) {
     Logger.log(`Amount: ₹${totalAmount}`);
     Logger.log('========================================');
 
+    // DEBUG: Log successful booking
+    debugLog('✅ BOOKING SUCCESS', {
+      bookingId: bookingId,
+      attendees: attendeeIds.length,
+      general: generalSeats,
+      student: studentSeats,
+      chairs: chairsRequested,
+      amount: totalAmount
+    });
+
     return createResponse({
       success: true,
       bookingId: bookingId,
@@ -742,6 +841,14 @@ function submitBooking(data) {
     Logger.log('Error: ' + error.toString());
     Logger.log('Stack: ' + error.stack);
     Logger.log('========================================');
+
+    // DEBUG: Log booking failure
+    debugLog('❌ BOOKING FAILED', {
+      error: error.toString(),
+      stack: error.stack,
+      bookingId: bookingId
+    });
+
     return createResponse({ error: error.toString() }, 500);
   }
 }

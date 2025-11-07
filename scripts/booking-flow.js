@@ -743,6 +743,15 @@ async function confirmBooking() {
         }
     }
 
+    // Count ACTUAL student and general seats from attendee selections (not from Step 2)
+    const actualGeneralSeats = bookingState.attendees.filter(a => a.type === 'General').length;
+    const actualStudentSeats = bookingState.attendees.filter(a => a.type === 'Student').length;
+    const actualChairsRequested = bookingState.attendees.filter(a => a.needsChair).length;
+
+    console.log('📊 Seat Breakdown:');
+    console.log(`   From Step 2: ${bookingState.generalSeats} general, ${bookingState.studentSeats} student`);
+    console.log(`   Actual selections: ${actualGeneralSeats} general, ${actualStudentSeats} student, ${actualChairsRequested} chairs`);
+
     // Prepare booking data
     const bookingData = {
         bookingId: bookingState.bookingId,
@@ -750,9 +759,9 @@ async function confirmBooking() {
         timestamp: new Date().toISOString(),
         concert: bookingState.concertData,
         seats: {
-            general: bookingState.generalSeats,
-            student: bookingState.studentSeats,
-            chairs: bookingState.chairs
+            general: actualGeneralSeats,      // Use ACTUAL count from checkboxes
+            student: actualStudentSeats,      // Use ACTUAL count from checkboxes
+            chairs: actualChairsRequested     // Use ACTUAL count from checkboxes
         },
         totalAmount: bookingState.totalAmount,
         attendees: bookingState.attendees.map(a => ({

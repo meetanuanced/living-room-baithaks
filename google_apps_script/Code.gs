@@ -364,12 +364,19 @@ function findOrCreateAttendee(name, whatsapp, email, studentStatus, needsChair) 
   for (let i = 1; i < data.length; i++) {
     if (data[i][headers.indexOf('whatsapp')] === whatsapp) {
       // Found existing attendee - return their ID
-      return data[i][headers.indexOf('attendee_id')];
+      const existingId = data[i][headers.indexOf('attendee_id')];
+      const existingName = data[i][headers.indexOf('name')];
+      const totalConcerts = data[i][headers.indexOf('total_concerts_attended')] || 0;
+      Logger.log(`      → Found existing attendee: ${existingName} (${existingId}), attended ${totalConcerts} concerts`);
+      return existingId;
     }
   }
 
   // Attendee not found - create new
   const attendeeId = generateAttendeeId();
+
+  Logger.log(`      → Creating NEW attendee in ATTENDEES sheet:`);
+  Logger.log(`         Row: [${attendeeId}, ${name}, ${whatsapp}, ${email || ''}, ${studentStatus || 'General'}, ${needsChair ? 'Yes' : 'No'}, '', '', 0, '', '', '']`);
 
   sheet.appendRow([
     attendeeId,
@@ -385,6 +392,8 @@ function findOrCreateAttendee(name, whatsapp, email, studentStatus, needsChair) 
     '', // last_concert_date
     ''  // notes
   ]);
+
+  Logger.log(`      → ✓ New attendee created with ID: ${attendeeId}`);
 
   return attendeeId;
 }
@@ -472,6 +481,10 @@ function submitBooking(data) {
   const bookingAttendeesSheet = ss.getSheetByName(SHEET_NAMES.BOOKING_ATTENDEES);
 
   try {
+    Logger.log('========================================');
+    Logger.log('📥 BOOKING SUBMISSION STARTED');
+    Logger.log('========================================');
+
     // Extract data
     const bookingId = data.bookingId || generateBookingId();
     const transactionId = data.transactionId;
@@ -483,16 +496,36 @@ function submitBooking(data) {
     const chairsRequested = data.seats.chairs || 0;
     const totalAmount = data.totalAmount || 0;
 
+    Logger.log('🎫 Booking Details:');
+    Logger.log(`   Booking ID: ${bookingId}`);
+    Logger.log(`   Transaction ID: ${transactionId}`);
+    Logger.log(`   Concert ID: ${concertId}`);
+    Logger.log(`   Concert Name: ${concertName}`);
+    Logger.log(`   General Seats: ${generalSeats}`);
+    Logger.log(`   Student Seats: ${studentSeats}`);
+    Logger.log(`   Chairs: ${chairsRequested}`);
+    Logger.log(`   Total Amount: ₹${totalAmount}`);
+    Logger.log(`   Total Attendees: ${data.attendees?.length || 0}`);
+
     // ========================================
     // VALIDATE SEAT AVAILABILITY BEFORE ACCEPTING BOOKING
     // ========================================
+
+    Logger.log('');
+    Logger.log('🔍 Checking Seat Availability...');
 
     // Get current seat availability
     const availabilityResponse = getSeatAvailabilityJSON(concertId);
     const availability = JSON.parse(availabilityResponse.getContent());
 
+    Logger.log(`   Current Availability:`);
+    Logger.log(`      General: ${availability.general_seats_available} available (${availability.general_seats_total} total, ${availability.general_seats_booked} booked)`);
+    Logger.log(`      Student: ${availability.student_seats_available} available (${availability.student_seats_total} total, ${availability.student_seats_booked} booked)`);
+    Logger.log(`      Chairs: ${availability.chairs_available} available (${availability.chairs_total} total, ${availability.chairs_booked} booked)`);
+
     // Validate general seats
     if (generalSeats > availability.general_seats_available) {
+      Logger.log(`❌ VALIDATION FAILED: Not enough general seats (requested ${generalSeats}, available ${availability.general_seats_available})`);
       return createResponse({
         success: false,
         error: `Only ${availability.general_seats_available} general seats available. You requested ${generalSeats}.`
@@ -501,6 +534,7 @@ function submitBooking(data) {
 
     // Validate student seats (CRITICAL - prevents revenue loss!)
     if (studentSeats > availability.student_seats_available) {
+      Logger.log(`❌ VALIDATION FAILED: Not enough student seats (requested ${studentSeats}, available ${availability.student_seats_available})`);
       return createResponse({
         success: false,
         error: `Only ${availability.student_seats_available} student seats available. You requested ${studentSeats}.`
@@ -509,11 +543,14 @@ function submitBooking(data) {
 
     // Validate chairs
     if (chairsRequested > availability.chairs_available) {
+      Logger.log(`❌ VALIDATION FAILED: Not enough chairs (requested ${chairsRequested}, available ${availability.chairs_available})`);
       return createResponse({
         success: false,
         error: `Only ${availability.chairs_available} chairs available. You requested ${chairsRequested}.`
       }, 400);
     }
+
+    Logger.log('✅ Seat availability validated - sufficient seats available');
 
     // All validations passed - proceed with booking
     // ========================================
@@ -521,11 +558,22 @@ function submitBooking(data) {
     // Find main attendee
     const mainAttendee = data.attendees.find(a => a.isMain) || data.attendees[0] || {};
 
+    Logger.log('');
+    Logger.log('👥 Processing Attendees...');
+
     // Create or find all attendees in master table
     const attendeeIds = [];
     let mainContactAttendeeId = '';
 
-    for (const attendee of data.attendees) {
+    for (let i = 0; i < data.attendees.length; i++) {
+      const attendee = data.attendees[i];
+      Logger.log(`   Attendee ${i + 1}:`);
+      Logger.log(`      Name: ${attendee.name}`);
+      Logger.log(`      WhatsApp: ${attendee.whatsapp}`);
+      Logger.log(`      Seat Type: ${attendee.seatType || 'General'}`);
+      Logger.log(`      Needs Chair: ${attendee.needsChair ? 'Yes' : 'No'}`);
+      Logger.log(`      Is Main Contact: ${attendee.isMain ? 'Yes' : 'No'}`);
+
       const attendeeId = findOrCreateAttendee(
         attendee.name,
         attendee.whatsapp,
@@ -533,6 +581,8 @@ function submitBooking(data) {
         attendee.seatType,
         attendee.needsChair
       );
+
+      Logger.log(`      ✓ Attendee ID: ${attendeeId}`);
 
       attendeeIds.push({
         attendeeId: attendeeId,
@@ -550,21 +600,43 @@ function submitBooking(data) {
     if (!mainContactAttendeeId && attendeeIds.length > 0) {
       mainContactAttendeeId = attendeeIds[0].attendeeId;
       attendeeIds[0].isMain = true;
+      Logger.log(`   ⚠ No main contact specified, using first attendee as main contact`);
     }
+
+    Logger.log(`   Main Contact Attendee ID: ${mainContactAttendeeId}`);
 
     // Handle payment screenshot upload
     let screenshotUrl = '';
     if (data.paymentScreenshot) {
+      Logger.log('');
+      Logger.log('📸 Uploading Payment Screenshot...');
       screenshotUrl = uploadScreenshotToDrive(
         data.paymentScreenshot,
         `payment_${bookingId}`
       );
 
-      // Log to Payment Logs sheet
-      logPaymentScreenshot(bookingId, transactionId, `payment_${bookingId}.jpg`, screenshotUrl);
+      if (screenshotUrl) {
+        Logger.log(`   ✓ Screenshot uploaded: ${screenshotUrl}`);
+        // Log to Payment Logs sheet
+        logPaymentScreenshot(bookingId, transactionId, `payment_${bookingId}.jpg`, screenshotUrl);
+        Logger.log(`   ✓ Screenshot logged to Payment Logs sheet`);
+      } else {
+        Logger.log(`   ⚠ Screenshot upload failed or skipped`);
+      }
+    } else {
+      Logger.log('');
+      Logger.log('📸 No payment screenshot provided');
     }
 
+    Logger.log('');
+    Logger.log('💾 Writing to Excel Sheets...');
+
     // Append to Bookings sheet
+    Logger.log('   ✍ Writing to BOOKINGS sheet:');
+    Logger.log(`      Row data: [${bookingId}, ${transactionId}, ${timestamp}, ${concertId}, ${concertName}, `
+              + `${generalSeats}, ${studentSeats}, ${chairsRequested}, ${totalAmount}, ${mainContactAttendeeId}, `
+              + `${screenshotUrl ? 'screenshot_url' : 'no_screenshot'}, pending, No, '']`);
+
     bookingsSheet.appendRow([
       bookingId,
       transactionId,
@@ -581,9 +653,15 @@ function submitBooking(data) {
       'No',      // confirmation_sent
       ''         // booking_notes
     ]);
+    Logger.log(`   ✓ Added 1 row to BOOKINGS sheet`);
 
     // Append to Booking_Attendees junction table
-    for (const attendeeInfo of attendeeIds) {
+    Logger.log('   ✍ Writing to BOOKING_ATTENDEES sheet:');
+    for (let i = 0; i < attendeeIds.length; i++) {
+      const attendeeInfo = attendeeIds[i];
+      Logger.log(`      Row ${i + 1}: [${bookingId}, ${attendeeInfo.attendeeId}, ${attendeeInfo.seatType}, `
+                + `${attendeeInfo.needsChair ? 'Yes' : 'No'}, ${attendeeInfo.isMain ? 'Yes' : 'No'}]`);
+
       bookingAttendeesSheet.appendRow([
         bookingId,
         attendeeInfo.attendeeId,
@@ -592,15 +670,33 @@ function submitBooking(data) {
         attendeeInfo.isMain ? 'Yes' : 'No'
       ]);
     }
+    Logger.log(`   ✓ Added ${attendeeIds.length} rows to BOOKING_ATTENDEES sheet`);
 
     // ========================================
     // UPDATE SEAT AVAILABILITY IMMEDIATELY
     // ========================================
+    Logger.log('');
+    Logger.log('📊 Updating Seat Availability in SEAT TRACKING sheet...');
+    Logger.log(`   Reducing: ${generalSeats} general seats, ${studentSeats} student seats, ${chairsRequested} chairs`);
+
     updateSeatAvailability(concertId, generalSeats, studentSeats, chairsRequested);
-    Logger.log(`✅ Updated seat availability for ${concertId}: -${generalSeats} general, -${studentSeats} student, -${chairsRequested} chairs`);
+
+    Logger.log(`   ✓ Seat availability updated successfully`);
 
     // Send confirmation email/WhatsApp (optional)
     // sendConfirmationNotification(mainAttendee.whatsapp, bookingId, concertName);
+
+    Logger.log('');
+    Logger.log('========================================');
+    Logger.log('✅ BOOKING COMPLETED SUCCESSFULLY');
+    Logger.log('========================================');
+    Logger.log(`Booking ID: ${bookingId}`);
+    Logger.log(`Concert: ${concertName}`);
+    Logger.log(`Total Attendees: ${attendeeIds.length}`);
+    Logger.log(`Seats Booked: ${generalSeats} general + ${studentSeats} student = ${generalSeats + studentSeats} total`);
+    Logger.log(`Chairs: ${chairsRequested}`);
+    Logger.log(`Amount: ₹${totalAmount}`);
+    Logger.log('========================================');
 
     return createResponse({
       success: true,
@@ -609,7 +705,12 @@ function submitBooking(data) {
     });
 
   } catch (error) {
-    Logger.log('submitBooking Error: ' + error.toString());
+    Logger.log('========================================');
+    Logger.log('❌ BOOKING FAILED');
+    Logger.log('========================================');
+    Logger.log('Error: ' + error.toString());
+    Logger.log('Stack: ' + error.stack);
+    Logger.log('========================================');
     return createResponse({ error: error.toString() }, 500);
   }
 }
@@ -776,31 +877,49 @@ function updateSeatAvailability(concertId, generalSeatsToBook, studentSeatsToBoo
       const chairsBookedCol = 10;  // Column J: chairs_booked
       const chairsAvailCol = 11;   // Column K: chairs_available
 
-      // Update GENERAL seats
+      // Get BEFORE values
       const currentGeneralBooked = data[i][generalBookedCol - 1];
+      const currentGeneralAvail = data[i][generalAvailCol - 1];
+      const currentStudentBooked = data[i][studentBookedCol - 1];
+      const currentStudentAvail = data[i][studentAvailCol - 1];
+      const currentChairsBooked = data[i][chairsBookedCol - 1];
+      const currentChairsAvail = data[i][chairsAvailCol - 1];
+
+      Logger.log('   📊 BEFORE Update (Row ' + rowNum + ' in SEAT TRACKING sheet):');
+      Logger.log(`      General: ${currentGeneralBooked} booked, ${currentGeneralAvail} available`);
+      Logger.log(`      Student: ${currentStudentBooked} booked, ${currentStudentAvail} available`);
+      Logger.log(`      Chairs: ${currentChairsBooked} booked, ${currentChairsAvail} available`);
+
+      // Calculate NEW values
       const newGeneralBooked = currentGeneralBooked + generalSeatsToBook;
-      sheet.getRange(rowNum, generalBookedCol).setValue(newGeneralBooked);
+      const newStudentBooked = currentStudentBooked + studentSeatsToBook;
+      const newChairsBooked = currentChairsBooked + chairsToBook;
 
       const generalTotal = data[i][2];  // Column C: general_seats_total
-      sheet.getRange(rowNum, generalAvailCol).setValue(generalTotal - newGeneralBooked);
+      const studentTotal = data[i][5];  // Column F: student_seats_total
+      const chairsTotal = data[i][8];   // Column I: chairs_total
+
+      const newGeneralAvail = generalTotal - newGeneralBooked;
+      const newStudentAvail = studentTotal - newStudentBooked;
+      const newChairsAvail = chairsTotal - newChairsBooked;
+
+      // Update GENERAL seats
+      sheet.getRange(rowNum, generalBookedCol).setValue(newGeneralBooked);
+      sheet.getRange(rowNum, generalAvailCol).setValue(newGeneralAvail);
 
       // Update STUDENT seats
-      const currentStudentBooked = data[i][studentBookedCol - 1];
-      const newStudentBooked = currentStudentBooked + studentSeatsToBook;
       sheet.getRange(rowNum, studentBookedCol).setValue(newStudentBooked);
-
-      const studentTotal = data[i][5];  // Column F: student_seats_total
-      sheet.getRange(rowNum, studentAvailCol).setValue(studentTotal - newStudentBooked);
+      sheet.getRange(rowNum, studentAvailCol).setValue(newStudentAvail);
 
       // Update CHAIRS
-      const currentChairsBooked = data[i][chairsBookedCol - 1];
-      const newChairsBooked = currentChairsBooked + chairsToBook;
       sheet.getRange(rowNum, chairsBookedCol).setValue(newChairsBooked);
+      sheet.getRange(rowNum, chairsAvailCol).setValue(newChairsAvail);
 
-      const chairsTotal = data[i][8];  // Column I: chairs_total
-      sheet.getRange(rowNum, chairsAvailCol).setValue(chairsTotal - newChairsBooked);
+      Logger.log('   📊 AFTER Update:');
+      Logger.log(`      General: ${newGeneralBooked} booked (+${generalSeatsToBook}), ${newGeneralAvail} available (-${generalSeatsToBook})`);
+      Logger.log(`      Student: ${newStudentBooked} booked (+${studentSeatsToBook}), ${newStudentAvail} available (-${studentSeatsToBook})`);
+      Logger.log(`      Chairs: ${newChairsBooked} booked (+${chairsToBook}), ${newChairsAvail} available (-${chairsToBook})`);
 
-      Logger.log(`Updated seats for ${concertId}: +${generalSeatsToBook} general, +${studentSeatsToBook} student, +${chairsToBook} chairs`);
       break;
     }
   }

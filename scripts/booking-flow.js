@@ -53,9 +53,10 @@ function initBookingFlow() {
     // Step 2: Seat selection
     setupSeatSelectors();
     document.getElementById('step2Back').addEventListener('click', () => goToStep(1));
-    document.getElementById('step2Continue').addEventListener('click', () => {
-        generateAttendeeForms();
-        goToStep(3);
+    document.getElementById('step2Continue').addEventListener('click', async () => {
+        // Re-validate seat availability before proceeding
+        // (Someone else might have booked seats while user was selecting)
+        await revalidateAndProceedToStep3();
     });
 
     // Step 3: Attendee details
@@ -260,13 +261,14 @@ function goToStep(stepNumber) {
 function setupSeatSelectors() {
     // General seats
     document.getElementById('generalPlus').addEventListener('click', () => {
-        const maxGeneral = bookingState.seatAvailability?.general_seats_available || 10;
+        // Use ?? instead of || to handle 0 correctly (0 is falsy but valid!)
+        const maxGeneral = bookingState.seatAvailability?.general_seats_available ?? 10;
 
         if (bookingState.generalSeats < maxGeneral && bookingState.generalSeats < 10) {
             bookingState.generalSeats++;
             updateSeatDisplay();
         } else if (bookingState.generalSeats >= maxGeneral) {
-            alert(`Only ${maxGeneral} general seats available`);
+            alert(`Only ${maxGeneral} general seat${maxGeneral !== 1 ? 's' : ''} available`);
         }
     });
 
@@ -279,13 +281,14 @@ function setupSeatSelectors() {
 
     // Student seats
     document.getElementById('studentPlus').addEventListener('click', () => {
-        const maxStudent = bookingState.seatAvailability?.student_seats_available || 10;
+        // Use ?? instead of || to handle 0 correctly (0 is falsy but valid!)
+        const maxStudent = bookingState.seatAvailability?.student_seats_available ?? 10;
 
         if (bookingState.studentSeats < maxStudent && bookingState.studentSeats < 10) {
             bookingState.studentSeats++;
             updateSeatDisplay();
         } else if (bookingState.studentSeats >= maxStudent) {
-            alert(`Only ${maxStudent} student seats available`);
+            alert(`Only ${maxStudent} student seat${maxStudent !== 1 ? 's' : ''} available`);
         }
     });
 
@@ -299,13 +302,16 @@ function setupSeatSelectors() {
     // Chairs
     document.getElementById('chairPlus').addEventListener('click', () => {
         const totalSeats = bookingState.generalSeats + bookingState.studentSeats;
-        const maxChairs = bookingState.seatAvailability?.chairs_available || 5;
+        // Use ?? instead of || to handle 0 correctly (0 is falsy but valid!)
+        const maxChairs = bookingState.seatAvailability?.chairs_available ?? 5;
 
         if (bookingState.chairs < totalSeats && bookingState.chairs < maxChairs && bookingState.chairs < 5) {
             bookingState.chairs++;
             updateSeatDisplay();
         } else if (bookingState.chairs >= maxChairs) {
-            alert(`Only ${maxChairs} chairs available`);
+            alert(`Only ${maxChairs} chair${maxChairs !== 1 ? 's' : ''} available`);
+        } else if (bookingState.chairs >= totalSeats) {
+            alert(`You can't request more chairs than seats (${totalSeats} seats selected)`);
         }
     });
 
@@ -357,6 +363,74 @@ function updateSeatDisplay() {
     }
     
     updateStickyCTA();
+}
+
+/**
+ * Re-validate seat availability before proceeding to Step 3
+ * Handles scenario where seats get booked by someone else while user is on Step 2
+ */
+async function revalidateAndProceedToStep3() {
+    console.log('🔄 Re-validating seat availability before proceeding...');
+
+    try {
+        // Fetch latest seat availability from backend
+        const latestAvailability = await getSeatAvailability(bookingState.concertData.concert_id);
+
+        console.log('📊 Latest availability from server:', latestAvailability);
+
+        // Check if user's selections are still valid
+        const generalRequested = bookingState.generalSeats;
+        const studentRequested = bookingState.studentSeats;
+        const chairsRequested = bookingState.chairs;
+
+        const generalAvailable = latestAvailability.general_seats_available;
+        const studentAvailable = latestAvailability.student_seats_available;
+        const chairsAvailable = latestAvailability.chairs_available;
+
+        let errors = [];
+
+        if (generalRequested > generalAvailable) {
+            errors.push(`Only ${generalAvailable} general seat${generalAvailable !== 1 ? 's' : ''} available (you selected ${generalRequested})`);
+        }
+
+        if (studentRequested > studentAvailable) {
+            errors.push(`Only ${studentAvailable} student seat${studentAvailable !== 1 ? 's' : ''} available (you selected ${studentRequested})`);
+        }
+
+        if (chairsRequested > chairsAvailable) {
+            errors.push(`Only ${chairsAvailable} chair${chairsAvailable !== 1 ? 's' : ''} available (you selected ${chairsRequested})`);
+        }
+
+        if (errors.length > 0) {
+            // Availability changed - show error and reset selections
+            console.error('❌ Seat availability changed:', errors);
+
+            alert(`⚠️ Seat Availability Changed!\n\n${errors.join('\n')}\n\nSomeone else booked seats while you were selecting. Your selections have been reset.\n\nPlease select again with the updated availability.`);
+
+            // Update stored availability
+            bookingState.seatAvailability = latestAvailability;
+
+            // Reset selections to 0
+            bookingState.generalSeats = 0;
+            bookingState.studentSeats = 0;
+            bookingState.chairs = 0;
+            updateSeatDisplay();
+
+            // Stay on Step 2
+            return;
+        }
+
+        // Validation passed - update availability and proceed
+        console.log('✅ Seat availability validated - proceeding to Step 3');
+        bookingState.seatAvailability = latestAvailability;
+
+        generateAttendeeForms();
+        goToStep(3);
+
+    } catch (error) {
+        console.error('❌ Error validating seat availability:', error);
+        alert('Error checking seat availability. Please try again.');
+    }
 }
 
 function generateAttendeeForms() {
@@ -893,21 +967,48 @@ async function confirmBooking() {
         // Submit to backend (uses config.js function)
         const result = await submitBookingToBackend(bookingData);
 
-        console.log('✅ Booking submitted successfully:', result);
+        console.log('📡 Backend response:', result);
 
-        // Refresh seat availability on hero section (from main.js)
-        if (typeof fetchAndDisplaySeatAvailability === 'function' && bookingState.concertData?.concert_id) {
-            console.log('🔄 Refreshing seat availability...');
-            fetchAndDisplaySeatAvailability(bookingState.concertData.concert_id);
+        // CHECK if booking was successful
+        if (result.success) {
+            console.log('✅ Booking confirmed successfully!');
+
+            // Refresh seat availability on hero section (from main.js)
+            if (typeof fetchAndDisplaySeatAvailability === 'function' && bookingState.concertData?.concert_id) {
+                console.log('🔄 Refreshing seat availability...');
+                fetchAndDisplaySeatAvailability(bookingState.concertData.concert_id);
+            }
+
+            // Show confirmation
+            populateConfirmationStep();
+            goToStep(6);
+
+        } else {
+            // Booking failed due to validation error
+            console.error('❌ Booking rejected by server:', result.error);
+
+            const errorMessage = result.error || 'Unknown error occurred';
+
+            // Show detailed error message
+            alert(`❌ Booking Failed!\n\n${errorMessage}\n\nThis usually means:\n- Someone else booked seats while you were filling the form\n- Seat availability changed\n\nPlease go back to Step 2 and select fewer seats, then try again.`);
+
+            // Refresh seat availability to get latest data
+            if (typeof fetchAndDisplaySeatAvailability === 'function' && bookingState.concertData?.concert_id) {
+                const latestAvailability = await getSeatAvailability(bookingState.concertData.concert_id);
+                bookingState.seatAvailability = latestAvailability;
+                console.log('🔄 Updated seat availability:', latestAvailability);
+            }
+
+            // Go back to Step 2 so user can adjust selections
+            goToStep(2);
         }
-
-        // Show confirmation
-        populateConfirmationStep();
-        goToStep(6);
 
     } catch (error) {
         console.error('❌ Error submitting booking:', error);
-        alert('There was an error submitting your booking. Please try again or contact support.');
+        alert('There was a network error submitting your booking.\n\nPlease check your internet connection and try again.\n\nIf the problem persists, contact support.');
+
+        // Go back to Step 2
+        goToStep(2);
     }
 }
 

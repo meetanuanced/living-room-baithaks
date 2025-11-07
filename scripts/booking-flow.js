@@ -16,7 +16,8 @@ const bookingState = {
     paymentScreenshot: null,
     transactionId: '',
     bookingId: '',
-    concertData: null
+    concertData: null,
+    seatAvailability: null  // Will be populated when concert data loads
 };
 
 // Initialize booking flow
@@ -105,33 +106,41 @@ function reinitializeBookingTriggers() {
     });
 }
 
-function loadConcertData() {
+async function loadConcertData() {
     // Use config.js to get the correct data source
     const dataURL = getDataSourceURL();
 
-    fetch(dataURL)
-        .then(response => response.json())
-        .then(data => {
-            const upcomingConcert = data.find(concert =>
-                concert.event_status &&
-                concert.event_status.toLowerCase() === 'upcoming'
-            );
+    try {
+        const response = await fetch(dataURL);
+        const data = await response.json();
 
-            if (upcomingConcert) {
-                bookingState.concertData = upcomingConcert;
-                bookingState.generalPrice = upcomingConcert.ticket_price_general || 1000;
-                bookingState.studentPrice = upcomingConcert.ticket_price_student || 500;
+        const upcomingConcert = data.find(concert =>
+            concert.event_status &&
+            concert.event_status.toLowerCase() === 'upcoming'
+        );
 
-                // Update prices in UI (seat selector displays)
-                document.querySelectorAll('#generalPriceDisplay').forEach(el => {
-                    el.textContent = bookingState.generalPrice;
-                });
-                document.querySelectorAll('#studentPriceDisplay').forEach(el => {
-                    el.textContent = bookingState.studentPrice;
-                });
-            }
-        })
-        .catch(error => console.error('Error loading concert data:', error));
+        if (upcomingConcert) {
+            bookingState.concertData = upcomingConcert;
+            bookingState.generalPrice = upcomingConcert.ticket_price_general || 1000;
+            bookingState.studentPrice = upcomingConcert.ticket_price_student || 500;
+
+            // Fetch seat availability from config.js
+            const availability = await getSeatAvailability(upcomingConcert.concert_id);
+            bookingState.seatAvailability = availability;
+
+            console.log('💺 Seat Availability:', availability);
+
+            // Update prices in UI (seat selector displays)
+            document.querySelectorAll('#generalPriceDisplay').forEach(el => {
+                el.textContent = bookingState.generalPrice;
+            });
+            document.querySelectorAll('#studentPriceDisplay').forEach(el => {
+                el.textContent = bookingState.studentPrice;
+            });
+        }
+    } catch (error) {
+        console.error('Error loading concert data:', error);
+    }
 }
 
 function startBookingFlow() {
@@ -164,16 +173,21 @@ function exitBookingFlow() {
     if (window.innerWidth <= 968) {
         document.getElementById('mobileStickyCTA').style.display = 'block';
     }
-    
+
     // Hide booking flow
     document.getElementById('booking-flow').classList.remove('active');
     document.getElementById('booking-flow').style.display = 'none';
     document.getElementById('navBackBtn').classList.remove('visible');
     document.getElementById('bookingStickyCTA').classList.remove('active');
-    
+
+    // Refresh seat availability in case booking was completed
+    if (typeof fetchAndDisplaySeatAvailability === 'function' && bookingState.concertData?.concert_id) {
+        fetchAndDisplaySeatAvailability(bookingState.concertData.concert_id);
+    }
+
     // Reset booking state
     resetBookingState();
-    
+
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -232,43 +246,55 @@ function goToStep(stepNumber) {
 function setupSeatSelectors() {
     // General seats
     document.getElementById('generalPlus').addEventListener('click', () => {
-        if (bookingState.generalSeats < 10) {
+        const maxGeneral = bookingState.seatAvailability?.general_seats_available || 10;
+
+        if (bookingState.generalSeats < maxGeneral && bookingState.generalSeats < 10) {
             bookingState.generalSeats++;
             updateSeatDisplay();
+        } else if (bookingState.generalSeats >= maxGeneral) {
+            alert(`Only ${maxGeneral} general seats available`);
         }
     });
-    
+
     document.getElementById('generalMinus').addEventListener('click', () => {
         if (bookingState.generalSeats > 0) {
             bookingState.generalSeats--;
             updateSeatDisplay();
         }
     });
-    
+
     // Student seats
     document.getElementById('studentPlus').addEventListener('click', () => {
-        if (bookingState.studentSeats < 10) {
+        const maxStudent = bookingState.seatAvailability?.student_seats_available || 10;
+
+        if (bookingState.studentSeats < maxStudent && bookingState.studentSeats < 10) {
             bookingState.studentSeats++;
             updateSeatDisplay();
+        } else if (bookingState.studentSeats >= maxStudent) {
+            alert(`Only ${maxStudent} student seats available`);
         }
     });
-    
+
     document.getElementById('studentMinus').addEventListener('click', () => {
         if (bookingState.studentSeats > 0) {
             bookingState.studentSeats--;
             updateSeatDisplay();
         }
     });
-    
+
     // Chairs
     document.getElementById('chairPlus').addEventListener('click', () => {
         const totalSeats = bookingState.generalSeats + bookingState.studentSeats;
-        if (bookingState.chairs < totalSeats && bookingState.chairs < 5) {
+        const maxChairs = bookingState.seatAvailability?.chairs_available || 5;
+
+        if (bookingState.chairs < totalSeats && bookingState.chairs < maxChairs && bookingState.chairs < 5) {
             bookingState.chairs++;
             updateSeatDisplay();
+        } else if (bookingState.chairs >= maxChairs) {
+            alert(`Only ${maxChairs} chairs available`);
         }
     });
-    
+
     document.getElementById('chairMinus').addEventListener('click', () => {
         if (bookingState.chairs > 0) {
             bookingState.chairs--;
@@ -346,20 +372,22 @@ function generateAttendeeForms() {
                 <input type="email" class="attendee-email" data-index="0" placeholder="your@email.com">
             </div>
         </div>
-        <div class="field-checkboxes">
-            ${bookingState.studentSeats > 0 ? `
-                <label class="checkbox-label">
-                    <input type="checkbox" class="attendee-student" data-index="0">
-                    <span>Student Ticket (₹${bookingState.studentPrice})</span>
-                </label>
-            ` : ''}
-            ${bookingState.chairs > 0 ? `
-                <label class="checkbox-label">
-                    <input type="checkbox" class="attendee-chair" data-index="0">
-                    <span>Needs Chair</span>
-                </label>
-            ` : ''}
-        </div>
+        ${(bookingState.studentSeats > 0 || bookingState.chairs > 0) ? `
+            <div class="field-checkboxes">
+                ${bookingState.studentSeats > 0 ? `
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="attendee-student" data-index="0">
+                        <span>Student Ticket</span>
+                    </label>
+                ` : ''}
+                ${bookingState.chairs > 0 ? `
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="attendee-chair" data-index="0">
+                        <span>Need a Chair</span>
+                    </label>
+                ` : ''}
+            </div>
+        ` : ''}
     `;
 
     bookingState.attendees.push({
@@ -379,7 +407,7 @@ function generateAttendeeForms() {
         const additionalCard = document.createElement('div');
         additionalCard.className = 'additional-attendees-card';
 
-        const headerText = totalSeats === 2 ? '1 seat' : `${totalSeats - 1} seats`;
+        const headerText = totalSeats === 2 ? '1 Seat' : `${totalSeats - 1} Seats`;
         additionalCard.innerHTML = `
             <div class="header">Additional Attendees (${headerText})</div>
         `;
@@ -392,8 +420,9 @@ function generateAttendeeForms() {
         container.appendChild(additionalCard);
     }
 
-    // Add event listeners for checkboxes
+    // Add event listeners for checkboxes and name inputs
     attachCheckboxListeners();
+    attachNameCapitalization();
 }
 
 function createAttendeeRow(index) {
@@ -402,25 +431,27 @@ function createAttendeeRow(index) {
 
     row.innerHTML = `
         <div class="attendee-row-header">
-            <div class="person-number">Person ${index + 1}</div>
+            <div class="person-label">Attendee ${index + 1}</div>
         </div>
-        <div class="attendee-row-content">
-            <input type="text" class="attendee-name" data-index="${index}" placeholder="Full name" required>
+        <div class="attendee-row-field">
+            <input type="text" class="attendee-name" data-index="${index}" placeholder="Enter full name" required>
+        </div>
+        ${(bookingState.studentSeats > 0 || bookingState.chairs > 0) ? `
             <div class="attendee-row-checkboxes">
                 ${bookingState.studentSeats > 0 ? `
                     <label class="checkbox-label">
                         <input type="checkbox" class="attendee-student" data-index="${index}">
-                        <span>Student</span>
+                        <span>Student Ticket</span>
                     </label>
                 ` : ''}
                 ${bookingState.chairs > 0 ? `
                     <label class="checkbox-label">
                         <input type="checkbox" class="attendee-chair" data-index="${index}">
-                        <span>Chair</span>
+                        <span>Need a Chair</span>
                     </label>
                 ` : ''}
             </div>
-        </div>
+        ` : ''}
     `;
 
     // Store reference
@@ -443,6 +474,7 @@ function attachCheckboxListeners() {
     studentCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             validateStudentSelection(this);
+            updateCheckboxStates();  // Update disabled states after each change
         });
     });
 
@@ -451,7 +483,70 @@ function attachCheckboxListeners() {
     chairCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             validateChairSelection(this);
+            updateCheckboxStates();  // Update disabled states after each change
         });
+    });
+
+    // Initial state update
+    updateCheckboxStates();
+}
+
+/**
+ * Capitalizes first letter of each word in a name
+ * Example: "meeta gangrade" -> "Meeta Gangrade"
+ */
+function capitalizeWords(str) {
+    return str
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
+
+/**
+ * Attach name capitalization to all name inputs
+ */
+function attachNameCapitalization() {
+    const nameInputs = document.querySelectorAll('.attendee-name');
+    nameInputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (this.value.trim()) {
+                this.value = capitalizeWords(this.value.trim());
+            }
+        });
+    });
+}
+
+/**
+ * Update checkbox disabled states based on current selections
+ * Disables checkboxes when limits are reached
+ */
+function updateCheckboxStates() {
+    const selectedStudents = document.querySelectorAll('.attendee-student:checked').length;
+    const selectedChairs = document.querySelectorAll('.attendee-chair:checked').length;
+
+    // Disable student checkboxes if limit reached
+    const studentCheckboxes = document.querySelectorAll('.attendee-student');
+    studentCheckboxes.forEach(checkbox => {
+        if (!checkbox.checked && selectedStudents >= bookingState.studentSeats) {
+            checkbox.disabled = true;
+            checkbox.closest('.checkbox-label')?.classList.add('disabled');
+        } else {
+            checkbox.disabled = false;
+            checkbox.closest('.checkbox-label')?.classList.remove('disabled');
+        }
+    });
+
+    // Disable chair checkboxes if limit reached
+    const chairCheckboxes = document.querySelectorAll('.attendee-chair');
+    chairCheckboxes.forEach(checkbox => {
+        if (!checkbox.checked && selectedChairs >= bookingState.chairs) {
+            checkbox.disabled = true;
+            checkbox.closest('.checkbox-label')?.classList.add('disabled');
+        } else {
+            checkbox.disabled = false;
+            checkbox.closest('.checkbox-label')?.classList.remove('disabled');
+        }
     });
 }
 
@@ -493,17 +588,20 @@ function validateChairSelection(checkbox) {
 
 function validateAttendeeDetails() {
     let isValid = true;
-    
+
     // Get all name inputs
     const nameInputs = document.querySelectorAll('.attendee-name');
     nameInputs.forEach(input => {
         const index = parseInt(input.dataset.index);
-        const name = input.value.trim();
-        
+        let name = input.value.trim();
+
         if (!name) {
             input.style.borderColor = 'var(--orange)';
             isValid = false;
         } else {
+            // Capitalize name before saving
+            name = capitalizeWords(name);
+            input.value = name;  // Update input to show capitalized version
             input.style.borderColor = '';
             bookingState.attendees[index].name = name;
         }
@@ -782,6 +880,12 @@ async function confirmBooking() {
         const result = await submitBookingToBackend(bookingData);
 
         console.log('✅ Booking submitted successfully:', result);
+
+        // Refresh seat availability on hero section (from main.js)
+        if (typeof fetchAndDisplaySeatAvailability === 'function' && bookingState.concertData?.concert_id) {
+            console.log('🔄 Refreshing seat availability...');
+            fetchAndDisplaySeatAvailability(bookingState.concertData.concert_id);
+        }
 
         // Show confirmation
         populateConfirmationStep();

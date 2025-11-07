@@ -890,35 +890,24 @@ function updateSeatAvailability(concertId, generalSeatsToBook, studentSeatsToBoo
       Logger.log(`      Student: ${currentStudentBooked} booked, ${currentStudentAvail} available`);
       Logger.log(`      Chairs: ${currentChairsBooked} booked, ${currentChairsAvail} available`);
 
-      // Calculate NEW values
+      // Calculate NEW values for BOOKED columns only
+      // NOTE: Available columns (E, H, K) should be FORMULAS in Excel (e.g., =C2-D2)
+      // We only update the BOOKED columns, and the formulas auto-calculate available seats
       const newGeneralBooked = currentGeneralBooked + generalSeatsToBook;
       const newStudentBooked = currentStudentBooked + studentSeatsToBook;
       const newChairsBooked = currentChairsBooked + chairsToBook;
 
-      const generalTotal = data[i][2];  // Column C: general_seats_total
-      const studentTotal = data[i][5];  // Column F: student_seats_total
-      const chairsTotal = data[i][8];   // Column I: chairs_total
-
-      const newGeneralAvail = generalTotal - newGeneralBooked;
-      const newStudentAvail = studentTotal - newStudentBooked;
-      const newChairsAvail = chairsTotal - newChairsBooked;
-
-      // Update GENERAL seats
+      // Update ONLY the BOOKED columns (D, G, J)
+      // The AVAILABLE columns (E, H, K) are formulas and will update automatically
       sheet.getRange(rowNum, generalBookedCol).setValue(newGeneralBooked);
-      sheet.getRange(rowNum, generalAvailCol).setValue(newGeneralAvail);
-
-      // Update STUDENT seats
       sheet.getRange(rowNum, studentBookedCol).setValue(newStudentBooked);
-      sheet.getRange(rowNum, studentAvailCol).setValue(newStudentAvail);
-
-      // Update CHAIRS
       sheet.getRange(rowNum, chairsBookedCol).setValue(newChairsBooked);
-      sheet.getRange(rowNum, chairsAvailCol).setValue(newChairsAvail);
 
       Logger.log('   📊 AFTER Update:');
-      Logger.log(`      General: ${newGeneralBooked} booked (+${generalSeatsToBook}), ${newGeneralAvail} available (-${generalSeatsToBook})`);
-      Logger.log(`      Student: ${newStudentBooked} booked (+${studentSeatsToBook}), ${newStudentAvail} available (-${studentSeatsToBook})`);
-      Logger.log(`      Chairs: ${newChairsBooked} booked (+${chairsToBook}), ${newChairsAvail} available (-${chairsToBook})`);
+      Logger.log(`      General: ${newGeneralBooked} booked (+${generalSeatsToBook}) → available will auto-calculate via formula`);
+      Logger.log(`      Student: ${newStudentBooked} booked (+${studentSeatsToBook}) → available will auto-calculate via formula`);
+      Logger.log(`      Chairs: ${newChairsBooked} booked (+${chairsToBook}) → available will auto-calculate via formula`);
+      Logger.log(`   ⚠ NOTE: Columns E, H, K should contain formulas like =C${rowNum}-D${rowNum} (total - booked)`);
 
       break;
     }

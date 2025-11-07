@@ -427,28 +427,36 @@ function findOrCreateAttendee(name, whatsapp, email, studentStatus, needsChair) 
   const data = sheet.getDataRange().getValues();
   const headers = data[0];
 
-  // Search for existing attendee by WhatsApp
-  for (let i = 1; i < data.length; i++) {
-    if (data[i][headers.indexOf('whatsapp')] === whatsapp) {
-      // Found existing attendee - return their ID
-      const existingId = data[i][headers.indexOf('attendee_id')];
-      const existingName = data[i][headers.indexOf('name')];
-      const totalConcerts = data[i][headers.indexOf('total_concerts_attended')] || 0;
-      Logger.log(`      → Found existing attendee: ${existingName} (${existingId}), attended ${totalConcerts} concerts`);
-      return existingId;
+  // ONLY search for existing attendee if WhatsApp is provided AND not empty
+  // This prevents reusing old attendees for additional attendees without WhatsApp
+  if (whatsapp && whatsapp.trim() !== '') {
+    // Search for existing attendee by WhatsApp
+    for (let i = 1; i < data.length; i++) {
+      const existingWhatsapp = data[i][headers.indexOf('whatsapp')];
+      if (existingWhatsapp === whatsapp) {
+        // Found existing attendee - return their ID
+        const existingId = data[i][headers.indexOf('attendee_id')];
+        const existingName = data[i][headers.indexOf('name')];
+        const totalConcerts = data[i][headers.indexOf('total_concerts_attended')] || 0;
+        Logger.log(`      → Found existing attendee: ${existingName} (${existingId}), attended ${totalConcerts} concerts`);
+        return existingId;
+      }
     }
+  } else {
+    // No WhatsApp provided - will create new attendee
+    Logger.log(`      → No WhatsApp provided for "${name}" - creating new attendee`);
   }
 
   // Attendee not found - create new
   const attendeeId = generateAttendeeId();
 
   Logger.log(`      → Creating NEW attendee in ATTENDEES sheet:`);
-  Logger.log(`         Row: [${attendeeId}, ${name}, ${whatsapp}, ${email || ''}, ${studentStatus || 'General'}, ${needsChair ? 'Yes' : 'No'}, '', '', 0, '', '', '']`);
+  Logger.log(`         Row: [${attendeeId}, ${name}, ${whatsapp || ''}, ${email || ''}, ${studentStatus || 'General'}, ${needsChair ? 'Yes' : 'No'}, '', '', 0, '', '', '']`);
 
   sheet.appendRow([
     attendeeId,
     name,
-    whatsapp,
+    whatsapp || '',
     email || '',
     studentStatus || 'General',
     needsChair ? 'Yes' : 'No',

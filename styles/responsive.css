@@ -41,6 +41,17 @@
         display: flex;
     }
 
+    /* Logo - smaller on tablet */
+    .logo {
+        max-height: 38px;
+        max-width: 150px;
+    }
+
+    /* Tagline - smaller text on tablet */
+    .site-tagline {
+        font-size: 0.7em;
+    }
+
     /* Mobile Sticky CTA */
     .mobile-sticky-cta {
         display: block;
@@ -70,6 +81,18 @@
     /* Container */
     .container {
         padding: 0 20px;
+    }
+
+    /* Logo - even smaller on mobile */
+    .logo {
+        max-height: 32px;
+        max-width: 120px;
+    }
+
+    /* Tagline - hide on very small screens to save space */
+    .site-tagline {
+        font-size: 0.65em;
+        padding: 6px 0;
     }
 
     /* Hero Section */

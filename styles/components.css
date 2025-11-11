@@ -12,30 +12,61 @@
     background: rgba(0, 0, 0, 0.98);
     backdrop-filter: blur(20px);
     z-index: 1000;
-    padding: 15px 0;
     border-bottom: 1px solid rgba(212, 165, 116, 0.15);
 }
 
 .nav-container {
     max-width: 1300px;
     margin: 0 auto;
-    padding: 0 30px;
+    padding: 15px 30px 10px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+}
+
+/* Logo Styles */
+.nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-right: auto;
+}
+
+.logo {
+    max-height: 45px;
+    max-width: 180px;
+    height: auto;
+    width: auto;
+    transition: opacity 0.3s;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+/* Site Tagline */
+.site-tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75em;
+    letter-spacing: 1.5px;
+    color: var(--text-gray);
+    text-align: center;
+    padding: 8px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .nav-menu {
     display: flex;
     gap: 25px;
     align-items: center;
+    margin-left: auto;
 }
 
 .nav-menu a {
     color: var(--orange);
     text-decoration: none;
     font-family: 'Inter', sans-serif;
-    font-size: 0.9em;
+    font-size: 0.95em;
     font-weight: 500;
     transition: color 0.3s;
 }
@@ -305,6 +336,21 @@
     font-size: 0.55em;
     font-weight: 500;
     font-family: 'Inter', sans-serif;
+}
+
+/* Artist Hierarchy - Primary vs Accompanist */
+.artist-primary {
+    font-size: 1.15em;
+    color: var(--gold-toned);
+    font-weight: 700;
+    display: inline-block;
+}
+
+.artist-accompanist {
+    font-size: 0.95em;
+    color: var(--text-white);
+    font-weight: 400;
+    display: inline-block;
 }
 
 .hero-title {

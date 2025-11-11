@@ -77,6 +77,8 @@ function formatTime12Hr(time24) {
 /**
  * Format artists sorted by category with genre mapping
  * Returns HTML string with each artist on new line
+ * Primary artists: larger, bold, gold-toned
+ * Accompanists: smaller, regular, white
  */
 function formatArtists(artists) {
     if (!artists || artists.length === 0) return 'Various Artists';
@@ -89,9 +91,12 @@ function formatArtists(artists) {
         return orderA - orderB;
     });
 
-    // Format each artist as "Name (Genre)"
+    // Format each artist with category-based styling
     return sorted
-        .map(artist => `${artist.name} (${artist.genre})`)
+        .map(artist => {
+            const cssClass = artist.category === 'Primary' ? 'artist-primary' : 'artist-accompanist';
+            return `<span class="${cssClass}">${artist.name} (${artist.genre})</span>`;
+        })
         .join('<br>');
 }
 
@@ -170,7 +175,7 @@ fetch(dataURL)
                     </div>
                     
                     <h1 class="hero-title">
-                        ${upcomingConcert.title}${upcomingConcert.sub_title || ''}
+                        ${upcomingConcert.title}${upcomingConcert.sub_title ? ` — ${upcomingConcert.sub_title}` : ''}
                     </h1>
                     
                     <div class="event-details">

@@ -43,8 +43,8 @@
 
     /* Logo - smaller on tablet */
     .logo {
-        max-height: 38px;
-        max-width: 150px;
+        max-height: 28px;
+        max-width: 90px;
     }
 
     /* Tagline - smaller text on tablet */
@@ -85,8 +85,8 @@
 
     /* Logo - even smaller on mobile */
     .logo {
-        max-height: 32px;
-        max-width: 120px;
+        max-height: 26px;
+        max-width: 80px;
     }
 
     /* Tagline - hide on very small screens to save space */

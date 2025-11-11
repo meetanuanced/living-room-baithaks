@@ -26,6 +26,75 @@ document.querySelectorAll('.mobile-menu-content a').forEach(link => {
     });
 });
 
+// ========================================
+// HELPER FUNCTIONS FOR FORMATTING
+// ========================================
+
+/**
+ * Get ordinal suffix for day (1st, 2nd, 3rd, 4th, etc.)
+ */
+function getOrdinalSuffix(day) {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+        case 1: return 'st';
+        case 2: return 'nd';
+        case 3: return 'rd';
+        default: return 'th';
+    }
+}
+
+/**
+ * Format date as "16th November 2025, Saturday"
+ */
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                   'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const day = date.getDate();
+    const dayOfWeek = days[date.getDay()];
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${day}${getOrdinalSuffix(day)} ${month} ${year}, ${dayOfWeek}`;
+}
+
+/**
+ * Convert 24hr time to 12hr with AM/PM
+ * Example: "10:00" -> "10:00 AM", "14:30" -> "2:30 PM"
+ */
+function formatTime12Hr(time24) {
+    if (!time24) return '';
+
+    const [hours, minutes] = time24.split(':').map(Number);
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const hours12 = hours % 12 || 12; // Convert 0 to 12
+
+    return `${hours12}:${minutes.toString().padStart(2, '0')} ${period}`;
+}
+
+/**
+ * Format artists sorted by category with genre mapping
+ * Returns HTML string with each artist on new line
+ */
+function formatArtists(artists) {
+    if (!artists || artists.length === 0) return 'Various Artists';
+
+    // Sort: Primary artists first, then Accompanists
+    const sorted = [...artists].sort((a, b) => {
+        const categoryOrder = { 'Primary': 0, 'Accompanist': 1 };
+        const orderA = categoryOrder[a.category] ?? 2;
+        const orderB = categoryOrder[b.category] ?? 2;
+        return orderA - orderB;
+    });
+
+    // Format each artist as "Name (Genre)"
+    return sorted
+        .map(artist => `${artist.name} (${artist.genre})`)
+        .join('<br>');
+}
+
 function formatTimeBlock(concert) {
   if (!concert.concert_time) return "";
 
@@ -33,20 +102,24 @@ function formatTimeBlock(concert) {
     ? concert.meal_type.charAt(0).toUpperCase() + concert.meal_type.slice(1).toLowerCase()
     : "";
 
+  // Convert times to 12hr format with AM/PM
+  const concertTime = formatTime12Hr(concert.concert_time);
+  const mealTime = concert.meal_time ? formatTime12Hr(concert.meal_time) : '';
+
   if (!concert.meal_time || !concert.meal_order) {
-    return `${concert.concert_time} — Baithak Begins`;
+    return `${concertTime} — Baithak Begins`;
   }
 
   if (concert.meal_order.toLowerCase() === "before") {
     return `
-      ${concert.meal_time} — ${mealType} followed by Baithak<br/>
-      ${concert.concert_time} — Baithak Begins
+      ${mealTime} — ${mealType} followed by Baithak<br/>
+      ${concertTime} — Baithak Begins
     `;
   }
 
   return `
-    ${concert.concert_time} — Baithak<br/>
-    ${concert.meal_time} — ${mealType}
+    ${concertTime} — Baithak<br/>
+    ${mealTime} — ${mealType}
   `;
 }
 
@@ -75,13 +148,8 @@ fetch(dataURL)
             return;
         }
         
-        const artistNames = upcomingConcert.artists && upcomingConcert.artists.length > 0
-            ? upcomingConcert.artists.map(a => a.name).join(', ')
-            : 'Various Artists';
-        
-        const artistRoles = upcomingConcert.artists && upcomingConcert.artists.length > 0
-            ? upcomingConcert.artists.map(a => a.genre).join(', ')
-            : '';
+        // Format artists with Primary first, each on new line with genre
+        const artistDisplay = formatArtists(upcomingConcert.artists);
         
         const heroHTML = `
             <div class="hero-grid">
@@ -98,8 +166,7 @@ fetch(dataURL)
                     <div class="hero-label">UPCOMING BAITHAK</div>
                     
                     <div class="hero-artists">
-                        <span class="artist-name">${artistNames}</span>
-                        ${artistRoles ? `<br><span class="artist-role">(${artistRoles})</span>` : ''}
+                        <span class="artist-name">${artistDisplay}</span>
                     </div>
                     
                     <h1 class="hero-title">
@@ -110,7 +177,7 @@ fetch(dataURL)
                         <div class="detail-row">
                             <div class="icon-dot"></div>
                             <strong>Date</strong>
-                            <span>${upcomingConcert.display_date || upcomingConcert.date}</span>
+                            <span>${formatDate(upcomingConcert.date)}</span>
                         </div>
                        <div class="detail-row">
                             <div class="icon-dot"></div>
@@ -129,7 +196,7 @@ fetch(dataURL)
                         </div>
                         <div class="detail-row">
                             <div class="icon-dot"></div>
-                            <strong>Contribution</strong>
+                            <strong>Price</strong>
                             <span>₹${upcomingConcert.ticket_price_general || 1000} (General) • ₹${upcomingConcert.ticket_price_student || 500} (Students)</span>
                         </div>
                     </div>
@@ -150,7 +217,7 @@ fetch(dataURL)
                     
                     <div class="hero-quick-links">
                         <a href="#how-it-works">Reservation Process</a>
-                        <a href="#past-events">Past Baithaks</a>
+                        <a href="#faq">FAQ</a>
                     </div>
                 </div>
             </div>
@@ -316,7 +383,7 @@ async function fetchAndDisplaySeatAvailability(concertId) {
                 });
             } else if (totalAvailable <= 5) {
                 seatsCountEl.textContent = `Only ${totalAvailable} Seats Left!`;
-                seatsTextEl.textContent = 'Book now';
+                seatsTextEl.textContent = '';
                 seatsCountEl.style.color = 'var(--orange)';
                 seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";
                 seatsTextEl.style.fontFamily = "'Inter', sans-serif";

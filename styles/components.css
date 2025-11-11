@@ -18,11 +18,12 @@
 .nav-container {
     max-width: 1300px;
     margin: 0 auto;
-    padding: 15px 30px;
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 30px;
+    padding: 20px 30px 15px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    gap: 12px;
+    position: relative;
 }
 
 /* Logo Styles */
@@ -30,12 +31,11 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    justify-self: start;
 }
 
 .logo {
-    max-height: 45px;
-    max-width: 160px;
+    max-height: 55px;
+    max-width: 180px;
     height: auto;
     width: auto;
     transition: opacity 0.3s;
@@ -49,14 +49,14 @@
 .nav-center-section {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     align-items: center;
 }
 
 /* Site Tagline */
 .site-tagline {
     font-family: 'Inter', sans-serif;
-    font-size: 0.75em;
+    font-size: 0.8em;
     letter-spacing: 1.5px;
     color: var(--gold-bright);
     text-align: center;
@@ -64,7 +64,7 @@
 
 .nav-menu {
     display: flex;
-    gap: 25px;
+    gap: 30px;
     align-items: center;
     justify-content: center;
 }
@@ -103,8 +103,9 @@
     transition: color 0.3s;
     align-items: center;
     gap: 8px;
-    grid-column: 1 / -1;
-    justify-self: start;
+    position: absolute;
+    left: 30px;
+    top: 20px;
 }
 
 .nav-back-btn.visible {
@@ -123,7 +124,9 @@
     cursor: pointer;
     padding: 5px;
     z-index: 1002;
-    justify-self: end;
+    position: absolute;
+    right: 30px;
+    top: 20px;
 }
 
 .menu-toggle span {

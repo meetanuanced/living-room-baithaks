@@ -28,36 +28,26 @@
 
     /* Navigation */
     .nav-container {
-        grid-template-columns: 1fr auto;
-    }
-
-    .nav-center-section {
-        grid-column: 1 / -1;
-        order: 2;
-    }
-
-    .nav-logo {
-        order: 1;
+        padding: 15px 20px;
     }
 
     .menu-toggle {
         display: flex;
-        order: 3;
     }
 
     .nav-menu {
         display: none;
     }
 
-    /* Logo - smaller on tablet */
+    /* Logo - slightly smaller on tablet */
     .logo {
-        max-height: 40px;
-        max-width: 140px;
+        max-height: 50px;
+        max-width: 170px;
     }
 
     /* Tagline - smaller text on tablet */
     .site-tagline {
-        font-size: 0.7em;
+        font-size: 0.75em;
     }
 
     /* Mobile Sticky CTA */
@@ -91,15 +81,20 @@
         padding: 0 20px;
     }
 
-    /* Logo - even smaller on mobile */
+    /* Navigation */
+    .nav-container {
+        padding: 15px 15px;
+    }
+
+    /* Logo - smaller on mobile */
     .logo {
-        max-height: 35px;
-        max-width: 120px;
+        max-height: 45px;
+        max-width: 150px;
     }
 
     /* Tagline - smaller on mobile */
     .site-tagline {
-        font-size: 0.65em;
+        font-size: 0.7em;
     }
 
     /* Hero Section */

@@ -470,51 +470,96 @@ function updateSeatDisplay() {
         generalSelector.classList.toggle('unavailable', generalAvailable === 0);
         generalSelector.classList.toggle('has-selection', bookingState.generalSeats > 0);
 
-        // Add/remove unavailability message
+        // Get controls element
+        const generalControls = generalSelector.querySelector('.seat-controls-minimal');
+
+        // Add/remove unavailability message and hide/show controls
         let generalMsg = generalSelector.querySelector('.unavailable-message');
         if (generalAvailable === 0) {
+            // Hide controls when sold out
+            if (generalControls) {
+                generalControls.style.display = 'none';
+            }
+            // Add sold out message
             if (!generalMsg) {
                 generalMsg = document.createElement('div');
                 generalMsg.className = 'unavailable-message';
                 generalMsg.textContent = 'Sold out';
                 generalSelector.appendChild(generalMsg);
             }
-        } else if (generalMsg) {
-            generalMsg.remove();
+        } else {
+            // Show controls when available
+            if (generalControls) {
+                generalControls.style.display = 'flex';
+            }
+            // Remove sold out message
+            if (generalMsg) {
+                generalMsg.remove();
+            }
         }
     }
     if (studentSelector) {
         studentSelector.classList.toggle('unavailable', studentAvailable === 0);
         studentSelector.classList.toggle('has-selection', bookingState.studentSeats > 0);
 
-        // Add/remove unavailability message
+        // Get controls element
+        const studentControls = studentSelector.querySelector('.seat-controls-minimal');
+
+        // Add/remove unavailability message and hide/show controls
         let studentMsg = studentSelector.querySelector('.unavailable-message');
         if (studentAvailable === 0) {
+            // Hide controls when sold out
+            if (studentControls) {
+                studentControls.style.display = 'none';
+            }
+            // Add unavailable message
             if (!studentMsg) {
                 studentMsg = document.createElement('div');
                 studentMsg.className = 'unavailable-message';
                 studentMsg.textContent = 'Not available';
                 studentSelector.appendChild(studentMsg);
             }
-        } else if (studentMsg) {
-            studentMsg.remove();
+        } else {
+            // Show controls when available
+            if (studentControls) {
+                studentControls.style.display = 'flex';
+            }
+            // Remove unavailable message
+            if (studentMsg) {
+                studentMsg.remove();
+            }
         }
     }
     if (chairSelector) {
         chairSelector.classList.toggle('unavailable', chairsAvailable === 0);
         chairSelector.classList.toggle('has-selection', bookingState.chairs > 0);
 
-        // Add/remove unavailability message
+        // Get controls element
+        const chairControls = chairSelector.querySelector('.seat-controls-minimal');
+
+        // Add/remove unavailability message and hide/show controls
         let chairMsg = chairSelector.querySelector('.unavailable-message');
         if (chairsAvailable === 0) {
+            // Hide controls when unavailable
+            if (chairControls) {
+                chairControls.style.display = 'none';
+            }
+            // Add unavailable message
             if (!chairMsg) {
                 chairMsg = document.createElement('div');
                 chairMsg.className = 'unavailable-message';
                 chairMsg.textContent = 'None available';
                 chairSelector.appendChild(chairMsg);
             }
-        } else if (chairMsg) {
-            chairMsg.remove();
+        } else {
+            // Show controls when available
+            if (chairControls) {
+                chairControls.style.display = 'flex';
+            }
+            // Remove unavailable message
+            if (chairMsg) {
+                chairMsg.remove();
+            }
         }
     }
 
@@ -1094,9 +1139,17 @@ function copyUpiId() {
 function populateReviewStep() {
     const reviewSummary = document.getElementById('reviewSummary');
     const mainAttendee = bookingState.attendees.find(a => a.isMain);
-    
-    const artistNames = bookingState.concertData?.artists?.map(a => a.name).join(', ') || 'Various Artists';
-    const concertDate = bookingState.concertData?.display_date || bookingState.concertData?.date || 'TBA';
+
+    // Get only Primary artists for display
+    const primaryArtists = bookingState.concertData?.artists?.filter(a => a.category === 'Primary') || [];
+    const artistNames = primaryArtists.length > 0
+        ? primaryArtists.map(a => a.name).join(', ')
+        : 'Various Artists';
+
+    // Use formatDate function for full date with day of week
+    const concertDate = bookingState.concertData?.date
+        ? formatDate(bookingState.concertData.date)
+        : 'TBA';
     
     reviewSummary.innerHTML = `
         <div class="summary-row">
@@ -1257,11 +1310,20 @@ function fileToBase64(file) {
 
 function populateConfirmationStep() {
     document.getElementById('confirmationBookingId').textContent = bookingState.bookingId;
-    
+
     const confirmationSummary = document.getElementById('confirmationSummary');
     const mainAttendee = bookingState.attendees.find(a => a.isMain);
-    const artistNames = bookingState.concertData?.artists?.map(a => a.name).join(', ') || 'Various Artists';
-    const concertDate = bookingState.concertData?.display_date || bookingState.concertData?.date || 'TBA';
+
+    // Get only Primary artists for display
+    const primaryArtists = bookingState.concertData?.artists?.filter(a => a.category === 'Primary') || [];
+    const artistNames = primaryArtists.length > 0
+        ? primaryArtists.map(a => a.name).join(', ')
+        : 'Various Artists';
+
+    // Use formatDate function for full date with day of week
+    const concertDate = bookingState.concertData?.date
+        ? formatDate(bookingState.concertData.date)
+        : 'TBA';
     
     confirmationSummary.innerHTML = `
         <div class="summary-row">

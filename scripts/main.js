@@ -269,8 +269,10 @@ fetch(dataURL)
             const concertsToShow = pastConcerts.slice(0, displayCount);
             
             concertsToShow.forEach((concert, index) => {
-                const artistNames = concert.artists && concert.artists.length > 0
-                    ? concert.artists.map(a => a.name).join(', ')
+                // Get only Primary artists for past baithaks display
+                const primaryArtists = concert.artists?.filter(a => a.category === 'Primary') || [];
+                const artistNames = primaryArtists.length > 0
+                    ? primaryArtists.map(a => a.name).join(', ')
                     : 'Various Artists';
                 
                 const imagePath = concert.image_past || './Images/Baithaks/default_past.jpg';

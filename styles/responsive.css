@@ -33,7 +33,7 @@
     }
 
     /* Navigation */
-    .nav-menu a:not(.nav-book-btn) {
+    .nav-menu {
         display: none;
     }
 

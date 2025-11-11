@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Comparison Test - Living Room Baithaks</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Current fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800;900&family=Lora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Test fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orange: #ff8800;
+            --gold-bright: #e6c200;
+            --gold-toned: #d4a574;
+            --bg-black: #000000;
+            --bg-dark: #1a1a1a;
+            --text-white: #ffffff;
+            --text-light: #e5e5e5;
+            --text-gray: #b3b3b3;
+            --text-muted: #808080;
+        }
+
+        body {
+            background: var(--bg-black);
+            color: var(--text-white);
+            padding: 0;
+            margin: 0;
+        }
+
+        .test-header {
+            background: var(--bg-dark);
+            padding: 40px;
+            text-align: center;
+            border-bottom: 3px solid var(--orange);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .test-header h1 {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 2.5em;
+            color: var(--gold-bright);
+            margin-bottom: 15px;
+        }
+
+        .test-header p {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-gray);
+            font-size: 1.1em;
+        }
+
+        .test-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .test-nav-btn {
+            background: var(--orange);
+            color: var(--bg-black);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-family: 'League Spartan', sans-serif;
+            font-weight: 700;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .test-nav-btn:hover {
+            background: var(--gold-bright);
+            transform: translateY(-2px);
+        }
+
+        .comparison-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .option-section {
+            margin-bottom: 80px;
+            background: var(--bg-dark);
+            border-radius: 12px;
+            padding: 40px;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .option-section:hover {
+            border-color: var(--orange);
+        }
+
+        .option-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(255, 136, 0, 0.3);
+        }
+
+        .option-title {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 2em;
+            color: var(--orange);
+            margin-bottom: 10px;
+        }
+
+        .option-subtitle {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-gray);
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+
+        .font-stack {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            color: var(--gold-toned);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .content-grid {
+            display: grid;
+            gap: 40px;
+        }
+
+        .content-block {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 3px solid var(--gold-toned);
+        }
+
+        .content-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gold-bright);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* Option-specific styles */
+
+        /* Option A: Hybrid */
+        .option-a-heading {
+            font-family: 'League Spartan', sans-serif;
+        }
+        .option-a-body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+        .option-a-special {
+            font-family: 'Merriweather', serif;
+            line-height: 1.8;
+        }
+        .option-a-ui {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Option B: Inter Only */
+        .option-b-heading {
+            font-family: 'League Spartan', sans-serif;
+        }
+        .option-b-body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+        .option-b-special {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+        .option-b-ui {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Option C: Merriweather Body */
+        .option-c-heading {
+            font-family: 'League Spartan', sans-serif;
+        }
+        .option-c-body {
+            font-family: 'Merriweather', serif;
+            line-height: 1.8;
+        }
+        .option-c-special {
+            font-family: 'Merriweather', serif;
+            line-height: 1.8;
+        }
+        .option-c-ui {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Current: Lora (for reference) */
+        .current-heading {
+            font-family: 'League Spartan', sans-serif;
+        }
+        .current-body {
+            font-family: 'Lora', serif;
+            line-height: 1.7;
+        }
+        .current-special {
+            font-family: 'Lora', serif;
+            line-height: 1.7;
+        }
+        .current-ui {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--gold-toned);
+        }
+
+        h3 {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .form-example {
+            background: var(--bg-black);
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-dark);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: var(--text-white);
+            font-size: 1em;
+        }
+
+        .btn-example {
+            display: inline-flex;
+            align-items: center;
+            padding: 15px 35px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 15px;
+            margin-top: 15px;
+        }
+
+        .btn-primary {
+            background: var(--gold-bright);
+            color: var(--bg-black);
+            font-family: 'League Spartan', sans-serif;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-white);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-family: 'League Spartan', sans-serif;
+        }
+
+        .comparison-note {
+            background: rgba(255, 136, 0, 0.1);
+            border: 2px solid var(--orange);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .comparison-note strong {
+            color: var(--gold-bright);
+            font-family: 'League Spartan', sans-serif;
+        }
+
+        .highlight-box {
+            background: rgba(212, 165, 116, 0.1);
+            border-left: 3px solid var(--gold-bright);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .stats-badge {
+            display: inline-block;
+            background: var(--orange);
+            color: var(--bg-black);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-container {
+                padding: 40px 20px;
+            }
+
+            .option-section {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="test-header">
+        <h1>🎵 Font Comparison Test</h1>
+        <p>Compare different font options with real content from your baithak website</p>
+        <div class="test-navigation">
+            <button class="test-nav-btn" onclick="document.getElementById('current').scrollIntoView({behavior: 'smooth'})">
+                Current (Lora)
+            </button>
+            <button class="test-nav-btn" onclick="document.getElementById('option-a').scrollIntoView({behavior: 'smooth'})">
+                Option A: Hybrid
+            </button>
+            <button class="test-nav-btn" onclick="document.getElementById('option-b').scrollIntoView({behavior: 'smooth'})">
+                Option B: Inter Only
+            </button>
+            <button class="test-nav-btn" onclick="document.getElementById('option-c').scrollIntoView({behavior: 'smooth'})">
+                Option C: Merriweather
+            </button>
+        </div>
+    </div>
+
+    <div class="comparison-container">
+
+        <!-- CURRENT: Lora (Reference) -->
+        <div id="current" class="option-section" style="border-color: var(--text-muted);">
+            <div class="option-header">
+                <div class="option-title">CURRENT (Reference)</div>
+                <div class="option-subtitle">What you have now - League Spartan + Lora + Inter</div>
+                <div class="font-stack">
+                    Headings: League Spartan | Body: Lora (serif) | UI: Inter
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Headings -->
+                <div class="content-block">
+                    <div class="content-label">Headings & Titles</div>
+                    <h1 class="current-heading">Siddharth Belammanu & Gaurav Gadiyar</h1>
+                    <h2 class="current-heading">Upcoming Baithak - November 2025</h2>
+                    <h3 class="current-heading">Classical Vocal & Tabla Performance</h3>
+                </div>
+
+                <!-- Body Text / Artist Bio -->
+                <div class="content-block">
+                    <div class="content-label">Body Text (Artist Bio / Long-form Content)</div>
+                    <div class="current-special">
+                        <p>Siddharth Belammanu is a Hindustani classical vocalist trained in the rich tradition of Kirana gharana. His voice carries the depth of years spent understanding the nuances of raag, exploring the subtle emotions that each note can evoke. In our intimate baithak setting, you'll experience the power of his alapchari and the intricate taans that are characteristic of his gharana's style.</p>
+                        <p>Gaurav Gadiyar accompanies on tabla, bringing a rhythmic sensitivity that enhances every phrase. His ability to follow the vocalist's improvisations while maintaining the integrity of the taal creates a beautiful musical conversation. Together, they create an atmosphere where tradition meets spontaneity, where every performance is unique.</p>
+                    </div>
+                </div>
+
+                <!-- UI Elements -->
+                <div class="content-block">
+                    <div class="content-label">UI Labels & Form Elements</div>
+                    <div class="form-example">
+                        <div class="form-group">
+                            <label class="form-label current-ui">Full Name *</label>
+                            <input type="text" class="form-input current-ui" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label current-ui">Email Address *</label>
+                            <input type="email" class="form-input current-ui" placeholder="your.email@example.com">
+                        </div>
+                        <button class="btn-example btn-primary">Reserve a Seat</button>
+                        <button class="btn-example btn-secondary">See Past Baithaks</button>
+                    </div>
+                </div>
+
+                <!-- Description Text -->
+                <div class="content-block">
+                    <div class="content-label">Event Description</div>
+                    <div class="current-body">
+                        <p>Join us for an intimate evening of Hindustani classical music in our home. This baithak brings together passionate listeners and accomplished artists in a space designed for deep listening and musical connection. The informal setting allows for interactions between artists and audience, creating a unique experience that goes beyond a traditional concert.</p>
+                        <p>We begin with chai and conversation, followed by the performance, and conclude with a home-cooked meal. It's an opportunity to experience classical music the way it was meant to be heard—in an intimate setting, surrounded by fellow music lovers.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-note">
+                <strong>Current Issue:</strong> Lora serif feels too delicate on screens, especially on mobile devices. Can be harder to read for longer content.
+            </div>
+        </div>
+
+        <!-- OPTION A: Hybrid (Recommended) -->
+        <div id="option-a" class="option-section" style="border-color: var(--gold-bright);">
+            <div class="option-header">
+                <div class="option-title">OPTION A: HYBRID <span class="stats-badge">RECOMMENDED</span></div>
+                <div class="option-subtitle">Inter for UI/Forms • Merriweather for Special Content</div>
+                <div class="font-stack">
+                    Headings: League Spartan | Body: Inter (sans) | Special Content: Merriweather (serif) | UI: Inter
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Headings -->
+                <div class="content-block">
+                    <div class="content-label">Headings & Titles (League Spartan - Same as all options)</div>
+                    <h1 class="option-a-heading">Siddharth Belammanu & Gaurav Gadiyar</h1>
+                    <h2 class="option-a-heading">Upcoming Baithak - November 2025</h2>
+                    <h3 class="option-a-heading">Classical Vocal & Tabla Performance</h3>
+                </div>
+
+                <!-- Special Content (Serif) -->
+                <div class="content-block">
+                    <div class="content-label">Artist Bio / Special Content (Merriweather Serif - Classical elegance)</div>
+                    <div class="option-a-special">
+                        <p>Siddharth Belammanu is a Hindustani classical vocalist trained in the rich tradition of Kirana gharana. His voice carries the depth of years spent understanding the nuances of raag, exploring the subtle emotions that each note can evoke. In our intimate baithak setting, you'll experience the power of his alapchari and the intricate taans that are characteristic of his gharana's style.</p>
+                        <p>Gaurav Gadiyar accompanies on tabla, bringing a rhythmic sensitivity that enhances every phrase. His ability to follow the vocalist's improvisations while maintaining the integrity of the taal creates a beautiful musical conversation. Together, they create an atmosphere where tradition meets spontaneity, where every performance is unique.</p>
+                    </div>
+                </div>
+
+                <!-- UI Elements -->
+                <div class="content-block">
+                    <div class="content-label">UI Labels & Form Elements (Inter Sans - Maximum readability)</div>
+                    <div class="form-example">
+                        <div class="form-group">
+                            <label class="form-label option-a-ui">Full Name *</label>
+                            <input type="text" class="form-input option-a-ui" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label option-a-ui">Email Address *</label>
+                            <input type="email" class="form-input option-a-ui" placeholder="your.email@example.com">
+                        </div>
+                        <button class="btn-example btn-primary">Reserve a Seat</button>
+                        <button class="btn-example btn-secondary">See Past Baithaks</button>
+                    </div>
+                </div>
+
+                <!-- Description Text (Sans) -->
+                <div class="content-block">
+                    <div class="content-label">Event Description (Inter Sans - Easy to read)</div>
+                    <div class="option-a-body">
+                        <p>Join us for an intimate evening of Hindustani classical music in our home. This baithak brings together passionate listeners and accomplished artists in a space designed for deep listening and musical connection. The informal setting allows for interactions between artists and audience, creating a unique experience that goes beyond a traditional concert.</p>
+                        <p>We begin with chai and conversation, followed by the performance, and conclude with a home-cooked meal. It's an opportunity to experience classical music the way it was meant to be heard—in an intimate setting, surrounded by fellow music lovers.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong style="color: var(--gold-bright); font-family: 'League Spartan', sans-serif;">✅ Best of Both Worlds:</strong>
+                <ul style="margin-top: 10px; color: var(--text-gray); line-height: 1.8; font-family: 'Inter', sans-serif;">
+                    <li><strong>Maximum readability</strong> for forms, booking flow, and UI (Inter sans-serif)</li>
+                    <li><strong>Classical elegance</strong> for artist bios and special content (Merriweather serif)</li>
+                    <li><strong>Faster load times</strong> - Only load Merriweather 400 weight (~8KB)</li>
+                    <li><strong>Pragmatic approach</strong> - Use the right tool for each job</li>
+                </ul>
+            </div>
+
+            <div class="comparison-note">
+                <strong>Why This Works:</strong> Forms and booking flows NEED readability (Inter). Artist bios and descriptions WANT elegance (Merriweather). You get both.
+            </div>
+        </div>
+
+        <!-- OPTION B: Inter Only -->
+        <div id="option-b" class="option-section" style="border-color: var(--orange);">
+            <div class="option-header">
+                <div class="option-title">OPTION B: INTER ONLY <span class="stats-badge">FASTEST LOAD</span></div>
+                <div class="option-subtitle">Modern, Clean, Maximum Readability</div>
+                <div class="font-stack">
+                    Headings: League Spartan | Body: Inter (sans) | UI: Inter
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Headings -->
+                <div class="content-block">
+                    <div class="content-label">Headings & Titles (League Spartan)</div>
+                    <h1 class="option-b-heading">Siddharth Belammanu & Gaurav Gadiyar</h1>
+                    <h2 class="option-b-heading">Upcoming Baithak - November 2025</h2>
+                    <h3 class="option-b-heading">Classical Vocal & Tabla Performance</h3>
+                </div>
+
+                <!-- Body Text -->
+                <div class="content-block">
+                    <div class="content-label">Artist Bio / Long-form Content (Inter Sans)</div>
+                    <div class="option-b-special">
+                        <p>Siddharth Belammanu is a Hindustani classical vocalist trained in the rich tradition of Kirana gharana. His voice carries the depth of years spent understanding the nuances of raag, exploring the subtle emotions that each note can evoke. In our intimate baithak setting, you'll experience the power of his alapchari and the intricate taans that are characteristic of his gharana's style.</p>
+                        <p>Gaurav Gadiyar accompanies on tabla, bringing a rhythmic sensitivity that enhances every phrase. His ability to follow the vocalist's improvisations while maintaining the integrity of the taal creates a beautiful musical conversation. Together, they create an atmosphere where tradition meets spontaneity, where every performance is unique.</p>
+                    </div>
+                </div>
+
+                <!-- UI Elements -->
+                <div class="content-block">
+                    <div class="content-label">UI Labels & Form Elements (Inter Sans)</div>
+                    <div class="form-example">
+                        <div class="form-group">
+                            <label class="form-label option-b-ui">Full Name *</label>
+                            <input type="text" class="form-input option-b-ui" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label option-b-ui">Email Address *</label>
+                            <input type="email" class="form-input option-b-ui" placeholder="your.email@example.com">
+                        </div>
+                        <button class="btn-example btn-primary">Reserve a Seat</button>
+                        <button class="btn-example btn-secondary">See Past Baithaks</button>
+                    </div>
+                </div>
+
+                <!-- Description Text -->
+                <div class="content-block">
+                    <div class="content-label">Event Description (Inter Sans)</div>
+                    <div class="option-b-body">
+                        <p>Join us for an intimate evening of Hindustani classical music in our home. This baithak brings together passionate listeners and accomplished artists in a space designed for deep listening and musical connection. The informal setting allows for interactions between artists and audience, creating a unique experience that goes beyond a traditional concert.</p>
+                        <p>We begin with chai and conversation, followed by the performance, and conclude with a home-cooked meal. It's an opportunity to experience classical music the way it was meant to be heard—in an intimate setting, surrounded by fellow music lovers.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong style="color: var(--gold-bright); font-family: 'League Spartan', sans-serif;">✅ Simplicity & Speed:</strong>
+                <ul style="margin-top: 10px; color: var(--text-gray); line-height: 1.8; font-family: 'Inter', sans-serif;">
+                    <li><strong>Only 2 font families</strong> - League Spartan + Inter (~27KB total)</li>
+                    <li><strong>Fastest page load</strong> - 20% faster than current</li>
+                    <li><strong>Maximum readability</strong> - Sans-serif optimized for screens</li>
+                    <li><strong>Modern, professional</strong> - Clean SaaS aesthetic</li>
+                    <li><strong>Consistent throughout</strong> - No switching between fonts</li>
+                </ul>
+            </div>
+
+            <div class="comparison-note">
+                <strong>Why This Works:</strong> Inter is exceptional for both UI and long-form content. Used by Stripe, Linear, Notion. Sacrifices classical serif elegance for maximum readability.
+            </div>
+        </div>
+
+        <!-- OPTION C: Merriweather Body -->
+        <div id="option-c" class="option-section" style="border-color: var(--gold-toned);">
+            <div class="option-header">
+                <div class="option-title">OPTION C: MERRIWEATHER BODY <span class="stats-badge">MOST CLASSICAL</span></div>
+                <div class="option-subtitle">Replace Lora with Better Serif Throughout</div>
+                <div class="font-stack">
+                    Headings: League Spartan | Body: Merriweather (serif) | UI: Inter
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Headings -->
+                <div class="content-block">
+                    <div class="content-label">Headings & Titles (League Spartan)</div>
+                    <h1 class="option-c-heading">Siddharth Belammanu & Gaurav Gadiyar</h1>
+                    <h2 class="option-c-heading">Upcoming Baithak - November 2025</h2>
+                    <h3 class="option-c-heading">Classical Vocal & Tabla Performance</h3>
+                </div>
+
+                <!-- Body Text -->
+                <div class="content-block">
+                    <div class="content-label">Artist Bio / Long-form Content (Merriweather Serif)</div>
+                    <div class="option-c-special">
+                        <p>Siddharth Belammanu is a Hindustani classical vocalist trained in the rich tradition of Kirana gharana. His voice carries the depth of years spent understanding the nuances of raag, exploring the subtle emotions that each note can evoke. In our intimate baithak setting, you'll experience the power of his alapchari and the intricate taans that are characteristic of his gharana's style.</p>
+                        <p>Gaurav Gadiyar accompanies on tabla, bringing a rhythmic sensitivity that enhances every phrase. His ability to follow the vocalist's improvisations while maintaining the integrity of the taal creates a beautiful musical conversation. Together, they create an atmosphere where tradition meets spontaneity, where every performance is unique.</p>
+                    </div>
+                </div>
+
+                <!-- UI Elements -->
+                <div class="content-block">
+                    <div class="content-label">UI Labels & Form Elements (Inter Sans)</div>
+                    <div class="form-example">
+                        <div class="form-group">
+                            <label class="form-label option-c-ui">Full Name *</label>
+                            <input type="text" class="form-input option-c-ui" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label option-c-ui">Email Address *</label>
+                            <input type="email" class="form-input option-c-ui" placeholder="your.email@example.com">
+                        </div>
+                        <button class="btn-example btn-primary">Reserve a Seat</button>
+                        <button class="btn-example btn-secondary">See Past Baithaks</button>
+                    </div>
+                </div>
+
+                <!-- Description Text -->
+                <div class="content-block">
+                    <div class="content-label">Event Description (Merriweather Serif)</div>
+                    <div class="option-c-body">
+                        <p>Join us for an intimate evening of Hindustani classical music in our home. This baithak brings together passionate listeners and accomplished artists in a space designed for deep listening and musical connection. The informal setting allows for interactions between artists and audience, creating a unique experience that goes beyond a traditional concert.</p>
+                        <p>We begin with chai and conversation, followed by the performance, and conclude with a home-cooked meal. It's an opportunity to experience classical music the way it was meant to be heard—in an intimate setting, surrounded by fellow music lovers.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong style="color: var(--gold-bright); font-family: 'League Spartan', sans-serif;">✅ Classical Throughout:</strong>
+                <ul style="margin-top: 10px; color: var(--text-gray); line-height: 1.8; font-family: 'Inter', sans-serif;">
+                    <li><strong>Better serif than Lora</strong> - Designed specifically for screen reading</li>
+                    <li><strong>Classical aesthetic</strong> - Serif maintains traditional elegance</li>
+                    <li><strong>Better x-height</strong> - Taller letters = easier to read than Lora</li>
+                    <li><strong>Sturdier characters</strong> - More weight, better contrast</li>
+                    <li><strong>Consistent serif feel</strong> - Throughout all body content</li>
+                </ul>
+            </div>
+
+            <div class="comparison-note">
+                <strong>Why This Works:</strong> If you want to keep serif body text, Merriweather is objectively better than Lora for screens. More readable while maintaining classical elegance.
+            </div>
+        </div>
+
+        <!-- Final Comparison Table -->
+        <div class="option-section" style="background: var(--bg-black); border-color: var(--gold-bright);">
+            <div class="option-header">
+                <div class="option-title">📊 Quick Comparison</div>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif;">
+                    <thead>
+                        <tr style="background: var(--bg-dark);">
+                            <th style="padding: 15px; text-align: left; border-bottom: 2px solid var(--orange); color: var(--gold-bright);">Feature</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid var(--orange); color: var(--gold-bright);">Current (Lora)</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid var(--orange); color: var(--gold-bright);">Option A: Hybrid</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid var(--orange); color: var(--gold-bright);">Option B: Inter</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid var(--orange); color: var(--gold-bright);">Option C: Merriweather</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">Readability</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-gray);">⭐⭐⭐</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">⭐⭐⭐⭐⭐</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">⭐⭐⭐⭐⭐</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">Classical Aesthetic</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-gray);">⭐⭐⭐⭐</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">⭐⭐⭐⭐</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-gray);">⭐⭐</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">⭐⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">Mobile Experience</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-gray);">⭐⭐⭐</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">⭐⭐⭐⭐⭐</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">⭐⭐⭐⭐⭐</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">Page Load Speed</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-gray);">~50KB</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">~35KB</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">~27KB</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">~35KB</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">Font Families</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-gray);">3</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">3</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">2</td>
+                            <td style="padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--gold-bright);">3</td>
+                        </tr>
+                        <tr style="background: rgba(255, 136, 0, 0.05);">
+                            <td style="padding: 15px; font-weight: 700; color: var(--gold-bright);">Recommendation</td>
+                            <td style="padding: 15px; text-align: center; color: var(--text-muted);">Replace</td>
+                            <td style="padding: 15px; text-align: center; color: var(--gold-bright); font-weight: 700;">✅ BEST</td>
+                            <td style="padding: 15px; text-align: center; color: var(--text-light);">Great</td>
+                            <td style="padding: 15px; text-align: center; color: var(--text-light);">Good</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="comparison-note" style="margin-top: 30px;">
+                <strong>Final Recommendation: Option A (Hybrid)</strong><br>
+                <span style="color: var(--text-gray); font-family: 'Inter', sans-serif; line-height: 1.7;">
+                    Use Inter for maximum readability where it matters (forms, UI), and Merriweather for classical elegance where it matters (artist bios). This gives you the best of both worlds with excellent performance.
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('.test-nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Visual feedback
+                this.style.background = 'var(--gold-bright)';
+                setTimeout(() => {
+                    this.style.background = 'var(--orange)';
+                }, 200);
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -206,8 +206,8 @@ fetch(dataURL)
                     </div>
                     
                     <div class="seats-urgency">
-                        <div class="seats-count">50 Baithak Seats</div>
-                        <div class="seats-text">Available</div>
+                        <div class="seats-count">Loading...</div>
+                        <div class="seats-text"></div>
                     </div>
                     
                     <div class="hero-cta-group">
@@ -384,7 +384,9 @@ async function fetchAndDisplaySeatAvailability(concertId) {
                     btn.textContent = 'Sold Out';
                 });
             } else if (totalAvailable <= 5) {
-                seatsCountEl.textContent = `Only ${totalAvailable} Seats Left!`;
+                // Handle singular/plural for seat count
+                const seatWord = totalAvailable === 1 ? 'Seat' : 'Seats';
+                seatsCountEl.textContent = `Only ${totalAvailable} ${seatWord} Left!`;
                 seatsTextEl.textContent = '';
                 seatsCountEl.style.color = 'var(--orange)';
                 seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";

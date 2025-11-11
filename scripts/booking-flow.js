@@ -2,6 +2,44 @@
 // BOOKING FLOW JAVASCRIPT
 // ========================================
 
+// ========================================
+// HELPER FUNCTIONS FOR FORMATTING
+// ========================================
+
+/**
+ * Get ordinal suffix for day (1st, 2nd, 3rd, 4th, etc.)
+ */
+function getOrdinalSuffix(day) {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+        case 1: return 'st';
+        case 2: return 'nd';
+        case 3: return 'rd';
+        default: return 'th';
+    }
+}
+
+/**
+ * Format date as "16th November 2025, Saturday"
+ */
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                   'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const day = date.getDate();
+    const dayOfWeek = days[date.getDay()];
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${day}${getOrdinalSuffix(day)} ${month} ${year}, ${dayOfWeek}`;
+}
+
+// ========================================
+// BOOKING STATE
+// ========================================
+
 // Booking state
 const bookingState = {
     currentStep: 1,

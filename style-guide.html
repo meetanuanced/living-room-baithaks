@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Living Room Baithaks - Style Guide & Design System</title>
+
+    <!-- Import current stylesheets -->
+    <link rel="stylesheet" href="./styles/core.css">
+    <link rel="stylesheet" href="./styles/layout.css">
+    <link rel="stylesheet" href="./styles/components.css">
+    <link rel="stylesheet" href="./styles/booking-flow.css">
+
+    <style>
+        /* Style Guide Specific Styles */
+        .style-guide-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            background: var(--bg-black);
+        }
+
+        .guide-header {
+            text-align: center;
+            margin-bottom: 80px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid var(--orange);
+        }
+
+        .guide-header h1 {
+            font-size: 3em;
+            color: var(--gold-bright);
+            margin-bottom: 20px;
+        }
+
+        .guide-header p {
+            color: var(--text-gray);
+            font-size: 1.1em;
+        }
+
+        .guide-section {
+            margin-bottom: 80px;
+        }
+
+        .guide-section-title {
+            font-size: 2em;
+            color: var(--orange);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 136, 0, 0.3);
+        }
+
+        .guide-subsection {
+            margin-bottom: 40px;
+        }
+
+        .guide-subsection-title {
+            font-size: 1.3em;
+            color: var(--gold-toned);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .element-row {
+            background: var(--bg-dark);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--orange);
+        }
+
+        .element-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .element-code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            color: var(--gold-bright);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .color-swatch {
+            text-align: center;
+        }
+
+        .color-box {
+            width: 100%;
+            height: 120px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .color-info {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9em;
+        }
+
+        .color-name {
+            color: var(--text-white);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .color-value {
+            color: var(--text-gray);
+            font-size: 0.85em;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .comparison-box {
+            background: rgba(255, 136, 0, 0.05);
+            border: 2px solid var(--orange);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .comparison-title {
+            color: var(--gold-bright);
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-family: 'League Spartan', sans-serif;
+        }
+
+        .optimization-note {
+            background: var(--bg-dark);
+            border-left: 3px solid var(--gold-bright);
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .optimization-note strong {
+            color: var(--gold-bright);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--bg-dark);
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid rgba(212, 165, 116, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            color: var(--gold-bright);
+            font-weight: 900;
+            font-family: 'League Spartan', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 0.9em;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-examples {
+            display: grid;
+            gap: 20px;
+        }
+
+        .spacing-example {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .spacing-box {
+            background: var(--orange);
+            color: var(--bg-black);
+            padding: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="style-guide-container">
+
+        <!-- Header -->
+        <div class="guide-header">
+            <h1>🎵 Living Room Baithaks</h1>
+            <h2 style="color: var(--gold-toned); font-size: 1.5em; margin-top: 10px;">Design System & Style Guide</h2>
+            <p style="margin-top: 20px;">A comprehensive visual reference of all design elements, components, and styles used in the website</p>
+        </div>
+
+        <!-- Design System Stats -->
+        <div class="guide-section">
+            <h2 class="guide-section-title">📊 Current Design System Metrics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Font Families</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Typography Styles</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7+</div>
+                    <div class="stat-label">Button Variants</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8+</div>
+                    <div class="stat-label">Card Types</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Color Variables</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1,860</div>
+                    <div class="stat-label">Total CSS Lines</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color Palette -->
+        <div class="guide-section">
+            <h2 class="guide-section-title">🎨 Color Palette</h2>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Primary Colors</h3>
+                <div class="color-grid">
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: var(--orange);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Orange</div>
+                            <div class="color-value">#ff8800</div>
+                            <div class="color-value">--orange</div>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: var(--gold-bright);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Gold Bright</div>
+                            <div class="color-value">#e6c200</div>
+                            <div class="color-value">--gold-bright</div>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: var(--gold-toned);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Gold Toned</div>
+                            <div class="color-value">#d4a574</div>
+                            <div class="color-value">--gold-toned</div>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: var(--orange-subtle);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Orange Subtle</div>
+                            <div class="color-value">rgba(255, 136, 0, 0.1)</div>
+                            <div class="color-value">--orange-subtle</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Background Colors</h3>
+                <div class="color-grid">
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: var(--bg-black); border: 1px solid var(--text-muted);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Black</div>
+                            <div class="color-value">#000000</div>
+                            <div class="color-value">--bg-black</div>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: var(--bg-dark); border: 1px solid var(--text-muted);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Dark Gray</div>
+                            <div class="color-value">#1a1a1a</div>
+                            <div class="color-value">--bg-dark</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Text Colors</h3>
+                <div class="color-grid">
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: var(--text-white);"></div>
+                        <div class="color-info">
+                            <div class="color-name">White</div>
+                            <div class="color-value">#ffffff</div>
+                            <div class="color-value">--text-white</div>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: var(--text-light);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Light Gray</div>
+                            <div class="color-value">#e5e5e5</div>
+                            <div class="color-value">--text-light</div>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: var(--text-gray);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Gray</div>
+                            <div class="color-value">#b3b3b3</div>
+                            <div class="color-value">--text-gray</div>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: var(--text-muted);"></div>
+                        <div class="color-info">
+                            <div class="color-name">Muted Gray</div>
+                            <div class="color-value">#808080</div>
+                            <div class="color-value">--text-muted</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typography -->
+        <div class="guide-section">
+            <h2 class="guide-section-title">✍️ Typography</h2>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Font Families</h3>
+                <div class="element-row">
+                    <span class="element-label">Headings Font</span>
+                    <p style="font-family: 'League Spartan', sans-serif; font-size: 2em; font-weight: 800; margin: 0;">
+                        League Spartan - The quick brown fox jumps
+                    </p>
+                    <span class="element-code">font-family: 'League Spartan', sans-serif;</span>
+                </div>
+                <div class="element-row">
+                    <span class="element-label">Body Font</span>
+                    <p style="font-family: 'Lora', serif; font-size: 1.1em; line-height: 1.7; margin: 0;">
+                        Lora - The quick brown fox jumps over the lazy dog. This serif font is used for body text and long-form content.
+                    </p>
+                    <span class="element-code">font-family: 'Lora', serif;</span>
+                </div>
+                <div class="element-row">
+                    <span class="element-label">UI/Labels Font</span>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 1em; margin: 0;">
+                        Inter - The quick brown fox jumps over the lazy dog. Used for UI elements, labels, and descriptions.
+                    </p>
+                    <span class="element-code">font-family: 'Inter', sans-serif;</span>
+                </div>
+            </div>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Headings Scale</h3>
+                <div class="element-row">
+                    <h1 style="margin: 0 0 20px 0;">Heading 1 - Main Page Title</h1>
+                    <span class="element-code">h1 { font-size: default; font-weight: 800; }</span>
+                </div>
+                <div class="element-row">
+                    <h2 style="margin: 0 0 20px 0;">Heading 2 - Section Title</h2>
+                    <span class="element-code">h2 { font-size: default; font-weight: 800; }</span>
+                </div>
+                <div class="element-row">
+                    <h3 style="margin: 0 0 20px 0;">Heading 3 - Subsection Title</h3>
+                    <span class="element-code">h3 { font-size: default; font-weight: 800; }</span>
+                </div>
+            </div>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Specialized Typography</h3>
+                <div class="element-row">
+                    <span class="element-label">Section Title</span>
+                    <div class="section-title" style="margin: 0;">Past <span class="highlight">Baithaks</span></div>
+                    <span class="element-code">.section-title { font-size: 2.5em; }</span>
+                </div>
+                <div class="element-row">
+                    <span class="element-label">Hero Label</span>
+                    <div class="hero-label" style="margin: 0;">UPCOMING BAITHAK</div>
+                    <span class="element-code">.hero-label { font-size: 0.7em; letter-spacing: 2px; }</span>
+                </div>
+                <div class="element-row">
+                    <span class="element-label">Step Title</span>
+                    <div class="step-title" style="margin: 0;">Choose Your Seats</div>
+                    <span class="element-code">.step-title { font-size: 1.8em; }</span>
+                </div>
+            </div>
+
+            <div class="optimization-note">
+                <strong>⚡ Optimization Opportunity:</strong> 25+ typography styles could be reduced to 8-10 utility classes:
+                <ul style="margin-top: 10px; color: var(--text-gray);">
+                    <li>.text-heading (League Spartan base)</li>
+                    <li>.text-body (Lora base)</li>
+                    <li>.text-ui (Inter base)</li>
+                    <li>.size-xl, .size-lg, .size-md, .size-sm (size modifiers)</li>
+                    <li>Reduce CSS by ~15-20%</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="guide-section">
+            <h2 class="guide-section-title">🔘 Buttons</h2>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Primary Buttons</h3>
+                <div class="button-grid">
+                    <div class="element-row">
+                        <span class="element-label">btn-primary</span>
+                        <button class="btn btn-primary">Reserve a Seat</button>
+                        <span class="element-code">.btn.btn-primary</span>
+                    </div>
+                    <div class="element-row">
+                        <span class="element-label">btn-secondary</span>
+                        <button class="btn btn-secondary">See Past Baithaks</button>
+                        <span class="element-code">.btn.btn-secondary</span>
+                    </div>
+                    <div class="element-row">
+                        <span class="element-label">nav-book-btn</span>
+                        <button class="nav-book-btn">Book Now</button>
+                        <span class="element-code">.nav-book-btn</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Utility Buttons</h3>
+                <div class="button-grid">
+                    <div class="element-row">
+                        <span class="element-label">copy-btn</span>
+                        <button class="copy-btn">Copy UPI ID</button>
+                        <span class="element-code">.copy-btn</span>
+                    </div>
+                    <div class="element-row">
+                        <span class="element-label">mobile-sticky-btn</span>
+                        <button class="mobile-sticky-btn">Reserve Seat</button>
+                        <span class="element-code">.mobile-sticky-btn</span>
+                    </div>
+                    <div class="element-row">
+                        <span class="element-label">booking-sticky-btn</span>
+                        <button class="booking-sticky-btn">Continue</button>
+                        <span class="element-code">.booking-sticky-btn</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Seat Selection Buttons</h3>
+                <div class="button-grid">
+                    <div class="element-row">
+                        <span class="element-label">seat-btn (Large)</span>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <button class="seat-btn">−</button>
+                            <span style="color: var(--text-white);">5</span>
+                            <button class="seat-btn">+</button>
+                        </div>
+                        <span class="element-code">.seat-btn { width: 45px; border-radius: 50%; }</span>
+                    </div>
+                    <div class="element-row">
+                        <span class="element-label">seat-btn-minimal (Compact)</span>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <button class="seat-btn-minimal">−</button>
+                            <span style="color: var(--text-white);">3</span>
+                            <button class="seat-btn-minimal">+</button>
+                        </div>
+                        <span class="element-code">.seat-btn-minimal { width: 32px; border-radius: 4px; }</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-box">
+                <div class="comparison-title">🔍 Current State</div>
+                <p style="color: var(--text-gray); margin: 10px 0;">
+                    <strong style="color: var(--orange);">7+ different button classes</strong> with similar styling but different names:
+                </p>
+                <ul style="color: var(--text-gray); margin: 10px 0 10px 20px;">
+                    <li>.btn, .btn-primary, .btn-secondary</li>
+                    <li>.nav-book-btn (padding: 10px 24px)</li>
+                    <li>.copy-btn (padding: 10px 20px)</li>
+                    <li>.mobile-sticky-btn (padding: 12px 28px)</li>
+                    <li>.booking-sticky-btn (padding: 12px 28px)</li>
+                    <li>.seat-btn, .seat-btn-minimal</li>
+                </ul>
+            </div>
+
+            <div class="optimization-note">
+                <strong>⚡ Proposed Optimization:</strong> Consolidate to 1 base class + size/style modifiers:
+                <ul style="margin-top: 10px; color: var(--text-gray);">
+                    <li>.btn (base class with common styles)</li>
+                    <li>.btn-primary, .btn-secondary (color variants)</li>
+                    <li>.btn-sm, .btn-md, .btn-lg (size modifiers)</li>
+                    <li>.btn-icon (for circular buttons)</li>
+                    <li>Reduce button CSS by ~40%</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="guide-section">
+            <h2 class="guide-section-title">🃏 Cards & Containers</h2>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Card Variants</h3>
+                <div class="card-grid">
+                    <div class="step-card">
+                        <div class="step-title">Step Card</div>
+                        <div class="step-desc">
+                            Used in "How It Works" section. Dark background with orange left border.
+                        </div>
+                        <span class="element-code" style="margin-top: 15px;">.step-card</span>
+                    </div>
+
+                    <div class="past-event-card">
+                        <div style="background: var(--bg-black); height: 200px; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">
+                            Image Here
+                        </div>
+                        <div class="past-event-info">
+                            <div class="past-event-title">Past Event Card</div>
+                            <div class="past-event-artist">Artist Name</div>
+                            <div class="past-event-date">Aug 2025</div>
+                        </div>
+                        <span class="element-code">.past-event-card</span>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Info Card</h3>
+                        <p style="color: var(--text-gray); margin: 10px 0 0 0;">
+                            Used in booking flow for displaying information. Dark background with orange accent border.
+                        </p>
+                        <span class="element-code" style="margin-top: 15px;">.info-card</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Seat Selector Cards</h3>
+                <div class="card-grid">
+                    <div class="seat-item-minimal">
+                        <div class="seat-item-info-minimal">
+                            <div class="seat-name-minimal">General Seats</div>
+                            <div class="seat-price-minimal">₹1000 each</div>
+                        </div>
+                        <div class="seat-controls-minimal">
+                            <button class="seat-btn-minimal">−</button>
+                            <div class="seat-count-minimal">2</div>
+                            <button class="seat-btn-minimal">+</button>
+                        </div>
+                        <span class="element-code" style="position: absolute; bottom: 10px; left: 18px;">.seat-item-minimal</span>
+                    </div>
+
+                    <div class="seat-selector">
+                        <div class="seat-header">
+                            <div class="seat-title">General Seats</div>
+                            <div class="seat-price">₹1000 per seat</div>
+                        </div>
+                        <div class="seat-controls">
+                            <button class="seat-btn">−</button>
+                            <div class="seat-display">3</div>
+                            <button class="seat-btn">+</button>
+                        </div>
+                        <span class="element-code" style="margin-top: 15px;">.seat-selector</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Attendee Cards</h3>
+                <div class="card-grid">
+                    <div class="main-attendee-card">
+                        <div style="color: var(--orange); font-weight: 700; margin-bottom: 15px;">MAIN ATTENDEE</div>
+                        <p style="color: var(--text-gray); margin: 0;">
+                            Special card for main booking contact. Orange border.
+                        </p>
+                        <span class="element-code" style="margin-top: 15px;">.main-attendee-card</span>
+                    </div>
+
+                    <div class="additional-attendees-card">
+                        <div style="color: var(--gold-bright); font-weight: 600; margin-bottom: 15px;">ADDITIONAL ATTENDEES</div>
+                        <p style="color: var(--text-gray); margin: 0;">
+                            Card for other attendees. Gold-toned left border.
+                        </p>
+                        <span class="element-code" style="margin-top: 15px;">.additional-attendees-card</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-box">
+                <div class="comparison-title">🔍 Pattern Identified</div>
+                <p style="color: var(--text-gray); margin: 10px 0;">
+                    <strong style="color: var(--orange);">8+ card types</strong> all share the same pattern:
+                </p>
+                <ul style="color: var(--text-gray); margin: 10px 0 10px 20px;">
+                    <li>background: var(--bg-dark)</li>
+                    <li>border-radius: 8px</li>
+                    <li>padding: 20-30px</li>
+                    <li>border-left: 2-3px solid (color varies)</li>
+                </ul>
+            </div>
+
+            <div class="optimization-note">
+                <strong>⚡ Proposed Optimization:</strong> Extract common pattern to base class:
+                <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 4px; margin-top: 10px; font-family: 'Courier New', monospace; font-size: 0.85em; color: var(--text-light);">
+                    .card { background: var(--bg-dark); border-radius: 8px; padding: 25px; }<br>
+                    .card-accent-orange { border-left: 3px solid var(--orange); }<br>
+                    .card-accent-gold { border-left: 3px solid var(--gold-toned); }<br><br>
+                    Usage: &lt;div class="card card-accent-orange"&gt;
+                </div>
+                <p style="margin-top: 10px; color: var(--text-gray);">Reduce card CSS by ~30-35%</p>
+            </div>
+        </div>
+
+        <!-- Form Elements -->
+        <div class="guide-section">
+            <h2 class="guide-section-title">📝 Form Elements</h2>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Input Fields</h3>
+                <div class="form-examples">
+                    <div class="element-row">
+                        <span class="element-label">Text Input</span>
+                        <div class="form-group">
+                            <label class="form-label">Full Name <span style="color: var(--orange);">*</span></label>
+                            <input type="text" class="form-input" placeholder="Enter your full name" value="John Doe">
+                        </div>
+                        <span class="element-code">.form-input</span>
+                    </div>
+
+                    <div class="element-row">
+                        <span class="element-label">Email Input</span>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" placeholder="your.email@example.com" value="john@example.com">
+                        </div>
+                        <span class="element-code">.form-input[type="email"]</span>
+                    </div>
+
+                    <div class="element-row">
+                        <span class="element-label">Checkbox</span>
+                        <div class="checkbox-label">
+                            <input type="checkbox" checked>
+                            <span>I agree to the terms and conditions</span>
+                        </div>
+                        <span class="element-code">.checkbox-label</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spacing -->
+        <div class="guide-section">
+            <h2 class="guide-section-title">📏 Spacing System</h2>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Spacing Scale (12px rhythm)</h3>
+                <div style="background: var(--bg-dark); padding: 30px; border-radius: 8px;">
+                    <div class="spacing-example">
+                        <div class="spacing-box" style="width: 12px;">12px</div>
+                        <span style="color: var(--text-gray);">Small gaps, tight spacing</span>
+                    </div>
+                    <div class="spacing-example">
+                        <div class="spacing-box" style="width: 15px;">15px</div>
+                        <span style="color: var(--text-gray);">Button padding, form spacing</span>
+                    </div>
+                    <div class="spacing-example">
+                        <div class="spacing-box" style="width: 20px;">20px</div>
+                        <span style="color: var(--text-gray);">Card padding, grid gaps</span>
+                    </div>
+                    <div class="spacing-example">
+                        <div class="spacing-box" style="width: 25px;">25px</div>
+                        <span style="color: var(--text-gray);">Section padding</span>
+                    </div>
+                    <div class="spacing-example">
+                        <div class="spacing-box" style="width: 30px;">30px</div>
+                        <span style="color: var(--text-gray);">Large card padding</span>
+                    </div>
+                    <div class="spacing-example">
+                        <div class="spacing-box" style="width: 40px;">40px</div>
+                        <span style="color: var(--text-gray);">Section margins</span>
+                    </div>
+                    <div class="spacing-example">
+                        <div class="spacing-box" style="width: 60px;">60px</div>
+                        <span style="color: var(--text-gray);">Major section spacing</span>
+                    </div>
+                </div>
+
+                <div class="optimization-note" style="margin-top: 20px;">
+                    <strong>⚡ Optimization Opportunity:</strong> Create spacing utility classes:
+                    <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 4px; margin-top: 10px; font-family: 'Courier New', monospace; font-size: 0.85em; color: var(--text-light);">
+                        .gap-12 { gap: 12px; }<br>
+                        .gap-20 { gap: 20px; }<br>
+                        .gap-30 { gap: 30px; }<br><br>
+                        .p-20 { padding: 20px; }<br>
+                        .p-30 { padding: 30px; }<br><br>
+                        .mb-20 { margin-bottom: 20px; }<br>
+                        .mb-30 { margin-bottom: 30px; }
+                    </div>
+                    <p style="margin-top: 10px; color: var(--text-gray);">Eliminates 30+ repeated spacing declarations</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Border Radius & Shadows -->
+        <div class="guide-section">
+            <h2 class="guide-section-title">🔲 Border Radius & Shadows</h2>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Border Radius Values</h3>
+                <div class="card-grid">
+                    <div style="background: var(--bg-dark); padding: 30px; text-align: center; border-radius: 4px;">
+                        <div style="color: var(--text-white); margin-bottom: 10px; font-weight: 600;">4px Radius</div>
+                        <div style="color: var(--text-gray); font-size: 0.85em;">Used for: Seat buttons (minimal)</div>
+                    </div>
+                    <div style="background: var(--bg-dark); padding: 30px; text-align: center; border-radius: 6px;">
+                        <div style="color: var(--text-white); margin-bottom: 10px; font-weight: 600;">6px Radius</div>
+                        <div style="color: var(--text-gray); font-size: 0.85em;">Used for: Buttons, inputs, small cards</div>
+                    </div>
+                    <div style="background: var(--bg-dark); padding: 30px; text-align: center; border-radius: 8px;">
+                        <div style="color: var(--text-white); margin-bottom: 10px; font-weight: 600;">8px Radius</div>
+                        <div style="color: var(--text-gray); font-size: 0.85em;">Used for: Cards, containers, images</div>
+                    </div>
+                    <div style="background: var(--bg-dark); padding: 30px; text-align: center; border-radius: 50%; width: 150px; height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <div style="color: var(--text-white); margin-bottom: 10px; font-weight: 600;">50% Radius</div>
+                        <div style="color: var(--text-gray); font-size: 0.85em;">Used for: Circular seat buttons</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-subsection">
+                <h3 class="guide-subsection-title">Shadow Styles</h3>
+                <div class="card-grid">
+                    <div style="background: var(--bg-dark); padding: 30px; border-radius: 8px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);">
+                        <div style="color: var(--text-white); font-weight: 600; margin-bottom: 10px;">Large Shadow</div>
+                        <div style="color: var(--text-gray); font-size: 0.85em; margin-bottom: 15px;">Hero images, major elements</div>
+                        <div style="font-family: 'Courier New', monospace; font-size: 0.75em; color: var(--gold-bright);">
+                            0 20px 60px rgba(0,0,0,0.6)
+                        </div>
+                    </div>
+                    <div style="background: var(--bg-dark); padding: 30px; border-radius: 8px; box-shadow: 0 10px 30px rgba(255, 136, 0, 0.2);">
+                        <div style="color: var(--text-white); font-weight: 600; margin-bottom: 10px;">Orange Glow</div>
+                        <div style="color: var(--text-gray); font-size: 0.85em; margin-bottom: 15px;">Card hover states</div>
+                        <div style="font-family: 'Courier New', monospace; font-size: 0.75em; color: var(--gold-bright);">
+                            0 10px 30px rgba(255,136,0,0.2)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary & Recommendations -->
+        <div class="guide-section">
+            <h2 class="guide-section-title">📋 Optimization Summary</h2>
+
+            <div class="comparison-box">
+                <div class="comparison-title">Current vs Optimized CSS Lines</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
+                    <div>
+                        <div style="font-size: 3em; color: var(--orange); font-weight: 900; text-align: center; margin-bottom: 10px;">1,860</div>
+                        <div style="text-align: center; color: var(--text-gray);">Current Total Lines</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 3em; color: var(--gold-bright); font-weight: 900; text-align: center; margin-bottom: 10px;">~1,400</div>
+                        <div style="text-align: center; color: var(--text-gray);">Estimated After Optimization</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <div style="font-size: 1.5em; color: var(--gold-bright); font-weight: 700;">~25% Reduction</div>
+                    <div style="color: var(--text-gray); margin-top: 5px;">Improved maintainability + faster load times</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h3 class="guide-subsection-title">Recommended Actions</h3>
+                <div class="stats-grid">
+                    <div class="stat-card" style="border-color: var(--orange);">
+                        <div class="stat-number" style="font-size: 1.8em;">Priority 1</div>
+                        <div class="stat-label">Create Utility Classes</div>
+                        <div style="margin-top: 15px; color: var(--text-gray); font-size: 0.85em;">
+                            Typography, spacing, colors
+                        </div>
+                    </div>
+                    <div class="stat-card" style="border-color: var(--orange);">
+                        <div class="stat-number" style="font-size: 1.8em;">Priority 2</div>
+                        <div class="stat-label">Consolidate Buttons</div>
+                        <div style="margin-top: 15px; color: var(--text-gray); font-size: 0.85em;">
+                            Base class + modifiers
+                        </div>
+                    </div>
+                    <div class="stat-card" style="border-color: var(--orange);">
+                        <div class="stat-number" style="font-size: 1.8em;">Priority 3</div>
+                        <div class="stat-label">Extract Card Pattern</div>
+                        <div style="margin-top: 15px; color: var(--text-gray); font-size: 0.85em;">
+                            .card base + accent modifiers
+                        </div>
+                    </div>
+                    <div class="stat-card" style="border-color: var(--gold-toned);">
+                        <div class="stat-number" style="font-size: 1.8em; color: var(--gold-toned);">Priority 4</div>
+                        <div class="stat-label">Move Inline Styles</div>
+                        <div style="margin-top: 15px; color: var(--text-gray); font-size: 0.85em;">
+                            30+ inline → CSS classes
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(255, 136, 0, 0.3);">
+            <p style="color: var(--text-gray); font-family: 'Inter', sans-serif;">
+                Living Room Baithaks Design System • Generated for Optimization Review
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>

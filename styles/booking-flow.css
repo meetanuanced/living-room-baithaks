@@ -159,7 +159,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    background: rgba(255, 136, 0, 0.1);
+    background: var(--orange-subtle-bg);
     padding: 20px;
     border-radius: 8px;
     margin-top: 30px;
@@ -168,7 +168,7 @@
 }
 
 .checkbox-container:hover {
-    background: rgba(255, 136, 0, 0.15);
+    background: var(--orange-subtle);
 }
 
 .checkbox-container input[type="checkbox"] {
@@ -255,7 +255,7 @@
 
 .seat-item-minimal.has-selection {
     border-left-width: 3px;
-    background: rgba(255, 136, 0, 0.05);
+    background: var(--orange-subtle);
 }
 
 .seat-item-minimal.unavailable {

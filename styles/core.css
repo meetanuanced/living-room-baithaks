@@ -14,9 +14,13 @@
 :root {
     /* Primary Colors */
     --orange: #ff8800;
-    --orange-subtle: rgba(255, 136, 0, 0.1);
     --gold-bright: #e6c200;
     --gold-toned: #d4a574;
+
+    /* Orange Opacity Variants (Two-tier system for better visibility) */
+    --orange-subtle-bg: rgba(255, 136, 0, 0.05);      /* Very subtle - backgrounds */
+    --orange-subtle: rgba(255, 136, 0, 0.15);         /* Visible - selected states, borders */
+    --orange-highlight: rgba(255, 136, 0, 0.25);      /* Clear - hover states */
 
     /* Background Colors */
     --bg-black: #000000;
@@ -35,7 +39,7 @@ html {
 }
 
 body {
-    font-family: 'Lora', serif;
+    font-family: 'Inter', sans-serif;
     background: var(--bg-black);
     color: var(--text-white);
     line-height: 1.7;
@@ -47,6 +51,16 @@ h1, h2, h3 {
     font-family: 'League Spartan', sans-serif;
     font-weight: 800;
     line-height: 1.2;
+}
+
+/* Special Content - Classical Serif for Artist Bios, Descriptions */
+.special-content,
+.artist-bio,
+.baithak-description,
+.about-content,
+blockquote {
+    font-family: 'Merriweather', serif;
+    line-height: 1.8;
 }
 
 .section-title {

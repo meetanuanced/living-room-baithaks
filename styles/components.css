@@ -566,3 +566,140 @@
 .footer-links a:hover {
     color: var(--orange);
 }
+
+
+/* ========================
+    FAQ SECTION
+    ======================== */
+    #faq {
+        padding: 80px 0;
+        background: var(--bg-black);
+    }
+
+    .faq-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .faq-item {
+        background: var(--bg-dark);
+        border-left: 3px solid var(--orange);
+        border-radius: 8px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+
+    .faq-question {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 1.1em;
+        font-weight: 700;
+        color: var(--text-white);
+        padding: 25px 30px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s;
+    }
+
+    .faq-question:hover {
+        color: var(--gold-toned);
+    }
+
+    .faq-toggle {
+        font-size: 1.5em;
+        color: var(--orange);
+        transition: transform 0.3s;
+    }
+
+    .faq-answer {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95em;
+        color: var(--text-gray);
+        padding: 0 30px 25px;
+        line-height: 1.7;
+        display: none;
+    }
+
+    .faq-item.active .faq-answer {
+        display: block;
+    }
+
+    .faq-item.active .faq-toggle {
+        transform: rotate(180deg);
+    }
+
+    /* FAQ Search Box */
+    .faq-search-container {
+        max-width: 900px;
+        margin: 0 auto 40px;
+        position: relative;
+    }
+
+    .faq-search-input {
+        width: 100%;
+        padding: 18px 50px 18px 20px;
+        font-family: 'Inter', sans-serif;
+        font-size: 1em;
+        background: var(--bg-dark);
+        border: 2px solid rgba(212, 165, 116, 0.2);
+        border-radius: 8px;
+        color: var(--text-white);
+        transition: all 0.3s;
+    }
+
+    .faq-search-input:focus {
+        outline: none;
+        border-color: var(--orange);
+        background: rgba(26, 26, 26, 0.8);
+    }
+
+    .faq-search-input::placeholder {
+        color: var(--text-muted);
+    }
+
+    .faq-search-icon {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.2em;
+        color: var(--orange);
+        pointer-events: none;
+    }
+
+    /* FAQ Category Headers */
+    .faq-category-header {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 1.5em;
+        font-weight: 800;
+        color: var(--gold-toned);
+        margin: 50px 0 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid rgba(255, 136, 0, 0.3);
+        text-align: left;
+    }
+
+    .faq-category-header:first-of-type {
+        margin-top: 0;
+    }
+
+    /* No Results Message */
+    .faq-no-results {
+        text-align: center;
+        padding: 60px 20px;
+        font-family: 'Inter', sans-serif;
+        color: var(--text-gray);
+        font-size: 1.1em;
+        display: none;
+    }
+
+    .faq-no-results.show {
+        display: block;
+    }
+
+    /* Hidden items during search */
+    .faq-item.hidden,
+    .faq-category-header.hidden {
+        display: none;
+    }

@@ -451,3 +451,181 @@ async function fetchAndDisplaySeatAvailability(concertId) {
         // Keep default display if fetch fails
     }
 }
+// ===========================
+// FAQ FUNCTIONALITY
+// ===========================
+
+// FAQ Toggle
+document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+        const faqItem = question.parentElement;
+        const isActive = faqItem.classList.contains('active');
+        
+        // Close all FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Open clicked item if it wasn't active
+        if (!isActive) {
+            faqItem.classList.add('active');
+        }
+    });
+});
+
+// FAQ Search with Synonyms
+const faqSearchInput = document.getElementById('faqSearch');
+const noResultsDiv = document.getElementById('noResults');
+
+// Synonym mapping for intelligent search
+const synonymMap = {
+    'length': ['duration', 'long', 'hours'],
+    'duration': ['length', 'long', 'hours'],
+    'long': ['duration', 'length', 'hours'],
+    'hours': ['duration', 'length', 'long'],
+    'hour': ['duration', 'length', 'long'],
+    'cost': ['contribution', 'price', 'fee', 'payment'],
+    'contribution': ['cost', 'price', 'fee', 'payment'],
+    'price': ['cost', 'contribution', 'fee', 'payment'],
+    'payment': ['cost', 'contribution', 'fee', 'price'],
+    'fee': ['cost', 'contribution', 'price', 'payment'],
+    'pay': ['payment', 'contribution', 'cost'],
+    'book': ['booking', 'reserve', 'reservation'],
+    'booking': ['book', 'reserve', 'reservation'],
+    'reserve': ['booking', 'book', 'reservation'],
+    'reservation': ['booking', 'book', 'reserve'],
+    'location': ['venue', 'address', 'where'],
+    'venue': ['location', 'address', 'where'],
+    'address': ['location', 'venue', 'where'],
+    'where': ['location', 'venue', 'address'],
+    'time': ['timing', 'when', 'schedule'],
+    'timing': ['time', 'when', 'schedule'],
+    'when': ['time', 'timing', 'schedule'],
+    'schedule': ['time', 'timing', 'when'],
+    'food': ['meal', 'dinner', 'lunch', 'breakfast'],
+    'meal': ['food', 'dinner', 'lunch', 'breakfast'],
+    'dinner': ['meal', 'food'],
+    'lunch': ['meal', 'food'],
+    'breakfast': ['meal', 'food'],
+    'seating': ['seat'],
+    'seat': ['seating'],
+    'sitting': ['seating', 'seat'],
+    'chair': ['seating', 'seat'],
+    'floor': ['seating'],
+    'photo': ['photography', 'picture', 'camera'],
+    'photography': ['photo', 'picture', 'camera'],
+    'picture': ['photo', 'photography'],
+    'record': ['recording', 'video'],
+    'recording': ['record', 'video'],
+    'camera': ['photo', 'photography'],
+    'video': ['recording', 'record'],
+    'kids': ['children', 'child'],
+    'children': ['kids', 'child'],
+    'child': ['children', 'kids'],
+    'cancel': ['cancellation'],
+    'cancellation': ['cancel'],
+    'refund': ['cancel', 'cancellation'],
+    'guest': ['friend', 'bring'],
+    'friend': ['guest', 'bring'],
+    'bring': ['guest'],
+    'arrive': ['arrival'],
+    'arrival': ['arrive'],
+    'dress': ['wear', 'clothing', 'attire'],
+    'wear': ['dress', 'clothing', 'attire'],
+    'clothing': ['dress', 'wear', 'attire'],
+    'clothes': ['dress', 'wear', 'attire'],
+    'contact': ['phone', 'email'],
+    'phone': ['contact'],
+    'email': ['contact'],
+    'concert': ['baithak', 'performance'],
+    'baithak': ['concert', 'performance'],
+    'performance': ['concert', 'baithak'],
+    'show': ['concert', 'baithak', 'performance']
+};
+
+// Get all synonyms for a word
+function getSynonyms(word) {
+    word = word.toLowerCase();
+    return synonymMap[word] || [];
+}
+
+// Helper function to check if a word exists with word boundaries
+function wordBoundaryMatch(text, word) {
+    const regex = new RegExp('\\b' + word + '\\b', 'i');
+    return regex.test(text);
+}
+
+// Helper function for intelligent matching with synonyms
+function smartMatch(text, searchTerm) {
+    text = text.toLowerCase();
+    searchTerm = searchTerm.toLowerCase();
+    
+    const keywords = searchTerm.split(' ').filter(word => word.length >= 3);
+    
+    if (keywords.length === 0) {
+        return text.includes(searchTerm);
+    }
+    
+    return keywords.every(keyword => {
+        if (wordBoundaryMatch(text, keyword)) return true;
+        
+        const synonyms = getSynonyms(keyword);
+        if (synonyms.length === 0) return false;
+        
+        return synonyms.some(syn => wordBoundaryMatch(text, syn));
+    });
+}
+
+if (faqSearchInput) {
+    faqSearchInput.addEventListener('input', function() {
+        const searchTerm = this.value.trim();
+        const faqItems = document.querySelectorAll('.faq-item');
+        const categoryHeaders = document.querySelectorAll('.faq-category-header');
+        let visibleCount = 0;
+
+        if (searchTerm === '') {
+            faqItems.forEach(item => item.classList.remove('hidden'));
+            categoryHeaders.forEach(header => header.classList.remove('hidden'));
+            noResultsDiv.classList.remove('show');
+            return;
+        }
+
+        const visibleCategories = new Set();
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question span:first-child').textContent;
+            const answer = item.querySelector('.faq-answer').textContent;
+            const combinedText = question + ' ' + answer;
+            
+            if (smartMatch(combinedText, searchTerm)) {
+                item.classList.remove('hidden');
+                visibleCount++;
+                
+                let previousElement = item.previousElementSibling;
+                while (previousElement) {
+                    if (previousElement.classList.contains('faq-category-header')) {
+                        visibleCategories.add(previousElement);
+                        break;
+                    }
+                    previousElement = previousElement.previousElementSibling;
+                }
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+
+        categoryHeaders.forEach(header => {
+            if (visibleCategories.has(header)) {
+                header.classList.remove('hidden');
+            } else {
+                header.classList.add('hidden');
+            }
+        });
+
+        if (visibleCount === 0) {
+            noResultsDiv.classList.add('show');
+        } else {
+            noResultsDiv.classList.remove('show');
+        }
+    });
+}

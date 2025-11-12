@@ -80,3 +80,46 @@ blockquote {
     margin: 0 auto;
     padding: 0 30px;
 }
+
+/* Font Utilities */
+.font-primary { font-family: 'Inter', sans-serif; }
+.font-heading { font-family: 'League Spartan', sans-serif; }
+.font-special { font-family: 'Merriweather', serif; }
+
+.font-light { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.font-extrabold { font-weight: 800; }
+.font-black { font-weight: 900; }
+
+.text-xs { font-size: 0.75em; }
+.text-sm { font-size: 0.85em; }
+.text-base { font-size: 1em; }
+.text-lg { font-size: 1.15em; }
+.text-xl { font-size: 1.5em; }
+.text-2xl { font-size: 2em; }
+
+/* Message States */
+.message-empty {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.message-empty h2 {
+    font-family: 'League Spartan', sans-serif;
+    color: var(--gold-toned);
+    margin-bottom: 20px;
+}
+
+.message-empty p {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-gray);
+}
+
+.message-error {
+    text-align: center;
+    padding: 100px 20px;
+    font-family: 'Inter', sans-serif;
+    color: var(--orange);
+}

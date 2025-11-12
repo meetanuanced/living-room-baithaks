@@ -1,0 +1,149 @@
+{
+  "categories": [
+    {
+      "name": "About the Baithak",
+      "questions": [
+        {
+          "question": "What makes this different from a regular concert?",
+          "answer": "Unlike an auditorium, a baithak is held in a home — close to the artist, with conversation, food, and no stage or spotlight. It brings back traditional raagdhari baithak culture — intimate, unhurried, and deeply personal.",
+          "keywords": ["baithak", "different", "intimate", "home concert", "traditional"]
+        },
+        {
+          "question": "Who curates the concerts?",
+          "answer": "Curated by musician Mowna Ramachandra along with the performing artists. Together, they choose traditional bandishes and newer explorations. Conversations and explanations are woven in so beginners and rasikas both feel included.",
+          "keywords": ["curator", "mowna", "artists", "curation"]
+        },
+        {
+          "question": "Do I need to know classical music?",
+          "answer": "Not at all. You can come as a first-time listener, a curious ear, or a seasoned rasika. The idea is simple — listen with attention and respect.",
+          "keywords": ["beginner", "knowledge", "classical music", "listener"]
+        },
+        {
+          "question": "How often do you host baithaks?",
+          "answer": "We host one baithak every month. Details are announced 2–3 weeks in advance on Instagram and WhatsApp.",
+          "keywords": ["frequency", "monthly", "schedule", "when"]
+        }
+      ]
+    },
+    {
+      "name": "Booking & Contribution",
+      "questions": [
+        {
+          "question": "How do I reserve a seat?",
+          "answer": "Fill the reservation form → make your contribution via UPI/GPay → share the screenshot. Please read all details before booking.",
+          "keywords": ["booking", "reserve", "seat", "how to book"]
+        },
+        {
+          "question": "What is the contribution/cost for each concert?",
+          "answer": "General Tickets are priced at 1000 Rs. Student Tickets are 500 Rs",
+          "keywords": ["price", "cost", "contribution", "ticket", "1000", "500"]
+        },
+        {
+          "question": "What is the contribution/cost for?",
+          "answer": "Your contribution goes toward remunerating the artists. The home-style meal is lovingly offered by the host — not charged.",
+          "keywords": ["payment", "contribution", "artists", "remuneration"]
+        },
+        {
+          "question": "When will my booking be confirmed?",
+          "answer": "You'll receive a WhatsApp confirmation within 24 hours. If seats are full, your amount is refunded.",
+          "keywords": ["confirmation", "booking", "whatsapp", "24 hours"]
+        },
+        {
+          "question": "Can I bring a guest?",
+          "answer": "Yes. Please book and contribute for the correct number of seats.",
+          "keywords": ["guest", "plus one", "additional", "bring"]
+        },
+        {
+          "question": "What is your cancellation policy?",
+          "answer": "If you need to cancel, please let us know at least 3 days in advance so we can offer the seat to someone else.",
+          "keywords": ["cancel", "refund", "cancellation", "policy"]
+        }
+      ]
+    },
+    {
+      "name": "Venue & Logistics",
+      "questions": [
+        {
+          "question": "Where is the venue?",
+          "answer": "The baithak is hosted at a home in Sadashivnagar, Bangalore. The exact address is shared with confirmed guests 24–48 hours before the event.",
+          "keywords": ["venue", "location", "address", "bangalore", "sadashivnagar"]
+        },
+        {
+          "question": "What time should I arrive?",
+          "answer": "Please arrive 15–20 minutes early — it allows time to park, settle in, and soak in the atmosphere before the music begins.",
+          "keywords": ["time", "arrival", "early", "when"]
+        },
+        {
+          "question": "Is parking available?",
+          "answer": "Street parking is available nearby. Coming a little early helps.",
+          "keywords": ["parking", "car", "vehicle"]
+        },
+        {
+          "question": "What should I do on arrival?",
+          "answer": "– Leave footwear neatly at the designated area<br>– Find a comfortable spot (floor or chair)<br>– Settle in quietly before the music starts",
+          "keywords": ["arrival", "footwear", "shoes", "seating"]
+        },
+        {
+          "question": "What should I wear?",
+          "answer": "Comfortable clothing that allows floor seating. Traditional wear is always welcome but never required.",
+          "keywords": ["dress", "clothes", "attire", "wear"]
+        },
+        {
+          "question": "What's the seating like?",
+          "answer": "Carpeted floor with bolsters and cushions — the most authentic way to experience a baithak. Chairs are available if floor seating is difficult — just mention it in the form.",
+          "keywords": ["seating", "floor", "chair", "cushion"]
+        }
+      ]
+    },
+    {
+      "name": "During the Baithak",
+      "questions": [
+        {
+          "question": "How long is the baithak?",
+          "answer": "The music lasts around 1.5 hours, followed by a short conversation or Q&A.",
+          "keywords": ["duration", "length", "time", "how long"]
+        },
+        {
+          "question": "Is food provided?",
+          "answer": "Yes — a home-style vegetarian meal (breakfast, brunch or dinner depending on timing). It is offered by the host as hospitality, not as part of a commercial package.",
+          "keywords": ["food", "meal", "vegetarian", "dinner"]
+        },
+        {
+          "question": "Can I bring children?",
+          "answer": "Children are welcome if they can sit quietly throughout. The space is intimate, and sound carries easily.",
+          "keywords": ["children", "kids", "family"]
+        },
+        {
+          "question": "Can I leave during the performance?",
+          "answer": "We request you stay for the full performance to maintain the atmosphere. Stepping out briefly in emergencies is, of course, understood.",
+          "keywords": ["leave", "exit", "duration", "stay"]
+        }
+      ]
+    },
+    {
+      "name": "Etiquette & Guidelines",
+      "questions": [
+        {
+          "question": "Can I take photos or record?",
+          "answer": "You're welcome to take a few quiet photos before or after the performance. During the music, please avoid recording so the space remains undisturbed.",
+          "keywords": ["photo", "recording", "video", "camera"]
+        },
+        {
+          "question": "Will I get reminders and directions?",
+          "answer": "Yes, directions and gentle reminders will be shared on WhatsApp before the baithak. On the day of the event, the host may be occupied in receiving artists and guests — we request you avoid calling unless urgent.",
+          "keywords": ["reminders", "directions", "whatsapp", "communication"]
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "questions": [
+        {
+          "question": "How can I contact you?",
+          "answer": "<strong>📞 Phone:</strong> +91 9880803110<br><strong>📧 Email:</strong> livingroombaithaks@gmail.com<br><strong>📷 Instagram:</strong> @livingroombaithaks<br><strong>💬 WhatsApp:</strong> Join our community via the link shared after booking",
+          "keywords": ["contact", "phone", "email", "instagram", "whatsapp"]
+        }
+      ]
+    }
+  ]
+}

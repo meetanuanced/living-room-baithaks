@@ -141,13 +141,9 @@ fetch(dataURL)
         
         if (!upcomingConcert) {
             document.getElementById('heroContent').innerHTML = `
-                <div style="text-align: center; padding: 100px 20px;">
-                    <h2 style="font-family: 'League Spartan', sans-serif; color: var(--gold-toned); margin-bottom: 20px;">
-                        No Upcoming Baithak Currently
-                    </h2>
-                    <p style="font-family: 'Inter', sans-serif; color: var(--text-gray);">
-                        Please check back soon for our next intimate classical music gathering.
-                    </p>
+                <div class="message-empty">
+                    <h2>No Upcoming Baithak Currently</h2>
+                    <p>Please check back soon for our next intimate classical music gathering.</p>
                 </div>
             `;
             return;
@@ -239,10 +235,8 @@ fetch(dataURL)
     .catch(error => {
         console.error('Error loading hero data:', error);
         document.getElementById('heroContent').innerHTML = `
-            <div style="text-align: center; padding: 100px 20px;">
-                <p style="font-family: 'Inter', sans-serif; color: var(--orange);">
-                    Unable to load upcoming baithak information. Please refresh the page.
-                </p>
+            <div class="message-error">
+                <p>Unable to load upcoming baithak information. Please refresh the page.</p>
             </div>
         `;
     });
@@ -455,23 +449,82 @@ async function fetchAndDisplaySeatAvailability(concertId) {
 // FAQ FUNCTIONALITY
 // ===========================
 
-// FAQ Toggle
-document.querySelectorAll('.faq-question').forEach(question => {
-    question.addEventListener('click', () => {
-        const faqItem = question.parentElement;
-        const isActive = faqItem.classList.contains('active');
-        
-        // Close all FAQ items
-        document.querySelectorAll('.faq-item').forEach(item => {
-            item.classList.remove('active');
+/**
+ * Load FAQ from JSON file and render to page
+ */
+async function loadFAQ() {
+    try {
+        const response = await fetch('./data/faq.json');
+        const faqData = await response.json();
+
+        const faqContainer = document.getElementById('faqContainer');
+        if (!faqContainer) return;
+
+        let faqHTML = '';
+
+        faqData.categories.forEach(category => {
+            // Add category header
+            faqHTML += `<h3 class="faq-category-header">${category.name}</h3>`;
+
+            // Add questions in this category
+            category.questions.forEach(q => {
+                const keywords = q.keywords ? q.keywords.join(' ') : '';
+                faqHTML += `
+                    <div class="faq-item" data-keywords="${keywords}">
+                        <div class="faq-question">
+                            <span>${q.question}</span>
+                            <span class="faq-toggle">▼</span>
+                        </div>
+                        <div class="faq-answer">${q.answer}</div>
+                    </div>
+                `;
+            });
         });
-        
-        // Open clicked item if it wasn't active
-        if (!isActive) {
-            faqItem.classList.add('active');
+
+        faqContainer.innerHTML = faqHTML;
+
+        // Initialize FAQ toggle functionality after loading
+        initFAQToggle();
+
+        console.log('✅ FAQ loaded from JSON successfully');
+
+    } catch (error) {
+        console.error('❌ Error loading FAQ:', error);
+        const faqContainer = document.getElementById('faqContainer');
+        if (faqContainer) {
+            faqContainer.innerHTML = `
+                <div class="message-error">
+                    <p>Unable to load FAQ. Please refresh the page.</p>
+                </div>
+            `;
         }
+    }
+}
+
+/**
+ * Initialize FAQ toggle functionality
+ */
+function initFAQToggle() {
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.parentElement;
+            const isActive = faqItem.classList.contains('active');
+
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        });
     });
-});
+}
+
+// Load FAQ when page loads
+loadFAQ();
 
 // FAQ Search with Synonyms
 const faqSearchInput = document.getElementById('faqSearch');

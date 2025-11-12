@@ -684,9 +684,9 @@
     /* FAQ Category Headers */
     .faq-category-header {
         font-family: 'League Spartan', sans-serif;
-        font-size: 1.5em;
-        font-weight: 800;
-        color: var(--gold-toned);
+        font-size: 0.95em;
+        font-weight: 400;
+        color: var(--orange);
         margin: 50px 0 25px;
         padding-bottom: 15px;
         border-bottom: 2px solid rgba(255, 136, 0, 0.3);
@@ -716,3 +716,135 @@
     .faq-category-header.hidden {
         display: none;
     }
+
+/* ========== EXPERIENCE SECTION ========== */
+#experience {
+    padding: 80px 0;
+    background: var(--bg-dark);
+}
+
+.experience-foreword {
+    max-width: 900px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+.experience-foreword p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1em;
+    line-height: 1.8;
+    color: var(--text-gray);
+}
+
+/* Video Gallery */
+.experience-videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 50px 0;
+}
+
+.video-card {
+    background: var(--bg-darker);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+}
+
+.experience-video {
+    width: 100%;
+    display: block;
+    background: #000;
+}
+
+.video-title {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--gold-bright);
+    padding: 15px 20px;
+    text-align: center;
+}
+
+/* Experience Content Sections */
+.experience-section {
+    max-width: 900px;
+    margin: 60px auto;
+}
+
+.experience-subtitle {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 1.8em;
+    color: var(--gold-toned);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.experience-content,
+.curation-content {
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    line-height: 1.8;
+    color: var(--text-gray);
+}
+
+.experience-content p,
+.curation-content p {
+    margin-bottom: 20px;
+}
+
+.experience-content strong,
+.curation-content strong {
+    color: var(--gold-bright);
+    font-weight: 600;
+}
+
+/* Curation List */
+.curation-list {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0;
+}
+
+.curation-list li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+.curation-list li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+.curation-list li strong {
+    color: var(--gold-bright);
+    font-weight: 600;
+}
+
+/* Responsive for Experience Section */
+@media (max-width: 640px) {
+    .experience-videos {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .experience-subtitle {
+        font-size: 1.5em;
+    }
+
+    .experience-foreword p {
+        font-size: 1em;
+    }
+}

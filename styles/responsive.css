@@ -102,14 +102,18 @@
         padding: 130px 0 40px;
     }
 
+    .hero-artists {
+        font-size: clamp(1em, 3vw, 1.3em);
+    }
+
+    .hero-title {
+        color: var(--gold-toned);
+    }
+
     /* Footer - stack links vertically on mobile */
     .footer-links {
         flex-direction: column;
         gap: 15px;
-    }
-
-    .hero-artists {
-        font-size: 1.5em;
     }
 
     .hero-cta-group {
@@ -139,11 +143,15 @@
         font-size: 1.6em;
     }
 
+    .total-summary {
+        padding: 15px;
+    }
+
     .total-amount {
-        font-size: 2.2em;
+        font-size: 1.5em;
     }
 
     .payment-amount {
-        font-size: 2em;
+        font-size: 1.7em;
     }
 }

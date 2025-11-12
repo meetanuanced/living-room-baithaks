@@ -229,6 +229,25 @@ fetch(dataURL)
         // Fetch and display seat availability
         fetchAndDisplaySeatAvailability(upcomingConcert.concert_id);
 
+        // Set up auto-refresh for seat availability (every 60 seconds)
+        // Only refresh when hero section is visible (not in booking flow)
+        if (window.seatAvailabilityInterval) {
+            clearInterval(window.seatAvailabilityInterval);
+        }
+        window.seatAvailabilityInterval = setInterval(() => {
+            const heroSection = document.getElementById('hero');
+            const bookingFlow = document.getElementById('booking-flow');
+
+            // Only refresh if hero is visible and booking flow is not active
+            if (heroSection && heroSection.style.display !== 'none' &&
+                (!bookingFlow || !bookingFlow.classList.contains('active'))) {
+                console.log('🔄 Auto-refreshing seat availability...');
+                fetchAndDisplaySeatAvailability(upcomingConcert.concert_id);
+            }
+        }, 60000); // 60 seconds
+
+        console.log('✅ Seat availability auto-refresh enabled (60s interval)');
+
         // Reinitialize booking triggers for dynamically added buttons
         reinitializeBookingTriggers();
     })
@@ -294,7 +313,7 @@ fetch(dataURL)
                              onerror="this.src='./Images/Baithaks/default_past.jpg'"/>
                     </div>
                     <div class="past-event-info">
-                        <div class="past-event-title">${concert.title}${concert.sub_title || ''}</div>
+                        <div class="past-event-title">${concert.title}${concert.sub_title ? ' ' + concert.sub_title : ''}</div>
                         <div class="past-event-artist">${artistNames}</div>
                         <div class="past-event-date">${concert.display_date || concert.date}</div>
                         ${(concert.event_gallery_link || concert.event_recording_link) ? 

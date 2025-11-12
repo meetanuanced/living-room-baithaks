@@ -99,7 +99,13 @@
 
     /* Hero Section */
     #hero {
-        padding: 100px 0 40px;
+        padding: 130px 0 40px;
+    }
+
+    /* Footer - stack links vertically on mobile */
+    .footer-links {
+        flex-direction: column;
+        gap: 15px;
     }
 
     .hero-artists {

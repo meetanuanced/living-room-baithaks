@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Living Room Baithaks - Hero States Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800;900&family=Merriweather:wght@400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --orange: #ff8800;
+        --gold-bright: #e6c200;
+        --gold-toned: #d4a574;
+        --bg-black: #000000;
+        --bg-dark: #1a1a1a;
+        --text-white: #ffffff;
+        --text-light: #e5e5e5;
+        --text-gray: #b3b3b3;
+        --text-muted: #808080;
+    }
+
+    body {
+        font-family: 'Merriweather', serif;
+        background: var(--bg-black);
+        color: var(--text-white);
+        line-height: 1.7;
+    }
+
+    .preview-container {
+        padding: 40px 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .preview-nav {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--bg-dark);
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid var(--orange);
+        z-index: 1000;
+        max-width: 250px;
+    }
+
+    .preview-nav h3 {
+        font-family: 'League Spartan', sans-serif;
+        color: var(--orange);
+        margin-bottom: 15px;
+        font-size: 1em;
+    }
+
+    .preview-nav a {
+        display: block;
+        color: var(--text-gray);
+        text-decoration: none;
+        padding: 8px;
+        margin-bottom: 5px;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.85em;
+        border-radius: 4px;
+        transition: all 0.3s;
+    }
+
+    .preview-nav a:hover {
+        background: rgba(255, 136, 0, 0.1);
+        color: var(--orange);
+    }
+
+    .state-section {
+        margin-bottom: 80px;
+        border: 2px solid var(--bg-dark);
+        border-radius: 12px;
+        padding: 40px;
+        background: #0a0a0a;
+    }
+
+    .state-label {
+        background: var(--orange);
+        color: var(--bg-black);
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-family: 'League Spartan', sans-serif;
+        font-weight: 800;
+        display: inline-block;
+        margin-bottom: 30px;
+        font-size: 0.9em;
+        letter-spacing: 1px;
+    }
+
+    /* Mini Brand Hero Styles */
+    .brand-intro {
+        text-align: center;
+        padding: 60px 0 40px;
+        background: var(--bg-black);
+    }
+
+    .brand-intro h1 {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 2.5em;
+        color: var(--gold-toned);
+        margin-bottom: 15px;
+        font-weight: 800;
+    }
+
+    .brand-intro-text {
+        font-size: 1.2em;
+        color: var(--text-light);
+        max-width: 700px;
+        margin: 0 auto 25px;
+        line-height: 1.6;
+    }
+
+    .trust-badges {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.85em;
+        color: var(--text-gray);
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .trust-badges span {
+        padding: 8px 16px;
+        background: var(--bg-dark);
+        border-radius: 20px;
+        border: 1px solid rgba(212, 165, 116, 0.2);
+    }
+
+    .scroll-indicator {
+        color: var(--orange);
+        text-decoration: none;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9em;
+        font-weight: 600;
+    }
+
+    /* Hero Grid Styles */
+    .hero-section {
+        padding: 60px 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 30px;
+    }
+
+    .hero-grid {
+        display: grid;
+        grid-template-columns: 45% 55%;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .hero-image {
+        width: 100%;
+        aspect-ratio: 4/5;
+        border-radius: 8px;
+        background: var(--bg-dark);
+        overflow: hidden;
+    }
+
+    .hero-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hero-label {
+        display: inline-block;
+        font-family: 'League Spartan', sans-serif;
+        font-size: 0.7em;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background: var(--orange);
+        color: var(--bg-black);
+        padding: 10px 20px;
+        margin-bottom: 20px;
+        font-weight: 900;
+    }
+
+    .hero-artists {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 2em;
+        font-weight: 800;
+        color: var(--gold-toned);
+        margin-bottom: 15px;
+        line-height: 1.3;
+    }
+
+    .artist-role {
+        color: var(--text-gray);
+        font-size: 0.6em;
+        font-weight: 500;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .hero-title {
+        font-size: 1.4em;
+        color: var(--text-light);
+        margin-bottom: 25px;
+        line-height: 1.4;
+    }
+
+    .event-details {
+        background: var(--bg-dark);
+        border-left: 3px solid var(--orange);
+        padding: 20px 22px;
+        margin-bottom: 25px;
+        border-radius: 4px;
+    }
+
+    .detail-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 12px;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.88em;
+        color: var(--text-gray);
+        align-items: flex-start;
+    }
+
+    .detail-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .icon-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--orange);
+        border-radius: 50%;
+        min-width: 8px;
+        margin-top: 6px;
+    }
+
+    .detail-row strong {
+        color: var(--text-white);
+        min-width: 75px;
+    }
+
+    .seats-urgency {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--bg-dark);
+        border-left: 3px solid var(--orange);
+        padding: 12px 20px;
+        border-radius: 4px;
+        margin-bottom: 25px;
+    }
+
+    .seats-count {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 1.3em;
+        font-weight: 800;
+        color: var(--gold-bright);
+    }
+
+    .seats-text {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.85em;
+        color: var(--text-gray);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 15px 35px;
+        border-radius: 6px;
+        font-family: 'League Spartan', sans-serif;
+        font-weight: 700;
+        font-size: 0.9em;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background: var(--gold-bright);
+        color: var(--bg-black);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--text-white);
+        border: 1.5px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-cta-group {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    /* URGENCY STATE */
+    .urgency-banner {
+        background: linear-gradient(90deg, #ff4500, #ff8800);
+        color: white;
+        text-align: center;
+        padding: 12px 20px;
+        font-family: 'League Spartan', sans-serif;
+        font-weight: 800;
+        font-size: 1.1em;
+        letter-spacing: 1px;
+        margin-bottom: 30px;
+        border-radius: 8px;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.85; }
+    }
+
+    .hero-image.urgent {
+        border: 3px solid var(--orange);
+        box-shadow: 0 0 20px rgba(255, 136, 0, 0.5);
+    }
+
+    .hero-label.urgent {
+        background: #ff4500;
+    }
+
+    .seats-urgency-large {
+        text-align: center;
+        background: rgba(255, 69, 0, 0.1);
+        padding: 25px;
+        border-radius: 8px;
+        border: 2px solid #ff4500;
+        margin-bottom: 25px;
+    }
+
+    .seats-count-urgent {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 2.2em;
+        font-weight: 900;
+        color: #ff4500;
+        animation: pulse 1.5s infinite;
+    }
+
+    /* SOLD OUT STATE */
+    .sold-out-badge {
+        background: var(--text-gray);
+        color: white;
+        text-align: center;
+        padding: 12px;
+        font-family: 'League Spartan', sans-serif;
+        font-weight: 800;
+        font-size: 1.2em;
+        margin-bottom: 25px;
+        border-radius: 8px;
+    }
+
+    .hero-image.sold-out {
+        opacity: 0.6;
+        position: relative;
+    }
+
+    .sold-out-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'League Spartan', sans-serif;
+        font-size: 3em;
+        font-weight: 900;
+        color: white;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px 40px;
+        border-radius: 8px;
+    }
+
+    .sold-out-message {
+        background: var(--bg-dark);
+        border-left: 3px solid var(--text-gray);
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 4px;
+        font-family: 'Inter', sans-serif;
+        color: var(--text-gray);
+        font-size: 0.95em;
+    }
+
+    .waitlist-form {
+        background: var(--bg-dark);
+        padding: 25px;
+        border-radius: 8px;
+        margin: 25px 0;
+        border: 1px solid rgba(212, 165, 116, 0.2);
+    }
+
+    .waitlist-form h3 {
+        font-family: 'League Spartan', sans-serif;
+        color: var(--gold-toned);
+        margin-bottom: 15px;
+        font-size: 1.2em;
+    }
+
+    .waitlist-form input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 12px;
+        border: 1px solid rgba(212, 165, 116, 0.3);
+        background: var(--bg-black);
+        color: var(--text-white);
+        border-radius: 4px;
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* NO EVENT STATE */
+    .hero-no-event {
+        text-align: center;
+        padding: 80px 40px;
+    }
+
+    .brand-hero-title {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 2.5em;
+        color: var(--gold-toned);
+        margin-bottom: 20px;
+        font-weight: 800;
+    }
+
+    .brand-hero-description {
+        font-size: 1.2em;
+        color: var(--text-light);
+        margin-bottom: 40px;
+        line-height: 1.6;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .brand-hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin: 50px 0;
+        flex-wrap: wrap;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 3em;
+        font-weight: 900;
+        color: var(--orange);
+        margin-bottom: 8px;
+    }
+
+    .stat-label {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9em;
+        color: var(--text-gray);
+    }
+
+    .email-signup {
+        background: var(--bg-dark);
+        padding: 30px;
+        border-radius: 8px;
+        margin: 40px auto;
+        max-width: 600px;
+        border: 1px solid rgba(212, 165, 116, 0.2);
+    }
+
+    .email-signup h3 {
+        font-family: 'League Spartan', sans-serif;
+        color: var(--gold-toned);
+        margin-bottom: 15px;
+        font-size: 1.3em;
+    }
+
+    .email-signup form {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .email-signup input[type="email"] {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid rgba(212, 165, 116, 0.3);
+        background: var(--bg-black);
+        color: var(--text-white);
+        border-radius: 4px;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .past-baithaks-preview {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin: 40px 0;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .past-preview-card {
+        background: var(--bg-dark);
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(212, 165, 116, 0.2);
+    }
+
+    .past-preview-img {
+        width: 100%;
+        aspect-ratio: 9/16;
+        background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-gray);
+        font-size: 3em;
+    }
+
+    .past-preview-info {
+        padding: 15px;
+    }
+
+    .past-preview-title {
+        font-family: 'League Spartan', sans-serif;
+        color: var(--gold-toned);
+        font-size: 0.9em;
+        margin-bottom: 5px;
+    }
+
+    .past-preview-date {
+        font-family: 'Inter', sans-serif;
+        color: var(--text-gray);
+        font-size: 0.75em;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 968px) {
+        .preview-nav {
+            position: static;
+            margin-bottom: 40px;
+        }
+
+        .hero-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .brand-hero-stats {
+            gap: 30px;
+        }
+
+        .stat-number {
+            font-size: 2em;
+        }
+
+        .past-baithaks-preview {
+            grid-template-columns: 1fr;
+        }
+
+        .email-signup form {
+            flex-direction: column;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="preview-nav">
+    <h3>📋 Navigation</h3>
+    <a href="#state-brand">Mini Brand Hero</a>
+    <a href="#state-normal">State 1: Normal</a>
+    <a href="#state-urgency">State 2: Low Seats</a>
+    <a href="#state-soldout">State 3: Sold Out</a>
+    <a href="#state-noevent">State 4: No Event</a>
+</div>
+
+<div class="preview-container">
+
+    <!-- ============================================ -->
+    <!-- MINI BRAND HERO (Always shows first) -->
+    <!-- ============================================ -->
+    <div class="state-section" id="state-brand">
+        <div class="state-label">ALWAYS VISIBLE: Mini Brand Hero</div>
+
+        <div class="brand-intro">
+            <h1>Living Room Baithaks</h1>
+            <p class="brand-intro-text">
+                Intimate classical music concerts in a Bangalore home.<br>
+                50 seats • Home-cooked meals • 100% contribution goes to artists.
+            </p>
+            <div class="trust-badges">
+                <span>✓ 600+ Attendees</span>
+                <span>✓ 12 Baithaks Hosted</span>
+                <span>✓ 4.9/5 Rating</span>
+            </div>
+            <a href="#" class="scroll-indicator">See Next Baithak ↓</a>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- STATE 1: NORMAL EVENT (Plenty of seats) -->
+    <!-- ============================================ -->
+    <div class="state-section" id="state-normal">
+        <div class="state-label">STATE 1: Normal Event (35+ Seats Available)</div>
+
+        <div class="hero-section">
+            <div class="container">
+                <div class="hero-grid">
+                    <div>
+                        <div class="hero-image">
+                            <img src="./Images/Baithaks/CONC004_hero.jpg" alt="Siddharth Belamannu"
+                                 onerror="this.style.background='linear-gradient(135deg, #1a1a1a, #2a2a2a)'; this.style.display='flex'; this.style.alignItems='center'; this.style.justifyContent='center'; this.innerHTML='🎵';">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="hero-label">UPCOMING BAITHAK</div>
+
+                        <div class="hero-artists">
+                            Siddharth Belamannu
+                            <div class="artist-role">(Hindustani Vocal)</div>
+                        </div>
+
+                        <h1 class="hero-title">
+                            Pratah Swar — Morning Baithak
+                        </h1>
+
+                        <div class="event-details">
+                            <div class="detail-row">
+                                <div class="icon-dot"></div>
+                                <strong>Date</strong>
+                                <span>16th November 2025, Saturday</span>
+                            </div>
+                            <div class="detail-row">
+                                <div class="icon-dot"></div>
+                                <strong>Time</strong>
+                                <span>9:00 AM – Breakfast<br>10:00 AM – Baithak Begins</span>
+                            </div>
+                            <div class="detail-row">
+                                <div class="icon-dot"></div>
+                                <strong>Venue</strong>
+                                <span>Sadashivnagar, Bangalore</span>
+                            </div>
+                            <div class="detail-row">
+                                <div class="icon-dot"></div>
+                                <strong>Price</strong>
+                                <span>₹1,000 (General) • ₹500 (Students)</span>
+                            </div>
+                        </div>
+
+                        <div class="seats-urgency">
+                            <div class="seats-count">38/50 Seats</div>
+                            <div class="seats-text">Available</div>
+                        </div>
+
+                        <div class="hero-cta-group">
+                            <button class="btn btn-primary">Reserve a Seat</button>
+                            <a href="#past-events" class="btn btn-secondary">See Past Baithaks</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- STATE 2: URGENCY (Low seats <15) -->
+    <!-- ============================================ -->
+    <div class="state-section" id="state-urgency">
+        <div class="state-label">STATE 2: Urgency Mode (Less than 15 Seats)</div>
+
+        <div class="hero-section">
+            <div class="container">
+                <div class="urgency-banner">
+                    🔥 ALMOST SOLD OUT — Only 8 Seats Remaining
+                </div>
+
+                <div class="hero-grid">
+                    <div>
+                        <div class="hero-image urgent">
+                            <img src="./Images/Baithaks/CONC004_hero.jpg" alt="Siddharth Belamannu"
+                                 onerror="this.style.background='linear-gradient(135deg, #1a1a1a, #2a2a2a)'; this.style.display='flex'; this.style.alignItems='center'; this.style.justifyContent='center'; this.innerHTML='🎵';">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="hero-label urgent">URGENT — FILLING FAST</div>
+
+                        <div class="hero-artists">
+                            Siddharth Belamannu
+                            <div class="artist-role">(Hindustani Vocal)</div>
+                        </div>
+
+                        <h1 class="hero-title">
+                            Pratah Swar — Morning Baithak
+                        </h1>
+
+                        <div class="seats-urgency-large">
+                            <div class="seats-count-urgent">⚡ 8 SEATS LEFT ⚡</div>
+                        </div>
+
+                        <div class="event-details">
+                            <div class="detail-row">
+                                <div class="icon-dot"></div>
+                                <strong>Date</strong>
+                                <span>16th November 2025, Saturday</span>
+                            </div>
+                            <div class="detail-row">
+                                <div class="icon-dot"></div>
+                                <strong>Time</strong>
+                                <span>9:00 AM – Breakfast • 10:00 AM – Baithak</span>
+                            </div>
+                            <div class="detail-row">
+                                <div class="icon-dot"></div>
+                                <strong>Price</strong>
+                                <span>₹1,000 (General) • ₹500 (Students)</span>
+                            </div>
+                        </div>
+
+                        <div class="hero-cta-group">
+                            <button class="btn btn-primary" style="width: 100%; font-size: 1.1em; padding: 18px;">
+                                RESERVE NOW
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- STATE 3: SOLD OUT -->
+    <!-- ============================================ -->
+    <div class="state-section" id="state-soldout">
+        <div class="state-label">STATE 3: Sold Out (0 Seats)</div>
+
+        <div class="hero-section">
+            <div class="container">
+                <div class="sold-out-badge">✓ SOLD OUT</div>
+
+                <div class="hero-grid">
+                    <div style="position: relative;">
+                        <div class="hero-image sold-out">
+                            <img src="./Images/Baithaks/CONC004_hero.jpg" alt="Siddharth Belamannu"
+                                 onerror="this.style.background='linear-gradient(135deg, #1a1a1a, #2a2a2a)'; this.style.display='flex'; this.style.alignItems='center'; this.style.justifyContent='center'; this.innerHTML='🎵';">
+                        </div>
+                        <div class="sold-out-overlay">SOLD OUT</div>
+                    </div>
+
+                    <div>
+                        <div class="hero-label" style="background: var(--text-gray);">FULLY BOOKED</div>
+
+                        <div class="hero-artists">
+                            Siddharth Belamannu
+                            <div class="artist-role">(Hindustani Vocal)</div>
+                        </div>
+
+                        <h1 class="hero-title">
+                            Pratah Swar — Morning Baithak
+                        </h1>
+
+                        <div class="sold-out-message">
+                            <p><strong>This baithak is fully booked.</strong></p>
+                            <p style="margin-top: 10px;">Join our community to get early access to future events and be notified when the next booking opens!</p>
+                        </div>
+
+                        <div class="waitlist-form">
+                            <h3>Join Waitlist</h3>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 0.85em; color: var(--text-gray); margin-bottom: 15px;">
+                                We'll notify you if seats become available due to cancellations
+                            </p>
+                            <input type="text" placeholder="Your Name" required>
+                            <input type="email" placeholder="Your Email" required>
+                            <input type="tel" placeholder="WhatsApp Number" required>
+                            <button class="btn btn-primary" style="width: 100%;">Join Waitlist</button>
+                        </div>
+
+                        <div class="hero-cta-group">
+                            <a href="#past-events" class="btn btn-secondary">See Past Baithaks</a>
+                            <a href="https://wa.me/919880803110" class="btn btn-secondary" target="_blank">Join Community</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- STATE 4: NO UPCOMING EVENT -->
+    <!-- ============================================ -->
+    <div class="state-section" id="state-noevent">
+        <div class="state-label">STATE 4: No Upcoming Event (Between Baithaks)</div>
+
+        <div class="hero-section">
+            <div class="container">
+                <div class="hero-no-event">
+                    <h2 class="brand-hero-title">The Original Living Room Concert Series</h2>
+                    <p class="brand-hero-description">
+                        Bringing classical music back to its intimate roots — one baithak at a time.<br>
+                        Our next event will be announced soon.
+                    </p>
+
+                    <div class="brand-hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">600+</div>
+                            <div class="stat-label">Attendees</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">Baithaks Hosted</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">4.9/5</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                    </div>
+
+                    <div class="email-signup">
+                        <h3>Get Notified of Our Next Baithak</h3>
+                        <p style="font-family: 'Inter', sans-serif; font-size: 0.9em; color: var(--text-gray); margin-bottom: 5px;">
+                            Join 200+ music lovers who get early access to bookings
+                        </p>
+                        <form>
+                            <input type="email" placeholder="your.email@example.com" required>
+                            <button type="submit" class="btn btn-primary">Notify Me</button>
+                        </form>
+                    </div>
+
+                    <h3 style="font-family: 'League Spartan', sans-serif; color: var(--gold-toned); margin: 50px 0 30px; font-size: 1.5em;">
+                        Previous Baithaks
+                    </h3>
+
+                    <div class="past-baithaks-preview">
+                        <div class="past-preview-card">
+                            <div class="past-preview-img">📸</div>
+                            <div class="past-preview-info">
+                                <div class="past-preview-title">Flute in the Night</div>
+                                <div class="past-preview-date">Oct 2025</div>
+                            </div>
+                        </div>
+                        <div class="past-preview-card">
+                            <div class="past-preview-img">📸</div>
+                            <div class="past-preview-info">
+                                <div class="past-preview-title">Emerging Vocalists</div>
+                                <div class="past-preview-date">Sept 2025</div>
+                            </div>
+                        </div>
+                        <div class="past-preview-card">
+                            <div class="past-preview-img">📸</div>
+                            <div class="past-preview-info">
+                                <div class="past-preview-title">Kishori Amonkar</div>
+                                <div class="past-preview-date">Aug 2025</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-cta-group" style="justify-content: center; margin-top: 30px;">
+                        <a href="#past-events" class="btn btn-secondary">View All Past Baithaks</a>
+                        <a href="https://wa.me/919880803110" class="btn btn-secondary" target="_blank">Join WhatsApp Community</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div style="text-align: center; padding: 60px 20px; background: var(--bg-dark);">
+    <p style="font-family: 'Inter', sans-serif; color: var(--text-gray); font-size: 0.9em;">
+        This is a static preview. Scroll up to see all states in the navigation.
+    </p>
+</div>
+
+</body>
+</html>

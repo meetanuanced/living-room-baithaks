@@ -402,6 +402,7 @@ async function fetchAndDisplaySeatAvailability(concertId) {
         // Update hero section
         const seatsCountEl = document.querySelector('.seats-count');
         const seatsTextEl = document.querySelector('.seats-text');
+        const seatsUrgencyEl = document.querySelector('.seats-urgency');
         const reserveButtons = document.querySelectorAll('.booking-trigger');
 
         if (seatsCountEl) {
@@ -411,6 +412,11 @@ async function fetchAndDisplaySeatAvailability(concertId) {
                 seatsCountEl.style.color = 'var(--orange)';
                 seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";  // Match site font
                 seatsTextEl.style.fontFamily = "'Inter', sans-serif";
+
+                // Remove urgency mode styling
+                if (seatsUrgencyEl) {
+                    seatsUrgencyEl.classList.remove('urgency-mode');
+                }
 
                 // Change Reserve buttons to Join Waitlist when sold out
                 reserveButtons.forEach(btn => {
@@ -430,9 +436,13 @@ async function fetchAndDisplaySeatAvailability(concertId) {
                 const seatWord = totalAvailable === 1 ? 'Seat' : 'Seats';
                 seatsCountEl.textContent = `Only ${totalAvailable} ${seatWord} Left!`;
                 seatsTextEl.textContent = '';
-                seatsCountEl.style.color = 'var(--orange)';
                 seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";
                 seatsTextEl.style.fontFamily = "'Inter', sans-serif";
+
+                // Add urgency mode styling with pulsing animation
+                if (seatsUrgencyEl) {
+                    seatsUrgencyEl.classList.add('urgency-mode');
+                }
 
                 // Re-enable buttons if previously disabled
                 reserveButtons.forEach(btn => {
@@ -452,6 +462,11 @@ async function fetchAndDisplaySeatAvailability(concertId) {
                 seatsTextEl.textContent = 'Available';
                 seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";
                 seatsTextEl.style.fontFamily = "'Inter', sans-serif";
+
+                // Remove urgency mode styling
+                if (seatsUrgencyEl) {
+                    seatsUrgencyEl.classList.remove('urgency-mode');
+                }
 
                 // Re-enable buttons if previously disabled
                 reserveButtons.forEach(btn => {

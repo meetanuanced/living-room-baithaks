@@ -519,6 +519,24 @@
     padding: 12px 20px;
     border-radius: 4px;
     margin-bottom: 28px;
+    transition: all 0.3s ease;
+}
+
+/* Urgency state styling */
+.seats-urgency.urgency-mode {
+    background: rgba(255, 136, 0, 0.1);
+    border-left: 4px solid var(--orange);
+    box-shadow: 0 0 20px rgba(255, 136, 0, 0.2);
+    animation: urgencyPulse 2s ease-in-out infinite;
+}
+
+@keyframes urgencyPulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 136, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(255, 136, 0, 0.4);
+    }
 }
 
 .seats-count {
@@ -527,6 +545,11 @@
     font-weight: 800;
     color: var(--gold-bright);
     letter-spacing: 0.5px;
+}
+
+.seats-urgency.urgency-mode .seats-count {
+    color: var(--orange);
+    font-size: clamp(1.2em, 2.8vw, 1.5em);
 }
 
 .hero-cta-group {

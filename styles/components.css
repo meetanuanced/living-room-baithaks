@@ -574,6 +574,54 @@
     transition: color 0.3s;
 }
 
+/* ========== URGENCY MODE STYLES ========== */
+.urgency-banner {
+    background: linear-gradient(90deg, #ff4500, #ff8800);
+    color: white;
+    text-align: center;
+    padding: 12px 20px;
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 800;
+    font-size: 1.1em;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+}
+
+.hero-label.urgent {
+    background: #ff4500;
+    color: white;
+}
+
+.seats-urgency-large {
+    text-align: center;
+    background: rgba(255, 69, 0, 0.1);
+    padding: 25px;
+    border-radius: 8px;
+    border: 2px solid #ff4500;
+    margin-bottom: 25px;
+}
+
+.seats-count-urgent {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 2.2em;
+    font-weight: 900;
+    color: #ff4500;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
 /* ========== STEP CARDS (How It Works) ========== */
 .step-card {
     background: var(--bg-black);

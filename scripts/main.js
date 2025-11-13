@@ -224,10 +224,13 @@ fetch(dataURL)
             </div>
         `;
         
+        // Store concert data globally for seat availability updates
+        window.currentConcert = upcomingConcert;
+
         document.getElementById('heroContent').innerHTML = heroHTML;
 
-        // Fetch and display seat availability
-        fetchAndDisplaySeatAvailability(upcomingConcert.concert_id);
+        // Fetch and display seat availability (will rebuild hero if urgency mode)
+        fetchAndDisplaySeatAvailability(upcomingConcert);
 
         // Set up auto-refresh for seat availability (every 60 seconds)
         // Only refresh when hero section is visible (not in booking flow)
@@ -242,7 +245,7 @@ fetch(dataURL)
             if (heroSection && heroSection.style.display !== 'none' &&
                 (!bookingFlow || !bookingFlow.classList.contains('active'))) {
                 console.log('🔄 Auto-refreshing seat availability...');
-                fetchAndDisplaySeatAvailability(upcomingConcert.concert_id);
+                fetchAndDisplaySeatAvailability(upcomingConcert);
             }
         }, 60000); // 60 seconds
 
@@ -390,128 +393,35 @@ fetch(dataURL)
     });
 
 // Fetch and display seat availability
-async function fetchAndDisplaySeatAvailability(concertId) {
+async function fetchAndDisplaySeatAvailability(concert) {
     try {
         // Get seat availability from config.js function
-        const availability = await getSeatAvailability(concertId);
+        const availability = await getSeatAvailability(concert.concert_id);
 
         // Calculate total available seats
         const totalAvailable = availability.general_seats_available + availability.student_seats_available;
         const totalSeats = availability.total_seats;
 
-        // Update hero section
-        const seatsCountEl = document.querySelector('.seats-count');
-        const seatsTextEl = document.querySelector('.seats-text');
-        const seatsUrgencyEl = document.querySelector('.seats-urgency');
-        const reserveButtons = document.querySelectorAll('.booking-trigger');
+        // Format artists
+        const artistDisplay = formatArtists(concert.artists);
 
-        if (seatsCountEl) {
-            if (totalAvailable === 0) {
-                seatsCountEl.textContent = 'Sold Out';
-                seatsTextEl.textContent = 'All seats booked';
-                seatsCountEl.style.color = 'var(--orange)';
-                seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";  // Match site font
-                seatsTextEl.style.fontFamily = "'Inter', sans-serif";
-
-                // Remove urgency mode styling
-                if (seatsUrgencyEl) {
-                    seatsUrgencyEl.classList.remove('urgency-mode');
-                }
-
-                // Change Reserve buttons to Join Waitlist when sold out
-                reserveButtons.forEach(btn => {
-                    btn.style.opacity = '1';
-                    btn.style.cursor = 'pointer';
-                    btn.style.pointerEvents = 'auto';
-                    btn.removeAttribute('disabled');
-                    btn.removeAttribute('aria-disabled');
-                    btn.textContent = 'Join WhatsApp Community';
-                    btn.href = 'https://chat.whatsapp.com/CfZlxIz3yKZBLSMKMyFBX2';
-                    btn.target = '_blank';
-                    btn.classList.remove('booking-trigger');
-                    btn.classList.add('btn-secondary');
-                });
-            } else if (totalAvailable <= 15) {
-                // Handle singular/plural for seat count
-                const seatWord = totalAvailable === 1 ? 'Seat' : 'Seats';
-                seatsCountEl.textContent = `Only ${totalAvailable} ${seatWord} Left!`;
-                seatsTextEl.textContent = '';
-                seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";
-                seatsTextEl.style.fontFamily = "'Inter', sans-serif";
-
-                // Add urgency mode styling with pulsing animation
-                if (seatsUrgencyEl) {
-                    seatsUrgencyEl.classList.add('urgency-mode');
-                }
-
-                // Re-enable buttons if previously disabled
-                reserveButtons.forEach(btn => {
-                    btn.style.opacity = '1';
-                    btn.style.cursor = 'pointer';
-                    btn.style.pointerEvents = 'auto';
-                    btn.removeAttribute('disabled');
-                    btn.removeAttribute('aria-disabled');
-                    if (btn.classList.contains('mobile-sticky-btn')) {
-                        btn.textContent = 'Reserve Seat';
-                    } else {
-                        btn.textContent = 'Reserve a Seat';
-                    }
-                });
-            } else {
-                seatsCountEl.textContent = `${totalAvailable} of ${totalSeats} Seats`;
-                seatsTextEl.textContent = 'Available';
-                seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";
-                seatsTextEl.style.fontFamily = "'Inter', sans-serif";
-
-                // Remove urgency mode styling
-                if (seatsUrgencyEl) {
-                    seatsUrgencyEl.classList.remove('urgency-mode');
-                }
-
-                // Re-enable buttons if previously disabled
-                reserveButtons.forEach(btn => {
-                    btn.style.opacity = '1';
-                    btn.style.cursor = 'pointer';
-                    btn.style.pointerEvents = 'auto';
-                    btn.removeAttribute('disabled');
-                    btn.removeAttribute('aria-disabled');
-                    if (btn.classList.contains('mobile-sticky-btn')) {
-                        btn.textContent = 'Reserve Seat';
-                    } else {
-                        btn.textContent = 'Reserve a Seat';
-                    }
-                });
-            }
+        // Decide which hero layout to build based on seat availability
+        if (totalAvailable <= 15 && totalAvailable > 0) {
+            // URGENCY MODE - Rebuild entire hero
+            buildUrgencyHero(concert, totalAvailable);
+        } else if (totalAvailable === 0) {
+            // SOLD OUT MODE - Update existing hero
+            updateSoldOutState();
+        } else {
+            // NORMAL MODE - Just update seat display (hero already built)
+            updateNormalSeatsDisplay(totalAvailable, totalSeats);
         }
 
-        // Update sticky CTA
-        const stickySeatsCount = document.getElementById('stickySeatsCount');
-        const stickyBookBtn = document.getElementById('stickyBookBtn');
-        if (stickySeatsCount) {
-            if (totalAvailable === 0) {
-                stickySeatsCount.textContent = 'Sold Out';
-                stickySeatsCount.style.fontFamily = "'League Spartan', sans-serif";
+        // Update mobile sticky CTA regardless of mode
+        updateMobileStickyCTA(totalAvailable);
 
-                // Update sticky button to link to WhatsApp
-                if (stickyBookBtn) {
-                    stickyBookBtn.textContent = 'Join Community';
-                    stickyBookBtn.href = 'https://chat.whatsapp.com/CfZlxIz3yKZBLSMKMyFBX2';
-                    stickyBookBtn.target = '_blank';
-                    stickyBookBtn.classList.remove('booking-trigger');
-                }
-            } else {
-                stickySeatsCount.textContent = `${totalAvailable} Seats`;
-                stickySeatsCount.style.fontFamily = "'League Spartan', sans-serif";
-
-                // Reset sticky button to booking trigger
-                if (stickyBookBtn) {
-                    stickyBookBtn.textContent = 'Reserve Seat';
-                    stickyBookBtn.href = '#';
-                    stickyBookBtn.removeAttribute('target');
-                    stickyBookBtn.classList.add('booking-trigger');
-                }
-            }
-        }
+        //Reinitialize booking triggers
+        reinitializeBookingTriggers();
 
         console.log('✅ Seat availability loaded:', availability);
 
@@ -520,6 +430,146 @@ async function fetchAndDisplaySeatAvailability(concertId) {
         // Keep default display if fetch fails
     }
 }
+
+// Helper function to build URGENCY hero layout
+function buildUrgencyHero(concert, totalAvailable) {
+    const artistDisplay = formatArtists(concert.artists);
+    const seatWord = totalAvailable === 1 ? 'Seat' : 'Seats';
+
+    const urgencyHTML = `
+        <div class="urgency-banner">
+            🔥 ALMOST SOLD OUT — Only ${totalAvailable} ${seatWord} Remaining
+        </div>
+
+        <div class="hero-grid">
+            <div class="hero-image-container">
+                <div class="hero-image image-container aspect-portrait">
+                    <img src="${concert.image_hero}"
+                         alt="${concert.image_alt || concert.title}"
+                         loading="eager"
+                         onerror="this.src='./Images/Baithaks/default_hero.jpg'">
+                </div>
+            </div>
+
+            <div class="hero-content">
+                <div class="hero-label urgent">URGENT — FILLING FAST</div>
+
+                <div class="hero-artists">
+                    <span class="artist-name">${artistDisplay}</span>
+                </div>
+
+                <h1 class="hero-title">
+                    ${concert.title}${concert.sub_title ? ` — ${concert.sub_title}` : ''}
+                </h1>
+
+                <div class="seats-urgency-large">
+                    <div class="seats-count-urgent">⚡ ${totalAvailable} ${seatWord.toUpperCase()} LEFT ⚡</div>
+                </div>
+
+                <div class="event-details">
+                    <div class="detail-row">
+                        <div class="icon-dot"></div>
+                        <strong>Date</strong>
+                        <span>${formatDate(concert.date)}</span>
+                    </div>
+                    <div class="detail-row">
+                        <div class="icon-dot"></div>
+                        <strong>Time</strong>
+                        <span>${formatTimeBlock(concert)}</span>
+                    </div>
+                    <div class="detail-row">
+                        <div class="icon-dot"></div>
+                        <strong>Price</strong>
+                        <span>₹${concert.ticket_price_general || 1000} (General) • ₹${concert.ticket_price_student || 500} (Students)</span>
+                    </div>
+                </div>
+
+                <div class="hero-cta-group">
+                    <button class="btn btn-primary booking-trigger" style="width: 100%; font-size: 1.1em; padding: 18px;">
+                        RESERVE NOW
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.getElementById('heroContent').innerHTML = urgencyHTML;
+}
+
+// Helper function to update normal seats display
+function updateNormalSeatsDisplay(totalAvailable, totalSeats) {
+    const seatsCountEl = document.querySelector('.seats-count');
+    const seatsTextEl = document.querySelector('.seats-text');
+
+    if (seatsCountEl) {
+        seatsCountEl.textContent = `${totalAvailable} of ${totalSeats} Seats`;
+        seatsTextEl.textContent = 'Available';
+        seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";
+        seatsTextEl.style.fontFamily = "'Inter', sans-serif";
+    }
+}
+
+// Helper function to update sold out state
+function updateSoldOutState() {
+    const seatsCountEl = document.querySelector('.seats-count');
+    const seatsTextEl = document.querySelector('.seats-text');
+    const reserveButtons = document.querySelectorAll('.booking-trigger');
+
+    if (seatsCountEl) {
+        seatsCountEl.textContent = 'Sold Out';
+        seatsTextEl.textContent = 'All seats booked';
+        seatsCountEl.style.color = 'var(--orange)';
+        seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";
+        seatsTextEl.style.fontFamily = "'Inter', sans-serif";
+
+        // Change Reserve buttons to Join WhatsApp Community when sold out
+        reserveButtons.forEach(btn => {
+            btn.style.opacity = '1';
+            btn.style.cursor = 'pointer';
+            btn.style.pointerEvents = 'auto';
+            btn.removeAttribute('disabled');
+            btn.removeAttribute('aria-disabled');
+            btn.textContent = 'Join WhatsApp Community';
+            btn.href = 'https://chat.whatsapp.com/CfZlxIz3yKZBLSMKMyFBX2';
+            btn.target = '_blank';
+            btn.classList.remove('booking-trigger');
+            btn.classList.add('btn-secondary');
+        });
+    }
+}
+
+// Helper function to update mobile sticky CTA
+function updateMobileStickyCTA(totalAvailable) {
+    const stickySeatsCount = document.getElementById('stickySeatsCount');
+    const stickyBookBtn = document.getElementById('stickyBookBtn');
+
+    if (stickySeatsCount) {
+        if (totalAvailable === 0) {
+            stickySeatsCount.textContent = 'Sold Out';
+            stickySeatsCount.style.fontFamily = "'League Spartan', sans-serif";
+
+            // Update sticky button to link to WhatsApp
+            if (stickyBookBtn) {
+                stickyBookBtn.textContent = 'Join Community';
+                stickyBookBtn.href = 'https://chat.whatsapp.com/CfZlxIz3yKZBLSMKMyFBX2';
+                stickyBookBtn.target = '_blank';
+                stickyBookBtn.classList.remove('booking-trigger');
+            }
+        } else {
+            stickySeatsCount.textContent = `${totalAvailable} Seats`;
+            stickySeatsCount.style.fontFamily = "'League Spartan', sans-serif";
+
+            // Reset sticky button to booking trigger
+            if (stickyBookBtn) {
+                stickyBookBtn.textContent = 'Reserve Seat';
+                stickyBookBtn.href = '#';
+                stickyBookBtn.removeAttribute('target');
+                stickyBookBtn.classList.add('booking-trigger');
+            }
+        }
+    }
+}
+
 // ===========================
 // FAQ FUNCTIONALITY
 // ===========================

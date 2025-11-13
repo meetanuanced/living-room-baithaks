@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Living Room Baithaks | Intimate Classical Music Concerts in Bangalore</title>
+<meta name="description" content="Experience classical music in intimate home concerts. Limited to 50 seats. Hindustani & Carnatic artists. Food included.">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800;900&family=Merriweather:wght@400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- External CSS Files -->
+<link rel="stylesheet" href="./styles/core.css">
+<link rel="stylesheet" href="./styles/layout.css">
+<link rel="stylesheet" href="./styles/components.css">
+<link rel="stylesheet" href="./styles/booking-flow.css">
+<link rel="stylesheet" href="./styles/responsive.css">
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-container">
+        <a href="#" class="nav-logo" id="navLogo">
+            <img src="./Images/livingroomlogo.svg" alt="Living Room Baithaks" class="logo">
+        </a>
+        <div class="nav-center-section">
+            <div class="site-tagline">
+                Music • Conversation • Connections • Food
+            </div>
+            <div class="nav-menu">
+                <a href="#past-events">Past Baithaks</a>
+            </div>
+        </div>
+        <a href="#" class="nav-back-btn" id="navBackBtn">
+            <span>←</span> Back to Home
+        </a>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>
+
+<div class="mobile-menu-overlay" id="mobileMenuOverlay">
+    <div class="mobile-menu-content">
+        <a href="#hero">Home</a>
+        <a href="#past-events">Past Baithaks</a>
+        <a href="#" class="nav-book-btn booking-trigger">Reserve Your Seat</a>
+    </div>
+</div>
+
+<div class="mobile-sticky-cta" id="mobileStickyCTA">
+    <div class="mobile-sticky-content">
+        <div class="mobile-sticky-info">
+            <div class="mobile-sticky-seats" id="stickySeatsCount">Loading...</div>
+            <div class="mobile-sticky-text">Remain</div>
+        </div>
+        <a href="#" class="mobile-sticky-btn booking-trigger" id="stickyBookBtn">Reserve Seat</a>
+    </div>
+</div>
+
+<section id="hero">
+    <div class="container">
+        <div class="hero-intro">Living Room Baithaks Presents</div>
+
+        <div id="heroContent">
+            <div style="text-align: center; padding: 100px 20px; color: var(--text-gray);">
+                <p>Loading upcoming baithak...</p>
+            </div>
+        </div>
+
+        <div class="hero-tagline">
+            <span class="highlight">Music</span> • Conversation • <span class="highlight">Connections</span> • Food
+        </div>
+    </div>
+</section>
+
+<section id="booking-flow">
+    <div class="container">
+        <div class="booking-header">
+            <h1 class="booking-title">Reserve Your Seat</h1>
+            <p class="booking-subtitle">Complete your booking in 6 simple steps</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-dot active" data-step="1"></div>
+            <div class="progress-dot" data-step="2"></div>
+            <div class="progress-dot" data-step="3"></div>
+            <div class="progress-dot" data-step="4"></div>
+            <div class="progress-dot" data-step="5"></div>
+            <div class="progress-dot" data-step="6"></div>
+        </div>
+
+        <!-- Step 1: Welcome & Guidelines -->
+        <div class="booking-step active" data-step="1">
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-number">Step 1 of 6</div>
+                    <h2 class="step-title">Before Reserving</h2>
+                    <p class="step-description">Please review these important details before reserving your seat.</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>What to Expect at a Living Room Baithak?</h3>
+                    <ul class="info-list-emphasized">
+                        <li><strong>An intimate home concert</strong>, not a formal auditorium event.</li>
+                        <li><strong>Traditional floor seating</strong> on carpets and cushions; chairs available only if needed.</li>
+                        <li><strong>Simple, homely acoustics</strong> — part of the close, personal experience.</li>
+                        <li><strong>Home-style vegetarian food</strong>, hosted by the home. 100% of your contribution goes to sustain the baithaks and support the artist.</li>
+                        <li><strong>Please arrive on time</strong> and help maintain the baithak's quiet, shared atmosphere.</li>
+                    </ul>
+                </div>
+
+                <div class="checkbox-container" id="guidelinesCheckbox">
+                    <input type="checkbox" id="agreeGuidelines">
+                    <label for="agreeGuidelines">I understand this is an intimate home concert and agree to the details above.</label>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="step1Continue" disabled>Continue</button>
+                    <button class="btn btn-secondary" id="step1Cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Select Seats -->
+        <div class="booking-step" data-step="2">
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-number">Step 2 of 6</div>
+                    <h2 class="step-title">Select Your Seats</h2>
+                    <p class="step-description">Choose the number of seats you need</p>
+                </div>
+
+                <div class="seats-list-minimal">
+                    <div class="seat-item-minimal" id="generalSeatSelector">
+                        <div class="seat-item-info-minimal">
+                            <div class="seat-name-minimal">General Seats</div>
+                            <div class="seat-price-minimal">₹<span id="generalPriceDisplay">1000</span> each</div>
+                        </div>
+                        <div class="seat-controls-minimal">
+                            <button class="seat-btn-minimal" id="generalMinus" disabled>−</button>
+                            <div class="seat-count-minimal" id="generalCount">0</div>
+                            <button class="seat-btn-minimal" id="generalPlus">+</button>
+                        </div>
+                    </div>
+
+                    <div class="seat-item-minimal" id="studentSeatSelector">
+                        <div class="seat-item-info-minimal">
+                            <div class="seat-name-minimal">Student Seats</div>
+                            <div class="seat-price-minimal">₹<span id="studentPriceDisplay">500</span> each</div>
+                        </div>
+                        <div class="seat-controls-minimal">
+                            <button class="seat-btn-minimal" id="studentMinus" disabled>−</button>
+                            <div class="seat-count-minimal" id="studentCount">0</div>
+                            <button class="seat-btn-minimal" id="studentPlus">+</button>
+                        </div>
+                    </div>
+
+                    <div class="student-info-note">
+                        <strong class="student-info-label">Who is a student?</strong> Anyone currently studying in school, college, or pursuing music full-time
+                    </div>
+
+                    <div class="seat-item-minimal" id="chairSeatSelector">
+                        <div class="seat-item-info-minimal">
+                            <div class="seat-name-minimal">Chairs Needed?</div>
+                            <div class="seat-price-minimal">Request a chair only if necessary — Baithaks are best enjoyed in traditional floor seating.</div>
+                        </div>
+                        <div class="seat-controls-minimal">
+                            <button class="seat-btn-minimal" id="chairMinus" disabled>−</button>
+                            <div class="seat-count-minimal" id="chairCount">0</div>
+                            <button class="seat-btn-minimal" id="chairPlus">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="total-summary">
+                    <div class="total-label">Total Amount</div>
+                    <div class="total-amount">₹<span id="totalAmount">0</span></div>
+                    <div class="total-seats"><span id="totalSeats">0</span> seats selected</div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="step2Back">← Back</button>
+                    <button class="btn btn-primary" id="step2Continue" disabled>Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Attendee Details -->
+        <div class="booking-step" data-step="3">
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-number">Step 3 of 6</div>
+                    <h2 class="step-title">Who's Coming?</h2>
+                    <p class="step-description">Please provide details for all attendees</p>
+                </div>
+
+                <div id="attendeeFormsContainer">
+                    <!-- Dynamic forms will be generated here -->
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="step3Back">← Back</button>
+                    <button class="btn btn-primary" id="step3Continue">Continue to Payment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Payment -->
+        <div class="booking-step" data-step="4">
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-number">Step 4 of 6</div>
+                    <h2 class="step-title">Complete Your Contribution</h2>
+                    <p class="step-description">Make your payment and upload the screenshot</p>
+                </div>
+
+                <div class="payment-info">
+                    <div class="payment-amount">₹<span id="paymentAmount">0</span></div>
+
+                    <div class="upi-details">
+                        <div class="upi-label">Pay via UPI</div>
+                        <div class="upi-id" id="upiId">livingroombaithaks@upi</div>
+                        <button class="copy-btn" id="copyUpiBtn">Copy UPI ID</button>
+                    </div>
+
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(230, 194, 0, 0.1); border-radius: 6px; border: 1px solid rgba(230, 194, 0, 0.3);">
+                        <div style="font-family: 'Inter', sans-serif; font-size: 0.85em; color: var(--text-gray); margin-bottom: 8px;">
+                            Use this Transaction ID when making payment:
+                        </div>
+                        <div style="font-family: 'League Spartan', sans-serif; font-size: 1.3em; color: var(--gold-bright); font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <span id="displayTransactionId">LRB####</span>
+                            <button class="copy-btn" id="copyTransactionIdBtn" style="padding: 8px 16px; font-size: 0.8em;">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label required">Upload Payment Screenshot</label>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📸</div>
+                        <div class="upload-text">Drag & drop or click to upload</div>
+                        <div class="upload-hint">JPG, PNG, or PDF (max 5MB)</div>
+                    </div>
+                    <input type="file" id="paymentScreenshot" accept="image/*,.pdf" style="display: none;">
+                    <div id="previewContainer"></div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="step4Back">← Back</button>
+                    <button class="btn btn-primary" id="step4Continue" disabled>Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5: Review -->
+        <div class="booking-step" data-step="5">
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-number">Step 5 of 6</div>
+                    <h2 class="step-title">Review Your Booking</h2>
+                    <p class="step-description">Please verify all details before confirming</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Booking Summary</h3>
+                    <div class="summary-grid" id="reviewSummary">
+                        <!-- Summary will be populated here -->
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="step5Back">← Back</button>
+                    <button class="btn btn-primary" id="step5Confirm">Confirm Booking</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 6: Confirmation -->
+        <div class="booking-step" data-step="6">
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-number">Step 6 of 6</div>
+                    <h2 class="step-title">Booking Confirmed! 🎵</h2>
+                </div>
+
+                <div class="confirmation-card">
+                    <div class="success-icon">✓</div>
+                    <div class="booking-id">Booking ID: <span id="confirmationBookingId">LRB####</span></div>
+
+                    <div class="summary-grid" id="confirmationSummary">
+                        <!-- Confirmation details will be populated here -->
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                    <h3>What Happens Next?</h3>
+                    <ul>
+                        <li>We've received your booking request</li>
+                        <li>You'll receive confirmation within 24 hours via WhatsApp</li>
+                        <li>If seats are full, your contribution will be refunded promptly</li>
+                        <li>Reminders and directions will be shared closer to the baithak date</li>
+                    </ul>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="returnHome">Return to Home</button>
+                    <a href="https://wa.me/919880803110" class="btn btn-secondary" target="_blank">Join WhatsApp Community</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="booking-sticky-cta" id="bookingStickyCTA">
+    <div class="booking-sticky-content">
+        <div class="booking-sticky-info">
+            <div class="booking-sticky-step" id="stickyStepInfo">Step 1 of 6</div>
+            <div class="booking-sticky-total" id="stickyTotalAmount">Total: ₹0</div>
+        </div>
+        <button class="booking-sticky-btn" id="stickyNextBtn" disabled>Continue</button>
+    </div>
+</div>
+
+<section id="how-it-works">
+    <div class="container">
+        <h2 class="section-title">Reservation <span class="highlight">Process</span></h2>
+
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-title">Reserve Online</div>
+                <div class="step-desc">
+                    <ul>
+                        <li>Reserve your baithak seat by filling the form</li>
+                        <li>Make the contribution via UPI/GPay and share the screenshot</li>
+                        <li>Please read all details and expectations before booking</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-title">Get Confirmation</div>
+                <div class="step-desc">
+                    <ul>
+                        <li>You'll receive a confirmation from the host within 24 hours</li>
+                        <li>If seats are full, your contribution will be refunded</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-title">Reminders & Directions</div>
+                <div class="step-desc">
+                    <ul>
+                        <li>We'll share reminders and directions on WhatsApp closer to the baithak.</li>
+                        <li>Most answers can be found in the FAQs.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-title">Immerse & Experience</div>
+                <div class="step-desc">
+                    <ul>
+                        <li>Arrive a little early, follow the house guidelines, and soak in the experience.</li>
+                        <li>Ask questions and interact with the artist.</li>
+                        <li>Share Instagram posts & join our community.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="experience">
+    <div class="container">
+        <h2 class="section-title">The <span class="highlight">Experience</span></h2>
+
+        <div class="experience-foreword">
+            <p>At Living Room Baithaks, we bring back the intimacy of traditional mehfil — a setting where music isn't performed from a stage, but shared in a circle. It's unhurried, conversational, and deeply personal.</p>
+        </div>
+
+        <div class="experience-videos">
+            <div class="video-card">
+                <video class="experience-video" controls preload="metadata">
+                    <source src="./Videos/Experience/WhatisaBaithak.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-title">What is a Baithak?</div>
+            </div>
+            <div class="video-card">
+                <video class="experience-video" controls preload="metadata">
+                    <source src="./Videos/Experience/OurPurpose.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-title">Our Purpose</div>
+            </div>
+            <div class="video-card">
+                <video class="experience-video" controls preload="metadata">
+                    <source src="./Videos/Experience/AboutUS.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-title">About Us</div>
+            </div>
+        </div>
+
+        <div class="experience-section">
+            <h3 class="experience-subtitle">What is a Baithak?</h3>
+            <div class="experience-content">
+                <p>A baithak is not a concert. It's a gathering — traditionally held in homes, where musicians and listeners sit together in close proximity. There's no stage, no spotlight, no applause at predetermined moments. Just music, shared in its most human form.</p>
+                <p>Living Room Baithaks revives this tradition in Bangalore, creating intimate spaces for raagdhari music — classical, semi-classical, and exploratory forms rooted in the raga tradition.</p>
+            </div>
+        </div>
+
+        <div class="experience-section">
+            <h3 class="experience-subtitle">Why Are We Doing This?</h3>
+            <div class="experience-content">
+                <p><strong>To bring listening back.</strong> In a world of distracted consumption, we create a space where music is the only thing happening. No phones, no interruptions — just presence.</p>
+                <p><strong>To sustain artists.</strong> Every contribution goes directly to the musicians. This is how baithaks have always worked — listeners supporting artists, ensuring the music continues.</p>
+                <p><strong>To build community.</strong> Not an audience, but a community — people who return, who listen deeply, who ask questions, who bring friends. This is how traditions stay alive.</p>
+            </div>
+        </div>
+
+        <div class="experience-section">
+            <h3 class="experience-subtitle">Curation</h3>
+            <div class="curation-content">
+                <p>Each baithak is thoughtfully curated by <strong>Mowna Ramachandra</strong>, alongside the performing artists. Every concert is shaped with intention:</p>
+                <ul class="curation-list">
+                    <li><strong>Traditional repertoire:</strong> Time-tested bandishes and compositions</li>
+                    <li><strong>Contemporary explorations:</strong> New interpretations and experiments within the raga framework</li>
+                    <li><strong>Guided listening:</strong> Conversations and explanations woven into the music, making it accessible to first-time listeners and enriching for seasoned rasikas</li>
+                </ul>
+                <p>We honor the guru-shishya tradition while welcoming diverse musical voices — Hindustani, Carnatic, and beyond.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="past-events">
+    <div class="container">
+        <h2 class="section-title"><span class="highlight">Previous</span> Baithaks</h2>
+
+        <div class="past-events-grid" id="pastEventsGrid">
+            <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; font-family: 'Inter', sans-serif; color: var(--text-gray);">
+                <p>Loading past baithaks...</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <button id="viewMoreBtn" class="btn btn-secondary" style="display: none;">
+                View More Past Baithaks
+            </button>
+        </div>
+
+        <!-- Instagram Reels Links -->
+    </div>
+</section>
+<section id="faq">
+    <div class="container">
+        <h2 class="section-title"><span class="highlight">Frequently Asked</span> Questions</h2>
+        
+        <!-- FAQ Search Box -->
+        <div class="faq-search-container">
+            <input type="text" 
+                   class="faq-search-input" 
+                   id="faqSearch" 
+                   placeholder="Search FAQs..." 
+                   aria-label="Search FAQs">
+            <span class="faq-search-icon">🔍</span>
+        </div>
+        
+        <div class="faq-container">
+            <!-- FAQ items will be loaded from data/faq.json -->
+            <div id="faqContainer">
+                <div style="text-align: center; padding: 40px; color: var(--text-gray);">Loading FAQs...</div>
+            </div>
+            <!-- No Results Message -->
+            <div class="faq-no-results" id="noResults">
+                No FAQs match your search. Please try different keywords or <a href="#" onclick="document.getElementById('faqSearch').value=''; document.getElementById('faqSearch').dispatchEvent(new Event('input')); return false;" style="color: var(--orange); text-decoration: underline;">clear your search</a>.
+            </div>
+        </div>
+    </div>
+</section>
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://instagram.com/livingroombaithaks" target="_blank"><span class="social-icon">📷</span> Instagram</a></li>
+                    <li><a href="https://wa.me/919880803110" target="_blank"><span class="social-icon">💬</span> WhatsApp</a></li>
+                    <li><a href="mailto:livingroombaithaks@gmail.com"><span class="social-icon">✉️</span> Email</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding-top: 30px; border-top: 1px solid rgba(212, 165, 116, 0.1); font-family: 'Inter', sans-serif; font-size: 0.85em; color: var(--text-muted);">
+            © 2024 Living Room Baithaks. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<!-- Configuration (must load first) -->
+<script src="./scripts/config.js"></script>
+
+<!-- Main JavaScript -->
+<script src="./scripts/main.js"></script>
+<script src="./scripts/booking-flow.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+/**
+ * LAYOUT STYLES
+ * Image containers, aspect ratios, grid systems, and section layouts
+ */
+
+/* ========== IMAGE CONTAINERS ========== */
+.image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: var(--bg-dark);
+    border-radius: 8px;
+}
+
+/* Aspect Ratios */
+.aspect-square { aspect-ratio: 1 / 1; }
+.aspect-portrait { aspect-ratio: 4 / 5; }
+.aspect-story { aspect-ratio: 9 / 16; }
+.aspect-landscape { aspect-ratio: 16 / 9; }
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* ========== HERO SECTION ========== */
+#hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 180px 0 60px;
+    background: var(--bg-black);
+}
+
+.hero-intro {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    letter-spacing: 3px;
+    color: var(--gold-toned);
+    margin-bottom: 50px;
+    font-weight: 500;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 60px;
+    align-items: center;
+}
+
+.hero-image {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.hero-tagline {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85em;
+    color: var(--gold-bright);
+    margin-top: 50px;
+}
+
+/* ========== HOW IT WORKS SECTION ========== */
+#how-it-works {
+    padding: 80px 0;
+    background: var(--bg-dark);
+}
+
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    position: relative;
+}
+
+/* ========== PAST EVENTS SECTION ========== */
+#past-events {
+    padding: 80px 0;
+    background: var(--bg-black);
+}
+
+.past-events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ========== FOOTER ========== */
+footer {
+    padding: 60px 0 40px;
+    background: var(--bg-dark);
+    border-top: 1px solid rgba(212, 165, 116, 0.2);
+}
+
+.footer-grid {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}

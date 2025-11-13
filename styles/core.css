@@ -1,0 +1,125 @@
+/**
+ * CORE STYLES
+ * CSS Variables, Reset, Base Typography, and Universal Styles
+ */
+
+/* ========== CSS RESET ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========== CSS VARIABLES (THEME) ========== */
+:root {
+    /* Primary Colors */
+    --orange: #ff8800;
+    --gold-bright: #e6c200;
+    --gold-toned: #d4a574;
+
+    /* Orange Opacity Variants (Two-tier system for better visibility) */
+    --orange-subtle-bg: rgba(255, 136, 0, 0.05);      /* Very subtle - backgrounds */
+    --orange-subtle: rgba(255, 136, 0, 0.15);         /* Visible - selected states, borders */
+    --orange-highlight: rgba(255, 136, 0, 0.25);      /* Clear - hover states */
+
+    /* Background Colors */
+    --bg-black: #000000;
+    --bg-dark: #1a1a1a;
+
+    /* Text Colors */
+    --text-white: #ffffff;
+    --text-light: #e5e5e5;
+    --text-gray: #b3b3b3;
+    --text-muted: #808080;
+}
+
+/* ========== BASE STYLES ========== */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-black);
+    color: var(--text-white);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+/* ========== TYPOGRAPHY ========== */
+h1, h2, h3 {
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* Special Content - Classical Serif for Artist Bios, Descriptions */
+.special-content,
+.artist-bio,
+.baithak-description,
+.about-content,
+blockquote {
+    font-family: 'Merriweather', serif;
+    line-height: 1.8;
+}
+
+.section-title {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 60px;
+    color: var(--text-white);
+}
+
+.section-title .highlight {
+    color: var(--orange);
+}
+
+/* ========== UTILITY CLASSES ========== */
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+/* Font Utilities */
+.font-primary { font-family: 'Inter', sans-serif; }
+.font-heading { font-family: 'League Spartan', sans-serif; }
+.font-special { font-family: 'Merriweather', serif; }
+
+.font-light { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.font-extrabold { font-weight: 800; }
+.font-black { font-weight: 900; }
+
+.text-xs { font-size: 0.75em; }
+.text-sm { font-size: 0.85em; }
+.text-base { font-size: 1em; }
+.text-lg { font-size: 1.15em; }
+.text-xl { font-size: 1.5em; }
+.text-2xl { font-size: 2em; }
+
+/* Message States */
+.message-empty {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.message-empty h2 {
+    font-family: 'League Spartan', sans-serif;
+    color: var(--gold-toned);
+    margin-bottom: 20px;
+}
+
+.message-empty p {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-gray);
+}
+
+.message-error {
+    text-align: center;
+    padding: 100px 20px;
+    font-family: 'Inter', sans-serif;
+    color: var(--orange);
+}

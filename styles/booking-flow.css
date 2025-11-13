@@ -1,0 +1,1094 @@
+/**
+ * BOOKING FLOW STYLES
+ * All styles related to the multi-step booking process
+ */
+
+/* ========== BOOKING SECTION ========== */
+#booking-flow {
+    display: none;
+    min-height: 100vh;
+    padding: 100px 0 60px;
+    background: var(--bg-black);
+}
+
+#booking-flow.active {
+    display: block;
+}
+
+.booking-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.booking-title {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 2.5em;
+    color: var(--text-white);
+    margin-bottom: 15px;
+}
+
+.booking-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    color: var(--text-gray);
+}
+
+/* ========== PROGRESS INDICATORS ========== */
+.progress-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 50px;
+}
+
+.progress-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg-dark);
+    border: 2px solid var(--text-muted);
+    transition: all 0.3s;
+}
+
+.progress-dot.active {
+    background: var(--orange);
+    border-color: var(--orange);
+    transform: scale(1.3);
+}
+
+.progress-dot.completed {
+    background: var(--gold-toned);
+    border-color: var(--gold-toned);
+}
+
+/* ========== BOOKING STEPS ========== */
+.booking-step {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s, transform 0.4s;
+}
+
+.booking-step.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.step-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.step-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.step-number {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85em;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.step-title {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 1.8em;
+    color: var(--gold-bright);
+    margin-bottom: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.step-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+    color: var(--text-gray);
+    line-height: 1.6;
+}
+
+/* ========== INFO CARDS ========== */
+.info-card {
+    background: var(--bg-dark);
+    border-left: 3px solid var(--orange);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.info-card h3 {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 1.3em;
+    color: var(--gold-toned);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+}
+
+.info-list li {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+    color: var(--text-gray);
+    padding: 12px 0;
+    padding-left: 30px;
+    position: relative;
+    line-height: 1.6;
+}
+
+.info-list li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+/* Emphasized Info List - with bold highlights */
+.info-list-emphasized {
+    list-style: none;
+    padding: 0;
+}
+
+.info-list-emphasized li {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+    color: var(--text-gray);
+    padding: 12px 0 12px 30px;
+    position: relative;
+    line-height: 1.7;
+}
+
+.info-list-emphasized li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+.info-list-emphasized li strong {
+    color: var(--gold-bright);
+    font-weight: 600;
+}
+
+/* Student Info Note */
+.student-info-note {
+    margin: 15px 0 20px;
+    padding: 12px 15px;
+    background: var(--orange-subtle-bg);
+    border-left: 3px solid var(--orange);
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-gray);
+}
+
+.student-info-label {
+    color: var(--gold-bright);
+    font-weight: 600;
+}
+
+/* ========== CHECKBOX CONTAINERS ========== */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--orange-subtle-bg);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.checkbox-container:hover {
+    background: var(--orange-subtle);
+}
+
+.checkbox-container input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    accent-color: var(--orange);
+}
+
+.checkbox-container label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+    color: var(--text-white);
+    cursor: pointer;
+    flex: 1;
+}
+
+/* ========== PRICING DISPLAY ========== */
+.pricing-display {
+    background: var(--bg-dark);
+    border: 2px solid var(--gold-toned);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 35px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.price-item {
+    text-align: center;
+}
+
+.price-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85em;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.price-amount {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 1.5em;
+    color: var(--gold-bright);
+    font-weight: 700;
+}
+
+.price-note {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85em;
+    color: var(--text-gray);
+    text-align: center;
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(212, 165, 116, 0.1);
+    border-radius: 6px;
+}
+
+/* ========== SEAT SELECTORS ========== */
+.seat-selector-group {
+    margin-bottom: 35px;
+}
+
+/* Minimalist Seat List */
+.seats-list-minimal {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 35px;
+}
+
+.seat-item-minimal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    background: var(--bg-dark);
+    border-radius: 6px;
+    border-left: 2px solid var(--orange);
+    transition: all 0.3s;
+}
+
+.seat-item-minimal.has-selection {
+    border-left-width: 3px;
+    background: var(--orange-subtle);
+}
+
+.seat-item-minimal.unavailable {
+    opacity: 0.5;
+    background: var(--bg-black);
+    border-left-color: var(--text-muted);
+    position: relative;
+}
+
+.seat-item-minimal.unavailable .seat-name-minimal,
+.seat-item-minimal.unavailable .seat-price-minimal {
+    color: var(--text-muted);
+}
+
+.unavailable-message {
+    position: absolute;
+    top: 50%;
+    right: 60px;
+    transform: translateY(-50%);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    background: rgba(255, 136, 0, 0.1);
+    border-radius: 4px;
+}
+
+.seat-item-info-minimal {
+    flex: 1;
+}
+
+.seat-name-minimal {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-light);
+    font-size: 0.95em;
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+
+.seat-price-minimal {
+    font-family: 'Inter', sans-serif;
+    color: var(--gold-toned);
+    font-size: 0.8em;
+}
+
+.seat-controls-minimal {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.seat-btn-minimal {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid var(--orange);
+    background: transparent;
+    color: var(--orange);
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'League Spartan', sans-serif;
+}
+
+.seat-btn-minimal:hover:not(:disabled) {
+    background: var(--orange);
+    color: var(--bg-black);
+}
+
+.seat-btn-minimal:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.seat-count-minimal {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 1.3em;
+    color: var(--text-white);
+    font-weight: 700;
+    min-width: 35px;
+    text-align: center;
+}
+
+/* Large Seat Selectors (Alternative Style) */
+.seat-selector {
+    background: var(--bg-dark);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+.seat-selector.has-selection {
+    border-color: var(--orange);
+}
+
+.seat-selector.unavailable {
+    opacity: 0.5;
+    background: var(--bg-black);
+    border-color: var(--text-muted);
+}
+
+.seat-selector.unavailable .seat-title,
+.seat-selector.unavailable .seat-price {
+    color: var(--text-muted);
+}
+
+.seat-selector.unavailable .seat-btn {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+.seat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.seat-title {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 1.3em;
+    color: var(--text-white);
+    font-weight: 700;
+}
+
+.seat-price {
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    color: var(--gold-bright);
+    font-weight: 600;
+}
+
+.seat-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.seat-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid var(--orange);
+    background: transparent;
+    color: var(--orange);
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'League Spartan', sans-serif;
+}
+
+.seat-btn:hover:not(:disabled) {
+    background: var(--orange);
+    color: var(--bg-black);
+    transform: scale(1.1);
+}
+
+.seat-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.seat-count {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 2em;
+    color: var(--text-white);
+    font-weight: 800;
+    min-width: 60px;
+    text-align: center;
+}
+
+/* ========== TOTAL SUMMARY ========== */
+.total-summary {
+    background: var(--bg-dark);
+    border: 2px solid var(--gold-bright);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.total-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85em;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.total-amount {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 1.8em;
+    color: var(--gold-bright);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.total-seats {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+    color: var(--text-light);
+}
+
+/* ========== FORM ELEMENTS ========== */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9em;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 500;
+}
+
+.form-label.required:after {
+    content: " *";
+    color: var(--orange);
+}
+
+.form-input {
+    width: 100%;
+    padding: 15px;
+    background: var(--bg-dark);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--text-white);
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    transition: all 0.3s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--orange);
+    background: rgba(255, 136, 0, 0.05);
+}
+
+/* ========== ATTENDEE CARDS ========== */
+.attendee-card {
+    background: var(--bg-dark);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-left: 3px solid var(--gold-toned);
+}
+
+.attendee-card.main {
+    border-left-color: var(--orange);
+}
+
+.attendee-header {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 1.1em;
+    color: var(--gold-bright);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.attendee-card.main .attendee-header {
+    color: var(--orange);
+    font-size: 1.2em;
+}
+
+/* Progressive Disclosure Styles */
+.main-attendee-card {
+    background: var(--bg-dark);
+    border-radius: 8px;
+    padding: 25px;
+    border: 2px solid var(--orange);
+    margin-bottom: 20px;
+}
+
+.main-attendee-card .header {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 1.1em;
+    color: var(--orange);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
+
+.field-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8em;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.field input {
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: var(--text-white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+}
+
+.field input:focus {
+    outline: none;
+    border-color: var(--orange);
+}
+
+/* Additional Attendees */
+.additional-attendees-card {
+    background: var(--bg-dark);
+    border-radius: 8px;
+    padding: 20px;
+    border-left: 3px solid var(--gold-toned);
+}
+
+.additional-attendees-card .header {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 0.95em;
+    color: var(--gold-bright);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.simple-name-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.simple-name-row .person-number {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 0.9em;
+    color: var(--gold-toned);
+    font-weight: 700;
+    min-width: 70px;
+}
+
+.simple-name-row input {
+    flex: 1;
+    padding: 10px 12px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: var(--text-white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+}
+
+.simple-name-row input:focus {
+    outline: none;
+    border-color: var(--gold-toned);
+}
+
+/* Chair Selection Icons */
+.simple-name-row .chair-icon {
+    cursor: pointer;
+    font-size: 1.3em;
+    opacity: 0.3;
+    transition: opacity 0.3s, transform 0.2s;
+    user-select: none;
+}
+
+.simple-name-row .chair-icon:hover {
+    transform: scale(1.1);
+}
+
+.simple-name-row .chair-icon.active {
+    opacity: 1;
+}
+
+.simple-name-row .chair-icon.disabled {
+    cursor: not-allowed;
+    opacity: 0.15;
+}
+
+.chair-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background: rgba(255, 136, 0, 0.05);
+    border-radius: 6px;
+    margin-top: 15px;
+    border: 1px solid rgba(255, 136, 0, 0.2);
+}
+
+.chair-checkbox-container input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--orange);
+}
+
+.chair-checkbox-container label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9em;
+    color: var(--text-light);
+    cursor: pointer;
+    flex: 1;
+}
+
+.chair-checkbox-container.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* ========== PAYMENT SECTION ========== */
+.payment-info {
+    background: var(--bg-dark);
+    border: 2px solid var(--gold-bright);
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.payment-amount {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 2.5em;
+    color: var(--gold-bright);
+    font-weight: 900;
+    margin-bottom: 20px;
+}
+
+.upi-details {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.upi-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85em;
+    color: var(--text-gray);
+    margin-bottom: 10px;
+}
+
+.upi-id {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 1.3em;
+    color: var(--text-white);
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* Upload Area */
+.upload-area {
+    background: var(--bg-dark);
+    border: 2px dashed var(--orange);
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 20px;
+}
+
+.upload-area:hover {
+    background: rgba(255, 136, 0, 0.05);
+    border-color: var(--gold-bright);
+}
+
+.upload-area.has-file {
+    border-style: solid;
+    border-color: var(--gold-bright);
+}
+
+.upload-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+}
+
+.upload-text {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-gray);
+    margin-bottom: 10px;
+}
+
+.upload-hint {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85em;
+    color: var(--text-muted);
+}
+
+.preview-image {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* ========== CONFIRMATION SECTION ========== */
+.confirmation-card {
+    background: var(--bg-dark);
+    border: 3px solid var(--gold-bright);
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.success-icon {
+    font-size: 4em;
+    color: var(--gold-bright);
+    margin-bottom: 20px;
+}
+
+.booking-id {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 2em;
+    color: var(--orange);
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+
+.summary-grid {
+    text-align: left;
+    margin: 30px 0;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Inter', sans-serif;
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    color: var(--text-gray);
+    font-size: 0.95em;
+}
+
+.summary-value {
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+.next-steps {
+    background: rgba(255, 136, 0, 0.1);
+    border-radius: 8px;
+    padding: 25px;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.next-steps h3 {
+    font-family: 'League Spartan', sans-serif;
+    color: var(--gold-toned);
+    margin-bottom: 20px;
+}
+
+.next-steps ul {
+    list-style: none;
+    padding: 0;
+}
+
+.next-steps li {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-gray);
+    padding: 10px 0;
+    padding-left: 30px;
+    position: relative;
+    line-height: 1.6;
+}
+
+.next-steps li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--gold-bright);
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+/* ========== BOOKING STICKY CTA ========== */
+.booking-sticky-cta {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(20px);
+    border-top: 2px solid var(--orange);
+    padding: 12px 20px;
+    z-index: 999;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.booking-sticky-cta.active {
+    display: block;
+}
+
+.booking-sticky-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1300px;
+    margin: 0 auto;
+    gap: 15px;
+}
+
+.booking-sticky-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.booking-sticky-step {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85em;
+    color: var(--text-gray);
+}
+
+.booking-sticky-total {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 1.1em;
+    font-weight: 800;
+    color: var(--gold-bright);
+}
+
+.booking-sticky-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gold-bright);
+    color: var(--bg-black);
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    min-height: 44px;
+    transition: all 0.3s;
+}
+
+.booking-sticky-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========== IMPROVED ATTENDEE CARDS ========== */
+/* Better spacing and visual consistency */
+
+.field-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;  /* Increased spacing from form fields */
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+    color: var(--text-light);
+}
+
+.checkbox-label:hover:not(.disabled) {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 136, 0, 0.3);
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--orange);
+    flex-shrink: 0;
+}
+
+.checkbox-label.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.checkbox-label.disabled input {
+    cursor: not-allowed;
+}
+
+/* Attendee Row Styles */
+.attendee-row {
+    margin-bottom: 16px;
+}
+
+.attendee-row-header {
+    margin-bottom: 10px;
+}
+
+.person-label {
+    font-family: 'League Spartan', sans-serif;
+    font-size: 0.9em;
+    color: var(--gold-toned);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.attendee-row-field {
+    margin-bottom: 12px;
+}
+
+.attendee-row-field input {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--text-white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+    transition: border-color 0.2s;
+}
+
+.attendee-row-field input:focus {
+    outline: none;
+    border-color: var(--gold-toned);
+}
+
+.attendee-row-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 8px;
+}
+
+.attendee-row-checkboxes .checkbox-label {
+    padding: 10px 14px;
+    font-size: 0.9em;
+}

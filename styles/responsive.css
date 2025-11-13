@@ -1,0 +1,157 @@
+/**
+ * RESPONSIVE STYLES
+ * Media queries for mobile and tablet layouts
+ */
+
+/* ========== TABLET & MOBILE (Max-width: 968px) ========== */
+@media (max-width: 968px) {
+    body {
+        padding-bottom: 80px;
+    }
+
+    /* Hero Section */
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .hero-image {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    /* Steps Container */
+    .steps-container {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    /* Navigation */
+    .nav-container {
+        padding: 15px 20px;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-menu {
+        display: none;
+    }
+
+    /* Logo - slightly smaller on tablet */
+    .logo {
+        max-height: 50px;
+        max-width: 170px;
+    }
+
+    /* Tagline - smaller text on tablet */
+    .site-tagline {
+        font-size: 0.75em;
+    }
+
+    /* Mobile Sticky CTA */
+    .mobile-sticky-cta {
+        display: block;
+    }
+
+    /* Booking Flow */
+    .pricing-display {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .btn-group {
+        flex-direction: column;
+    }
+
+    .btn-group .btn {
+        width: 100%;
+    }
+
+    .booking-sticky-cta.active {
+        display: block;
+    }
+}
+
+/* ========== MOBILE (Max-width: 640px) ========== */
+@media (max-width: 640px) {
+    /* Container */
+    .container {
+        padding: 0 20px;
+    }
+
+    /* Navigation */
+    .nav-container {
+        padding: 15px 15px;
+    }
+
+    /* Logo - smaller on mobile */
+    .logo {
+        max-height: 45px;
+        max-width: 150px;
+    }
+
+    /* Tagline - smaller on mobile */
+    .site-tagline {
+        font-size: 0.7em;
+    }
+
+    /* Hero Section */
+    #hero {
+        padding: 130px 0 40px;
+    }
+
+    .hero-artists {
+        font-size: clamp(1em, 3vw, 1.3em);
+    }
+
+    .hero-title {
+        color: var(--gold-toned);
+    }
+
+    /* Footer - stack links vertically on mobile */
+    .footer-links {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hero-cta-group {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    /* Section Titles */
+    .section-title {
+        font-size: 2em;
+    }
+
+    /* Past Events Grid */
+    .past-events-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Booking Flow */
+    .booking-title {
+        font-size: 2em;
+    }
+
+    .step-title {
+        font-size: 1.6em;
+    }
+
+    .total-summary {
+        padding: 15px;
+    }
+
+    .total-amount {
+        font-size: 1.5em;
+    }
+
+    .payment-amount {
+        font-size: 1.7em;
+    }
+}

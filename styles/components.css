@@ -18,11 +18,12 @@
 .nav-container {
     max-width: 1300px;
     margin: 0 auto;
-    padding: 20px 30px 15px;
+    padding: 15px 30px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 12px;
+    justify-content: space-between;
+    gap: 20px;
     position: relative;
 }
 
@@ -324,7 +325,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 100px 30px 60px;
+    padding: 160px 30px 60px;
     background: var(--bg-black);
     overflow: hidden;
 }
@@ -361,6 +362,16 @@
     position: relative;
     z-index: 2;
     max-width: 900px;
+}
+
+.brand-tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.9em, 2vw, 1.1em);
+    letter-spacing: 2px;
+    color: var(--gold-bright);
+    margin-bottom: 20px;
+    font-weight: 500;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
 }
 
 .brand-intro h1 {
@@ -597,6 +608,44 @@
 .past-event-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(255, 136, 0, 0.2);
+}
+
+/* Lightbox image link styles */
+.past-event-card .glightbox {
+    display: block;
+    cursor: pointer;
+    position: relative;
+}
+
+.past-event-card .glightbox::after {
+    content: '🔍';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.past-event-card:hover .glightbox::after {
+    opacity: 1;
+}
+
+.past-event-card .glightbox img {
+    transition: transform 0.3s ease;
+}
+
+.past-event-card:hover .glightbox img {
+    transform: scale(1.05);
 }
 
 .past-event-info {

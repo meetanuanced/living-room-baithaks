@@ -104,7 +104,7 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 100px 30px 60px;
+        padding: 160px 30px 60px;
         background: var(--bg-black);
         overflow: hidden;
     }
@@ -141,6 +141,16 @@
         position: relative;
         z-index: 2;
         max-width: 900px;
+    }
+
+    .brand-tagline {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(0.9em, 2vw, 1.1em);
+        letter-spacing: 2px;
+        color: var(--gold-bright);
+        margin-bottom: 20px;
+        font-weight: 500;
+        text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
     }
 
     .brand-intro h1 {
@@ -638,6 +648,7 @@
 
         <div class="brand-intro">
             <div class="brand-intro-content">
+                <div class="brand-tagline">Music. Conversations. Connections.</div>
                 <h1>Living Room Baithaks</h1>
                 <p class="brand-intro-text">
                     Old Bangalore charm. Intimate classical concerts.<br>

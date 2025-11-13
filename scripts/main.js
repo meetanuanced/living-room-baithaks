@@ -306,24 +306,30 @@ fetch(dataURL)
                 card.style.transition = 'opacity 0.5s, transform 0.5s';
                 
                 card.innerHTML = `
-                    <div class="image-container aspect-story">
-                        <img alt="${concert.image_alt || concert.title}" 
-                             loading="lazy" 
-                             src="${imagePath}"
-                             onerror="this.src='./Images/Baithaks/default_past.jpg'"/>
-                    </div>
+                    <a href="${imagePath}"
+                       class="glightbox"
+                       data-gallery="past-baithaks"
+                       data-title="${concert.title}${concert.sub_title ? ' ' + concert.sub_title : ''}"
+                       data-description="${artistNames} • ${concert.display_date || concert.date}">
+                        <div class="image-container aspect-story">
+                            <img alt="${concert.image_alt || concert.title}"
+                                 loading="lazy"
+                                 src="${imagePath}"
+                                 onerror="this.src='./Images/Baithaks/default_past.jpg'"/>
+                        </div>
+                    </a>
                     <div class="past-event-info">
                         <div class="past-event-title">${concert.title}${concert.sub_title ? ' ' + concert.sub_title : ''}</div>
                         <div class="past-event-artist">${artistNames}</div>
                         <div class="past-event-date">${concert.display_date || concert.date}</div>
-                        ${(concert.event_gallery_link || concert.event_recording_link) ? 
-                            `<a href="${viewMoreLink}" 
-                                target="_blank" 
+                        ${(concert.event_gallery_link || concert.event_recording_link) ?
+                            `<a href="${viewMoreLink}"
+                                target="_blank"
                                 style="display: inline-block; margin-top: 12px; color: var(--orange); text-decoration: none; font-family: 'Inter', sans-serif; font-size: 0.85em; font-weight: 600; transition: color 0.3s;"
                                 onmouseover="this.style.color='var(--gold-bright)'"
                                 onmouseout="this.style.color='var(--orange)'">
                                View Gallery/Recording →
-                             </a>` 
+                             </a>`
                             : ''}
                     </div>
                 `;
@@ -341,15 +347,29 @@ fetch(dataURL)
             } else {
                 viewMoreBtn.style.display = 'none';
             }
+
+            // Initialize or refresh GLightbox for new images
+            if (window.lightbox) {
+                window.lightbox.reload();
+            }
         }
-        
+
         viewMoreBtn.addEventListener('click', () => {
             displayCount = pastConcerts.length;
             displayConcerts();
         });
-        
+
         if (pastConcerts.length > 0) {
             displayConcerts();
+
+            // Initialize GLightbox after first render
+            setTimeout(() => {
+                window.lightbox = GLightbox({
+                    touchNavigation: true,
+                    loop: true,
+                    autoplayVideos: true
+                });
+            }, 500);
         } else {
             container.innerHTML = `
                 <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; font-family: 'Inter', sans-serif; color: var(--text-gray);">
@@ -392,16 +412,20 @@ async function fetchAndDisplaySeatAvailability(concertId) {
                 seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";  // Match site font
                 seatsTextEl.style.fontFamily = "'Inter', sans-serif";
 
-                // Disable all Reserve/Book buttons when sold out
+                // Change Reserve buttons to Join Waitlist when sold out
                 reserveButtons.forEach(btn => {
-                    btn.style.opacity = '0.5';
-                    btn.style.cursor = 'not-allowed';
-                    btn.style.pointerEvents = 'none';
-                    btn.setAttribute('disabled', 'true');
-                    btn.setAttribute('aria-disabled', 'true');
-                    btn.textContent = 'Sold Out';
+                    btn.style.opacity = '1';
+                    btn.style.cursor = 'pointer';
+                    btn.style.pointerEvents = 'auto';
+                    btn.removeAttribute('disabled');
+                    btn.removeAttribute('aria-disabled');
+                    btn.textContent = 'Join WhatsApp Community';
+                    btn.href = 'https://chat.whatsapp.com/CfZlxIz3yKZBLSMKMyFBX2';
+                    btn.target = '_blank';
+                    btn.classList.remove('booking-trigger');
+                    btn.classList.add('btn-secondary');
                 });
-            } else if (totalAvailable <= 5) {
+            } else if (totalAvailable <= 15) {
                 // Handle singular/plural for seat count
                 const seatWord = totalAvailable === 1 ? 'Seat' : 'Seats';
                 seatsCountEl.textContent = `Only ${totalAvailable} ${seatWord} Left!`;
@@ -447,13 +471,30 @@ async function fetchAndDisplaySeatAvailability(concertId) {
 
         // Update sticky CTA
         const stickySeatsCount = document.getElementById('stickySeatsCount');
+        const stickyBookBtn = document.getElementById('stickyBookBtn');
         if (stickySeatsCount) {
             if (totalAvailable === 0) {
                 stickySeatsCount.textContent = 'Sold Out';
                 stickySeatsCount.style.fontFamily = "'League Spartan', sans-serif";
+
+                // Update sticky button to link to WhatsApp
+                if (stickyBookBtn) {
+                    stickyBookBtn.textContent = 'Join Community';
+                    stickyBookBtn.href = 'https://chat.whatsapp.com/CfZlxIz3yKZBLSMKMyFBX2';
+                    stickyBookBtn.target = '_blank';
+                    stickyBookBtn.classList.remove('booking-trigger');
+                }
             } else {
                 stickySeatsCount.textContent = `${totalAvailable} Seats`;
                 stickySeatsCount.style.fontFamily = "'League Spartan', sans-serif";
+
+                // Reset sticky button to booking trigger
+                if (stickyBookBtn) {
+                    stickyBookBtn.textContent = 'Reserve Seat';
+                    stickyBookBtn.href = '#';
+                    stickyBookBtn.removeAttribute('target');
+                    stickyBookBtn.classList.add('booking-trigger');
+                }
             }
         }
 

@@ -98,51 +98,88 @@
 
     /* Mini Brand Hero Styles */
     .brand-intro {
+        position: relative;
+        min-height: 450px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
-        padding: 60px 0 40px;
+        padding: 100px 30px 60px;
         background: var(--bg-black);
+        overflow: hidden;
+    }
+
+    /* Background Image */
+    .brand-intro::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('./Images/hero-brand-background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.4;
+        z-index: 0;
+    }
+
+    /* Dark overlay for better text readability */
+    .brand-intro::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
+        z-index: 1;
+    }
+
+    .brand-intro-content {
+        position: relative;
+        z-index: 2;
+        max-width: 900px;
     }
 
     .brand-intro h1 {
         font-family: 'League Spartan', sans-serif;
-        font-size: 2.5em;
+        font-size: clamp(2em, 5vw, 3em);
         color: var(--gold-toned);
-        margin-bottom: 15px;
+        margin-bottom: 25px;
         font-weight: 800;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
     }
 
     .brand-intro-text {
-        font-size: 1.2em;
-        color: var(--text-light);
-        max-width: 700px;
-        margin: 0 auto 25px;
-        line-height: 1.6;
-    }
-
-    .trust-badges {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
         font-family: 'Inter', sans-serif;
-        font-size: 0.85em;
-        color: var(--text-gray);
-        margin-bottom: 30px;
-        flex-wrap: wrap;
-    }
-
-    .trust-badges span {
-        padding: 8px 16px;
-        background: var(--bg-dark);
-        border-radius: 20px;
-        border: 1px solid rgba(212, 165, 116, 0.2);
+        font-size: clamp(1em, 2.5vw, 1.25em);
+        color: var(--text-light);
+        line-height: 1.7;
+        margin-bottom: 35px;
+        text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
     }
 
     .scroll-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
         color: var(--orange);
         text-decoration: none;
         font-family: 'Inter', sans-serif;
-        font-size: 0.9em;
+        font-size: 0.95em;
         font-weight: 600;
+        transition: all 0.3s;
+        padding: 10px 20px;
+        border-radius: 6px;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(10px);
+    }
+
+    .scroll-indicator:hover {
+        color: var(--gold-bright);
+        transform: translateY(3px);
     }
 
     /* Hero Grid Styles */
@@ -600,17 +637,14 @@
         <div class="state-label">ALWAYS VISIBLE: Mini Brand Hero</div>
 
         <div class="brand-intro">
-            <h1>Living Room Baithaks</h1>
-            <p class="brand-intro-text">
-                Intimate classical music concerts in a Bangalore home.<br>
-                50 seats • Home-cooked meals • 100% contribution goes to artists.
-            </p>
-            <div class="trust-badges">
-                <span>✓ 600+ Attendees</span>
-                <span>✓ 12 Baithaks Hosted</span>
-                <span>✓ 4.9/5 Rating</span>
+            <div class="brand-intro-content">
+                <h1>Living Room Baithaks</h1>
+                <p class="brand-intro-text">
+                    Old Bangalore charm. Intimate classical concerts.<br>
+                    Home-style food. 100% to artists.
+                </p>
+                <a href="#" class="scroll-indicator">See Next Baithak ↓</a>
             </div>
-            <a href="#" class="scroll-indicator">See Next Baithak ↓</a>
         </div>
     </div>
 
@@ -794,7 +828,7 @@
 
                         <div class="hero-cta-group">
                             <a href="#past-events" class="btn btn-secondary">See Past Baithaks</a>
-                            <a href="https://wa.me/919880803110" class="btn btn-secondary" target="_blank">Join Community</a>
+                            <a href="https://chat.whatsapp.com/CfZlxIz3yKZBLSMKMyFBX2" class="btn btn-secondary" target="_blank">Join Community</a>
                         </div>
                     </div>
                 </div>
@@ -816,21 +850,6 @@
                         Bringing classical music back to its intimate roots — one baithak at a time.<br>
                         Our next event will be announced soon.
                     </p>
-
-                    <div class="brand-hero-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">600+</div>
-                            <div class="stat-label">Attendees</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">12</div>
-                            <div class="stat-label">Baithaks Hosted</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">4.9/5</div>
-                            <div class="stat-label">Rating</div>
-                        </div>
-                    </div>
 
                     <div class="email-signup">
                         <h3>Get Notified of Our Next Baithak</h3>
@@ -873,7 +892,7 @@
 
                     <div class="hero-cta-group" style="justify-content: center; margin-top: 30px;">
                         <a href="#past-events" class="btn btn-secondary">View All Past Baithaks</a>
-                        <a href="https://wa.me/919880803110" class="btn btn-secondary" target="_blank">Join WhatsApp Community</a>
+                        <a href="https://chat.whatsapp.com/CfZlxIz3yKZBLSMKMyFBX2" class="btn btn-secondary" target="_blank">Join WhatsApp Community</a>
                     </div>
                 </div>
             </div>

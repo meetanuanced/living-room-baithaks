@@ -318,12 +318,94 @@
     @media (max-width: 900px) {
         .hero-grid {
             grid-template-columns: 1fr;
+            gap: 30px;
         }
 
         .hero-image {
             width: 100%;
-            max-width: 300px;
+            max-width: 350px;
+            height: 350px;
             margin: 0 auto;
+        }
+
+        .variant {
+            padding: 25px;
+        }
+
+        .hero-preview {
+            padding: 25px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        body {
+            padding: 20px 10px;
+        }
+
+        .page-header h1 {
+            font-size: 1.8em;
+        }
+
+        .state-title {
+            font-size: 1.3em;
+            padding: 15px;
+        }
+
+        .variant {
+            padding: 20px;
+        }
+
+        .variant-label {
+            font-size: 1.1em;
+        }
+
+        .hero-preview {
+            padding: 20px;
+        }
+
+        .hero-image {
+            max-width: 100%;
+            height: 280px;
+        }
+
+        .artist-primary {
+            font-size: 1.3em;
+        }
+
+        .hero-title {
+            font-size: 1.5em;
+        }
+
+        .detail-row {
+            font-size: 0.9em;
+            gap: 10px;
+        }
+
+        .detail-row strong {
+            min-width: 70px;
+        }
+
+        .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        .hero-cta-group {
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .urgency-banner {
+            font-size: 0.95em;
+            padding: 10px 15px;
+        }
+
+        .seats-urgency-large {
+            padding: 20px;
+        }
+
+        .seats-count-urgent {
+            font-size: 1.4em;
         }
     }
 </style>

@@ -458,7 +458,7 @@ function buildUrgencyHero(concert, totalAvailable) {
                     <span class="artist-name">${artistDisplay}</span>
                 </div>
 
-                <h1 class="hero-title">
+                <h1 class="hero-title" style="color: var(--orange);">
                     ${concert.title}${concert.sub_title ? ` — ${concert.sub_title}` : ''}
                 </h1>
 
@@ -479,9 +479,23 @@ function buildUrgencyHero(concert, totalAvailable) {
                     </div>
                     <div class="detail-row">
                         <div class="icon-dot"></div>
+                        <strong>Venue</strong>
+                        <span>Sadashivnagar, Bangalore</span>
+                    </div>
+                    <div class="detail-row">
+                        <div class="icon-dot"></div>
+                        <strong>Includes</strong>
+                        <span>${concert.inclusions || 'Home-cooked meal & Raagdhari mehfil'}</span>
+                    </div>
+                    <div class="detail-row">
+                        <div class="icon-dot"></div>
                         <strong>Price</strong>
                         <span>₹${concert.ticket_price_general || 1000} (General) • ₹${concert.ticket_price_student || 500} (Students)</span>
                     </div>
+                </div>
+
+                <div style="font-family: 'Inter', sans-serif; font-size: 0.85em; color: var(--text-gray); margin-bottom: 25px; line-height: 1.6;">
+                    ${concert.contribution_note || 'Your contribution goes entirely toward the artists and their music.'}
                 </div>
 
                 <div class="hero-cta-group">

@@ -42,7 +42,7 @@ const LOCAL_DATA_PATH = './data/lrb_concerts_master_final_updated.json';
  *
  * This is better than third-party CORS proxies!
  */
-const USE_LOCAL_PROXY = false;  // Set to false for Netlify production
+const USE_LOCAL_PROXY = true;  // Set to false for Netlify production
 const LOCAL_PROXY_URL = 'http://localhost:3001';
 
 /**

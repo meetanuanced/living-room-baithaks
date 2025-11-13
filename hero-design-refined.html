@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Living Room Baithaks - Refined Hero Designs</title>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800;900&family=Merriweather:wght@400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg-black: #0a0a0a;
+        --bg-dark: #1a1a1a;
+        --gold-toned: #D4A574;
+        --gold-bright: #E8C4A0;
+        --orange: #FF8800;
+        --text-light: #E5E5E5;
+        --text-gray: #A0A0A0;
+        --warm-amber: #D4A574;
+        --soft-terracotta: #C87D5A;
+        --warm-ochre: #CC8E35;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg-black);
+        color: var(--text-light);
+        padding: 40px 20px;
+        line-height: 1.6;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 60px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid var(--gold-toned);
+    }
+
+    .page-header h1 {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 2.5em;
+        color: var(--gold-bright);
+        margin-bottom: 15px;
+    }
+
+    .page-header p {
+        font-size: 1.1em;
+        color: var(--text-gray);
+        margin-top: 10px;
+    }
+
+    .state-section {
+        margin-bottom: 80px;
+    }
+
+    .state-title {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 1.8em;
+        color: var(--orange);
+        margin-bottom: 40px;
+        padding: 20px;
+        background: var(--bg-dark);
+        border-left: 5px solid var(--orange);
+    }
+
+    .variants-container {
+        display: grid;
+        gap: 50px;
+    }
+
+    .variant {
+        background: var(--bg-dark);
+        border-radius: 12px;
+        padding: 40px;
+        border: 1px solid rgba(212, 165, 116, 0.2);
+    }
+
+    .variant-label {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 1.3em;
+        color: var(--gold-bright);
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(212, 165, 116, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .variant-label::before {
+        content: '●';
+        color: var(--warm-amber);
+        font-size: 0.6em;
+    }
+
+    .hero-container {
+        background: var(--bg-black);
+        border-radius: 8px;
+        padding: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .hero-grid {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 50px;
+        align-items: start;
+    }
+
+    .hero-image-wrapper {
+        width: 350px;
+        height: 350px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+    }
+
+    .hero-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    .hero-content {
+        flex: 1;
+    }
+
+    /* Normal state label */
+    .hero-label {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.75em;
+        letter-spacing: 2px;
+        color: var(--gold-toned);
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    /* Artist section */
+    .hero-artists {
+        margin-bottom: 15px;
+    }
+
+    .artist-primary {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 1.6em;
+        color: var(--gold-bright);
+        font-weight: 700;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .artist-secondary {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95em;
+        color: var(--text-gray);
+        display: block;
+        margin-bottom: 3px;
+    }
+
+    /* Title */
+    .hero-title {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 1.9em;
+        color: var(--orange);
+        margin-bottom: 20px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    /* Event details */
+    .event-details {
+        margin-bottom: 20px;
+    }
+
+    .detail-row {
+        display: flex;
+        gap: 15px;
+        align-items: baseline;
+        margin-bottom: 12px;
+        font-size: 0.95em;
+    }
+
+    .detail-row strong {
+        color: var(--gold-toned);
+        min-width: 85px;
+    }
+
+    .detail-row span {
+        color: var(--text-gray);
+    }
+
+    /* Contribution note */
+    .contribution-note {
+        font-size: 0.85em;
+        color: var(--text-gray);
+        margin-bottom: 25px;
+        line-height: 1.6;
+    }
+
+    /* Seats display - normal */
+    .seats-normal {
+        margin-bottom: 20px;
+        font-size: 0.9em;
+        color: var(--text-gray);
+    }
+
+    .seats-normal strong {
+        color: var(--gold-toned);
+    }
+
+    /* Buttons - CONSISTENT SIZING */
+    .cta-group {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        font-family: 'League Spartan', sans-serif;
+        padding: 14px 32px;
+        border-radius: 6px;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: 700;
+        font-size: 1em;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background: var(--gold-bright);
+        color: var(--bg-black);
+    }
+
+    .btn-primary:hover {
+        background: var(--gold-toned);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--orange);
+        border: 2px solid var(--orange);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 136, 0, 0.1);
+    }
+
+    /* ===== URGENCY VARIANT 1: Subtle Amber Accent ===== */
+    .urgency-v1 .hero-container {
+        border-left: 3px solid var(--warm-amber);
+        background: linear-gradient(90deg, rgba(212, 165, 116, 0.03) 0%, var(--bg-black) 15%);
+    }
+
+    .urgency-v1 .availability-note {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8em;
+        color: var(--warm-amber);
+        margin-bottom: 12px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+
+    .urgency-v1 .seats-info {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 1em;
+        color: var(--gold-bright);
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    /* ===== URGENCY VARIANT 2: Warm Terracotta Highlight ===== */
+    .urgency-v2 .seats-highlight {
+        background: rgba(200, 125, 90, 0.08);
+        border: 1px solid rgba(200, 125, 90, 0.25);
+        border-radius: 6px;
+        padding: 12px 18px;
+        margin-bottom: 20px;
+        display: inline-block;
+    }
+
+    .urgency-v2 .seats-highlight-text {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9em;
+        color: var(--text-light);
+        font-weight: 500;
+    }
+
+    .urgency-v2 .seats-highlight-count {
+        color: var(--soft-terracotta);
+        font-weight: 700;
+    }
+
+    /* ===== URGENCY VARIANT 3: Gentle Gold Frame ===== */
+    .urgency-v3 .hero-container {
+        border: 1px solid var(--warm-ochre);
+        box-shadow: 0 0 15px rgba(204, 142, 53, 0.12);
+    }
+
+    .urgency-v3 .availability-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(204, 142, 53, 0.12);
+        border-radius: 16px;
+        padding: 6px 14px;
+        margin-bottom: 12px;
+        font-size: 0.85em;
+    }
+
+    .urgency-v3 .availability-badge span {
+        color: var(--warm-ochre);
+        font-weight: 500;
+    }
+
+    /* ===== SOLD OUT STATE ===== */
+    .sold-out .hero-image-wrapper {
+        opacity: 0.6;
+    }
+
+    .sold-out .hero-content {
+        opacity: 0.9;
+    }
+
+    .sold-out-badge {
+        background: rgba(160, 160, 160, 0.1);
+        border: 1px solid rgba(160, 160, 160, 0.3);
+        border-radius: 6px;
+        padding: 10px 18px;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+
+    .sold-out-text {
+        font-family: 'League Spartan', sans-serif;
+        font-size: 0.95em;
+        color: var(--text-gray);
+        font-weight: 600;
+    }
+
+    .community-invite {
+        font-size: 0.9em;
+        color: var(--text-gray);
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+
+    .community-invite strong {
+        color: var(--gold-toned);
+    }
+
+    .design-notes {
+        margin-top: 25px;
+        padding: 20px;
+        background: rgba(212, 165, 116, 0.05);
+        border-left: 3px solid var(--warm-amber);
+        border-radius: 6px;
+        font-size: 0.9em;
+        color: var(--text-gray);
+        line-height: 1.7;
+    }
+
+    .design-notes strong {
+        color: var(--warm-amber);
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    @media (max-width: 1000px) {
+        .hero-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-image-wrapper {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+    <h1>Living Room Baithaks</h1>
+    <p>Refined Hero Design Options</p>
+    <p style="font-size: 0.9em; color: var(--text-gray);">Subtle, balanced, warm — no aggressive elements</p>
+</div>
+
+<!-- ================================================ -->
+<!-- STATE 1: NORMAL (35+ Seats Available) -->
+<!-- ================================================ -->
+<div class="state-section">
+    <div class="state-title">Current Design: Normal State (35+ seats)</div>
+
+    <div class="variants-container">
+        <div class="variant">
+            <div class="variant-label">Balanced & Clean Design</div>
+
+            <div class="hero-container">
+                <div class="hero-grid">
+                    <div class="hero-image-wrapper">
+                        <img src="./Images/Baithaks/CONC004_hero.jpg" alt="Siddharth Belamannu">
+                    </div>
+
+                    <div class="hero-content">
+                        <div class="hero-label">Upcoming Baithak</div>
+
+                        <div class="hero-artists">
+                            <span class="artist-primary">Siddharth Belamannu</span>
+                            <span class="artist-secondary">Hindustani Vocal</span>
+                            <span class="artist-secondary">Yogesh Samsi (Tabla) • Vinay Mishra (Harmonium)</span>
+                        </div>
+
+                        <h1 class="hero-title">Pratah Swar — Morning Baithak</h1>
+
+                        <div class="event-details">
+                            <div class="detail-row">
+                                <strong>Date</strong>
+                                <span>16th November 2025, Saturday</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Time</strong>
+                                <span>9:00 AM – Breakfast • 10:00 AM – Baithak</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Venue</strong>
+                                <span>Sadashivnagar, Bangalore</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Includes</strong>
+                                <span>Home-cooked meal & Raagdhari mehfil</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Price</strong>
+                                <span>₹1,000 (General) • ₹500 (Students)</span>
+                            </div>
+                        </div>
+
+                        <div class="seats-normal">
+                            <strong>35 of 50 seats</strong> available
+                        </div>
+
+                        <div class="contribution-note">
+                            Your contribution goes entirely toward the artists and their music.
+                        </div>
+
+                        <div class="cta-group">
+                            <a href="#" class="btn btn-primary">Reserve Your Seat</a>
+                            <a href="#" class="btn btn-secondary">See Past Baithaks</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="design-notes">
+                <strong>Design Philosophy:</strong>
+                Image and text feel equal and balanced. Consistent button sizes. Warm colors. Professional yet inviting. This is your baseline.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================ -->
+<!-- STATE 2: URGENCY (8 Seats Left) -->
+<!-- ================================================ -->
+<div class="state-section">
+    <div class="state-title">Urgency State: 8 Seats Remaining</div>
+
+    <div class="variants-container">
+
+        <!-- VARIANT 1: Subtle Amber Accent -->
+        <div class="variant urgency-v1">
+            <div class="variant-label">Option 1: Subtle Amber Accent</div>
+
+            <div class="hero-container">
+                <div class="hero-grid">
+                    <div class="hero-image-wrapper">
+                        <img src="./Images/Baithaks/CONC004_hero.jpg" alt="Siddharth Belamannu">
+                    </div>
+
+                    <div class="hero-content">
+                        <div class="availability-note">Limited availability</div>
+
+                        <div class="hero-artists">
+                            <span class="artist-primary">Siddharth Belamannu</span>
+                            <span class="artist-secondary">Hindustani Vocal</span>
+                            <span class="artist-secondary">Yogesh Samsi (Tabla) • Vinay Mishra (Harmonium)</span>
+                        </div>
+
+                        <h1 class="hero-title">Pratah Swar — Morning Baithak</h1>
+
+                        <div class="seats-info">8 seats remaining</div>
+
+                        <div class="event-details">
+                            <div class="detail-row">
+                                <strong>Date</strong>
+                                <span>16th November 2025, Saturday</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Time</strong>
+                                <span>9:00 AM – Breakfast • 10:00 AM – Baithak</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Venue</strong>
+                                <span>Sadashivnagar, Bangalore</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Includes</strong>
+                                <span>Home-cooked meal & Raagdhari mehfil</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Price</strong>
+                                <span>₹1,000 (General) • ₹500 (Students)</span>
+                            </div>
+                        </div>
+
+                        <div class="contribution-note">
+                            Your contribution goes entirely toward the artists and their music.
+                        </div>
+
+                        <div class="cta-group">
+                            <a href="#" class="btn btn-primary">Reserve Your Seat</a>
+                            <a href="#" class="btn btn-secondary">See Past Baithaks</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="design-notes">
+                <strong>What Changed:</strong>
+                Subtle 3px amber left border • Gentle amber background gradient (barely visible) • "Limited availability" in small text • "8 seats remaining" in calm gold • Same layout, same buttons, same balance • NO emojis, NO caps, NO aggressive colors
+            </div>
+        </div>
+
+        <!-- VARIANT 2: Warm Terracotta Highlight -->
+        <div class="variant urgency-v2">
+            <div class="variant-label">Option 2: Warm Terracotta Highlight</div>
+
+            <div class="hero-container">
+                <div class="hero-grid">
+                    <div class="hero-image-wrapper">
+                        <img src="./Images/Baithaks/CONC004_hero.jpg" alt="Siddharth Belamannu">
+                    </div>
+
+                    <div class="hero-content">
+                        <div class="hero-label">Upcoming Baithak</div>
+
+                        <div class="hero-artists">
+                            <span class="artist-primary">Siddharth Belamannu</span>
+                            <span class="artist-secondary">Hindustani Vocal</span>
+                            <span class="artist-secondary">Yogesh Samsi (Tabla) • Vinay Mishra (Harmonium)</span>
+                        </div>
+
+                        <h1 class="hero-title">Pratah Swar — Morning Baithak</h1>
+
+                        <div class="seats-highlight">
+                            <span class="seats-highlight-text">Filling up • <span class="seats-highlight-count">8 seats left</span></span>
+                        </div>
+
+                        <div class="event-details">
+                            <div class="detail-row">
+                                <strong>Date</strong>
+                                <span>16th November 2025, Saturday</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Time</strong>
+                                <span>9:00 AM – Breakfast • 10:00 AM – Baithak</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Venue</strong>
+                                <span>Sadashivnagar, Bangalore</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Includes</strong>
+                                <span>Home-cooked meal & Raagdhari mehfil</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Price</strong>
+                                <span>₹1,000 (General) • ₹500 (Students)</span>
+                            </div>
+                        </div>
+
+                        <div class="contribution-note">
+                            Your contribution goes entirely toward the artists and their music.
+                        </div>
+
+                        <div class="cta-group">
+                            <a href="#" class="btn btn-primary">Reserve Your Seat</a>
+                            <a href="#" class="btn btn-secondary">See Past Baithaks</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="design-notes">
+                <strong>What Changed:</strong>
+                Soft terracotta-tinted box for seats info • Conversational "Filling up" language • Rounded corners for warmth • Everything else identical to normal • Same buttons, same proportions, same balance
+            </div>
+        </div>
+
+        <!-- VARIANT 3: Gentle Gold Frame -->
+        <div class="variant urgency-v3">
+            <div class="variant-label">Option 3: Gentle Gold Frame</div>
+
+            <div class="hero-container">
+                <div class="hero-grid">
+                    <div class="hero-image-wrapper">
+                        <img src="./Images/Baithaks/CONC004_hero.jpg" alt="Siddharth Belamannu">
+                    </div>
+
+                    <div class="hero-content">
+                        <div class="hero-label">Upcoming Baithak</div>
+
+                        <div class="availability-badge">
+                            <span>8 seats left</span>
+                        </div>
+
+                        <div class="hero-artists">
+                            <span class="artist-primary">Siddharth Belamannu</span>
+                            <span class="artist-secondary">Hindustani Vocal</span>
+                            <span class="artist-secondary">Yogesh Samsi (Tabla) • Vinay Mishra (Harmonium)</span>
+                        </div>
+
+                        <h1 class="hero-title">Pratah Swar — Morning Baithak</h1>
+
+                        <div class="event-details">
+                            <div class="detail-row">
+                                <strong>Date</strong>
+                                <span>16th November 2025, Saturday</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Time</strong>
+                                <span>9:00 AM – Breakfast • 10:00 AM – Baithak</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Venue</strong>
+                                <span>Sadashivnagar, Bangalore</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Includes</strong>
+                                <span>Home-cooked meal & Raagdhari mehfil</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Price</strong>
+                                <span>₹1,000 (General) • ₹500 (Students)</span>
+                            </div>
+                        </div>
+
+                        <div class="contribution-note">
+                            Your contribution goes entirely toward the artists and their music.
+                        </div>
+
+                        <div class="cta-group">
+                            <a href="#" class="btn btn-primary">Reserve Your Seat</a>
+                            <a href="#" class="btn btn-secondary">See Past Baithaks</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="design-notes">
+                <strong>What Changed:</strong>
+                Gentle gold border around entire card with soft glow • Small pill-shaped badge "8 seats left" • Minimal, elegant • Everything else stays exactly the same
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ================================================ -->
+<!-- STATE 3: SOLD OUT (0 Seats) -->
+<!-- ================================================ -->
+<div class="state-section">
+    <div class="state-title">Sold Out State: 0 Seats</div>
+
+    <div class="variants-container">
+
+        <!-- SOLD OUT OPTION -->
+        <div class="variant">
+            <div class="variant-label">Graceful Sold Out</div>
+
+            <div class="hero-container sold-out">
+                <div class="hero-grid">
+                    <div class="hero-image-wrapper">
+                        <img src="./Images/Baithaks/CONC004_hero.jpg" alt="Siddharth Belamannu">
+                    </div>
+
+                    <div class="hero-content">
+                        <div class="sold-out-badge">
+                            <span class="sold-out-text">This baithak is sold out</span>
+                        </div>
+
+                        <div class="hero-artists">
+                            <span class="artist-primary">Siddharth Belamannu</span>
+                            <span class="artist-secondary">Hindustani Vocal</span>
+                            <span class="artist-secondary">Yogesh Samsi (Tabla) • Vinay Mishra (Harmonium)</span>
+                        </div>
+
+                        <h1 class="hero-title">Pratah Swar — Morning Baithak</h1>
+
+                        <div class="event-details">
+                            <div class="detail-row">
+                                <strong>Date</strong>
+                                <span>16th November 2025, Saturday</span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Time</strong>
+                                <span>9:00 AM – Breakfast • 10:00 AM – Baithak</span>
+                            </div>
+                        </div>
+
+                        <div class="community-invite">
+                            <strong>Join our community</strong> to be the first to know about future baithaks.
+                        </div>
+
+                        <div class="cta-group">
+                            <a href="https://chat.whatsapp.com/CfZlxIz3yKZBLSMKMyFBX2" class="btn btn-secondary" target="_blank">Join WhatsApp Community</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="design-notes">
+                <strong>What Changed:</strong>
+                Subtle opacity on image and content • Gray badge with lowercase text • Warm invitation to community • Button becomes WhatsApp link • No aggressive "SOLD OUT" messaging
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div style="text-align: center; padding: 50px 20px; border-top: 1px solid rgba(212, 165, 116, 0.2); margin-top: 80px;">
+    <p style="color: var(--gold-bright); font-size: 1.1em; font-family: 'League Spartan', sans-serif; margin-bottom: 15px;">
+        All Designs Maintain Balance
+    </p>
+    <p style="color: var(--text-gray); font-size: 0.95em; line-height: 1.7; max-width: 700px; margin: 0 auto;">
+        Image-to-text ratio stays equal • Button sizes stay consistent • Warm, inviting colors • No shouting, no pressure • Professional yet homely
+    </p>
+</div>
+
+</body>
+</html>

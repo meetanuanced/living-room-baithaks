@@ -434,13 +434,9 @@ async function fetchAndDisplaySeatAvailability(concert) {
 // Helper function to build URGENCY hero layout
 function buildUrgencyHero(concert, totalAvailable) {
     const artistDisplay = formatArtists(concert.artists);
-    const seatWord = totalAvailable === 1 ? 'Seat' : 'Seats';
+    const seatWord = totalAvailable === 1 ? 'seat' : 'seats';
 
     const urgencyHTML = `
-        <div class="urgency-banner">
-            🔥 ALMOST SOLD OUT — Only ${totalAvailable} ${seatWord} Remaining
-        </div>
-
         <div class="hero-grid">
             <div class="hero-image-container">
                 <div class="hero-image image-container aspect-portrait">
@@ -452,18 +448,18 @@ function buildUrgencyHero(concert, totalAvailable) {
             </div>
 
             <div class="hero-content">
-                <div class="hero-label urgent">URGENT — FILLING FAST</div>
+                <div class="hero-label">UPCOMING BAITHAK</div>
 
                 <div class="hero-artists">
                     <span class="artist-name">${artistDisplay}</span>
                 </div>
 
-                <h1 class="hero-title" style="color: var(--orange);">
+                <h1 class="hero-title">
                     ${concert.title}${concert.sub_title ? ` — ${concert.sub_title}` : ''}
                 </h1>
 
-                <div class="seats-urgency-large">
-                    <div class="seats-count-urgent">⚡ ${totalAvailable} ${seatWord.toUpperCase()} LEFT ⚡</div>
+                <div class="seats-terracotta-box">
+                    <span class="seats-terracotta-text">Filling up • <span class="seats-terracotta-count">${totalAvailable} ${seatWord} left</span></span>
                 </div>
 
                 <div class="event-details">
@@ -499,9 +495,13 @@ function buildUrgencyHero(concert, totalAvailable) {
                 </div>
 
                 <div class="hero-cta-group">
-                    <button class="btn btn-primary booking-trigger" style="width: 100%; font-size: 1.1em; padding: 18px;">
-                        RESERVE NOW
-                    </button>
+                    <a href="#" class="btn btn-primary booking-trigger">Reserve Your Seat</a>
+                    <a href="#past-events" class="btn btn-secondary">See Past Baithaks</a>
+                </div>
+
+                <div class="hero-quick-links">
+                    <a href="#how-it-works">Reservation Process</a>
+                    <a href="#faq">FAQ</a>
                 </div>
             </div>
         </div>
@@ -525,31 +525,37 @@ function updateNormalSeatsDisplay(totalAvailable, totalSeats) {
 
 // Helper function to update sold out state
 function updateSoldOutState() {
-    const seatsCountEl = document.querySelector('.seats-count');
-    const seatsTextEl = document.querySelector('.seats-text');
+    const seatsUrgencyEl = document.querySelector('.seats-urgency');
+    const heroImageContainer = document.querySelector('.hero-image-container');
     const reserveButtons = document.querySelectorAll('.booking-trigger');
 
-    if (seatsCountEl) {
-        seatsCountEl.textContent = 'Sold Out';
-        seatsTextEl.textContent = 'All seats booked';
-        seatsCountEl.style.color = 'var(--orange)';
-        seatsCountEl.style.fontFamily = "'League Spartan', sans-serif";
-        seatsTextEl.style.fontFamily = "'Inter', sans-serif";
-
-        // Change Reserve buttons to Join WhatsApp Community when sold out
-        reserveButtons.forEach(btn => {
-            btn.style.opacity = '1';
-            btn.style.cursor = 'pointer';
-            btn.style.pointerEvents = 'auto';
-            btn.removeAttribute('disabled');
-            btn.removeAttribute('aria-disabled');
-            btn.textContent = 'Join WhatsApp Community';
-            btn.href = 'https://chat.whatsapp.com/CfZlxIz3yKZBLSMKMyFBX2';
-            btn.target = '_blank';
-            btn.classList.remove('booking-trigger');
-            btn.classList.add('btn-secondary');
-        });
+    // Replace seats-urgency with sold-out badge
+    if (seatsUrgencyEl) {
+        seatsUrgencyEl.outerHTML = `
+            <div class="sold-out-badge">
+                <span class="sold-out-text">This baithak is sold out</span>
+            </div>
+        `;
     }
+
+    // Dim the hero image
+    if (heroImageContainer) {
+        heroImageContainer.classList.add('sold-out');
+    }
+
+    // Change Reserve buttons to Join WhatsApp Community when sold out
+    reserveButtons.forEach(btn => {
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        btn.style.pointerEvents = 'auto';
+        btn.removeAttribute('disabled');
+        btn.removeAttribute('aria-disabled');
+        btn.textContent = 'Join WhatsApp Community';
+        btn.href = 'https://chat.whatsapp.com/CfZlxIz3yKZBLSMKMyFBX2';
+        btn.target = '_blank';
+        btn.classList.remove('booking-trigger');
+        btn.classList.add('btn-secondary');
+    });
 }
 
 // Helper function to update mobile sticky CTA
